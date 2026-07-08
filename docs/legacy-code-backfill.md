@@ -17,6 +17,9 @@ This file tracks code recovered from old ChatGPT/project history, uploaded artif
 | Canonical path | Project | Purpose | Scientific/data status |
 |---|---|---|---|
 | `projects/jm105-intronsaurus/analysis/jm105-old-cell-leaky-intron-determinants.py` | JM105 / Intronsaurus | Classifies old-selective NMD-revealed introns and tests module + splice-architecture determinants including 5′SS, branchpoint, 3′SS, and PPT features. | Uses real JM105 Euler tables as inputs. No fake biological data. |
+| `projects/figure-rendering/prompts/render-jm105-figure5-powershell-euler.md` | Figure rendering | Exact prompt/spec for rendering Figure 5 from PowerShell + Euler with NO DATA placeholders, lane-map/collision/provenance workflow, and fixed-canvas export rules. | Prompt/spec only; no biological data; not runnable code. |
+| `projects/figure-rendering/prompts/redesign-jm105-manuscript-figure-sequence.md` | Figure rendering | Exact prompt/spec for Nature Aging / Yves-compatible JM105 figure-sequence redesign. | Prompt/spec only; no biological data; not runnable code. |
+| `projects/personal-intelligence-agency/prompts/legacy-code-backfill-github-import.md` | Personal intelligence agency | Exact reusable prompt for code-backfill/search/commit workflow into `jorddyk/Jordan-McCarthy`. | Prompt/workflow artifact only; no biological data; not runnable code. |
 
 ## Recovered exact source files identified in current project context
 
@@ -106,7 +109,7 @@ Y:\Jordan\JM133 Do weak 5′ splice sites need Mud1
 
 Known outputs included primary Q1 figures, named-candidate tables, hard checks, and tarball `JM133_Do_weak_5SS_need_Mud1.tar.gz`. Result: genome-wide correlation between U1 strength and Mud1-dependence was not supported, while six of eight named candidates were Mud1-dependent by the recovered table.
 
-Status: exact full source not yet recovered into the GitHub repo; source clue retained.
+Status: exact full source was canonicalized on open branch/PR `legacy-code-backfill-2026-07-08`; not yet merged to `main` as of this continuation pass.
 
 ### JM105 Figure 2 stage-1 audit / candidate gate
 
@@ -185,13 +188,25 @@ Likely canonical path:
 projects/imagej-fiji-aging-chips/
 ```
 
-Source clues:
+High-priority JM128/JM129 source clues:
 
 ```text
 jm128-split-nd2-positions-bioformats.ijm
 jm128-extract-mitosox-c2-every6-zpositions.ijm
 jm129-mitosox-virtual-hyperstack-background-subtraction.groovy
 ```
+
+Additional Google Drive lab-notebook source clues recovered in this continuation pass:
+
+```text
+Y:\Jordan\JM076\Macros\Step1_DetectAdjustConvertResize.ijm
+Y:\Jordan\JM076\Macros\Step2_BriightfieldExtractor.ijm
+Y:\Jordan\JM076\Macros\Step_3ConvertResize.ijm
+Y:\Jordan\JM076\Macros\Step4_RemovebrightfieldSlicesFromStack.ijm
+Y:\Jordan\JM076\Macros\Step6_RedChannelMacro.ijm
+```
+
+The JM-076 clues come from `Lab Notebook complete copy and paste text dump`, under an aging-chip protocol for intronless nuclear-encoded mitochondrial genes tagged with Tom70-yemScarlet3. The document gives macro names and workflow but not macro bodies, so these remain recovery targets rather than imported code.
 
 Microscopy rules to preserve when importing:
 
@@ -212,7 +227,14 @@ projects/figure-rendering/nature-aging-mockups/
 
 Source clues: Figure 5 renderer prompts, PowerPoint/docx panel assets, Nature Aging/Yves-compatible figure-layout mockup code, no-data placeholder renderers, fixed-canvas panel scripts.
 
-Status: exact full source not yet recovered. Do not reconstruct from mockup descriptions; mark missing panels as `NO DATA` when code is recovered.
+Imported prompt/spec artifacts:
+
+```text
+projects/figure-rendering/prompts/render-jm105-figure5-powershell-euler.md
+projects/figure-rendering/prompts/redesign-jm105-manuscript-figure-sequence.md
+```
+
+Status: prompt/spec artifacts imported. Exact runnable figure-rendering source not yet recovered. Do not reconstruct from mockup descriptions; mark missing panels as `NO DATA` when code is recovered.
 
 ### German/TELC/language-learning apps
 
@@ -238,9 +260,24 @@ Likely canonical path:
 projects/personal-intelligence-agency/
 ```
 
+Imported prompt/workflow artifact:
+
+```text
+projects/personal-intelligence-agency/prompts/legacy-code-backfill-github-import.md
+```
+
 Recovered conceptual structure:
 
 - Code handoff task remains persistent.
 - Four other scheduled tasks were consolidated around strategic alert triage, science preemption watch, Swiss leverage radar, and weekly strategic brief/red-team.
 
-Status: exact prompt text should be imported from scheduled-task records or old chats; not reconstructed here.
+Status: legacy-code-backfill prompt imported. Other exact scheduled-task prompt texts should be imported from scheduled-task records or old chats; not reconstructed here.
+
+## Current continuation pass — 2026-07-08 11:51 Europe/Zurich
+
+- Verified `jorddyk/Jordan-McCarthy` is private and writable with admin/push permissions.
+- Searched Google Drive for JM105/Intronsaurus/JM134/Fiji/MitoSOX/source-clue terms.
+- Searched Gmail for prior code-handoff records and code-like attachment queries.
+- Found the open PR `legacy-code-backfill-2026-07-08` containing JM-133 code; because it is open and not mergeable from the connector context, this pass did not duplicate or overwrite that runnable code on `main`.
+- Updated ImageJ/Fiji recovery documentation with exact JM-076 historical macro paths from the lab notebook.
+- No newly recovered full source code was committed in this continuation pass; only source-clue documentation was updated.
