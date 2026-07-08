@@ -6,7 +6,16 @@ Do not treat this file as code. It is a recovery queue.
 
 ## Search/backfill results from this pass
 
-File Library returned several uploaded prompt fragments documenting the exact rendering invariants for Figure 5 / Nature Aging-style panel production: lane maps before code, collision inventory before patching, data-provenance manifests, fixed-dimension transparent SVG/PDF/PNG plus white-preview PNG, editable SVG text, and explicit `NO DATA — experiment pending` placeholders. These are prompt/spec artifacts, not runnable source code, so no figure-rendering script was imported in this pass.
+File Library returned several uploaded prompt/spec artifacts documenting the exact rendering invariants for Figure 5 / Nature Aging-style panel production: lane maps before code, collision inventory before patching, data-provenance manifests, fixed-dimension transparent SVG/PDF/PNG plus white-preview PNG, editable SVG text, and explicit `NO DATA — experiment pending` placeholders.
+
+Imported exact prompt/spec artifacts:
+
+| Canonical path | Source clue | Purpose | Status |
+|---|---|---|---|
+| `projects/figure-rendering/prompts/render-jm105-figure5-powershell-euler.md` | `Pasted text (3).txt`, 2026-07-07 JM105 Figure 5 render prompt | Reusable exact contract for rendering Figure 5 from PowerShell + Euler without fake data and with lane/collision/provenance audits | Imported as prompt/spec; not runnable code |
+| `projects/figure-rendering/prompts/redesign-jm105-manuscript-figure-sequence.md` | `Pasted text.txt`, 2026-07-07 manuscript figure-redesign prompt | Reusable exact contract for redesigning the main/supplemental figure sequence around Yves/Nature Aging claim architecture | Imported as prompt/spec; not runnable code |
+
+No complete runnable figure-rendering Python/PowerShell/Euler script source was recovered in this pass, so no renderer code was imported.
 
 ## Priority code to recover
 
