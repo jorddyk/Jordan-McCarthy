@@ -65,6 +65,7 @@ docs/
 | JM105 manuscript figures | `projects/jm105-intronsaurus/figures/` | `render-figure-2-total-rna-intron-module.py` |
 | JM105 transformation protocol RNA-seq | `projects/jm105-intronsaurus/transformation-protocol-rnaseq/` | `build-relative-transcript-abundance-excel.py` |
 | JM134 starvation-switch comparison | `projects/jm105-intronsaurus/jm134-starvation-switch/` | `jm134-matched-splicing-index.py` |
+| Intronsaurus browser helpers | `projects/jm105-intronsaurus/intronsaurus-browser/` | `upload-submit-intronsaurus-explore-restored-data-fix-v3i.ps1` |
 | Figure mockups / Nature Aging layouts | `projects/figure-rendering/nature-aging-mockups/` | `render-main-figure-layouts.py` |
 | Figure prompt/spec artifacts | `projects/figure-rendering/prompts/` | `render-jm105-figure5-powershell-euler.md` |
 | ImageJ/Fiji aging-chip macros | `projects/imagej-fiji-aging-chips/macros/` | `jm128-split-nd2-positions-bioformats.ijm` |
@@ -82,7 +83,7 @@ docs/
 5. If an experiment has not been done, outputs must clearly say `NO DATA`.
 6. Distinguish real data, simulated toy data, and `NO DATA` placeholders.
 7. Do not commit raw FASTQ, BAM, SAM, CRAM, BAI, bigWig, archives, SLURM logs, scratch folders, cache folders, temporary renders, or Euler output clutter.
-8. Do not commit duplicate files named like `final.py`, `final_final.py`, `test.py`, `newplot.py`, `v2_fixed.py`, or `chatgpt_version.py`.
+8. Do not commit duplicate files named like `final.py`, `final_final.py`, `test.py`, `newplot.py`, or `v2_fixed.py`.
 9. Do not commit truncated code. A code file is canonical only when the complete source is available and runnable.
 10. Prompt/spec artifacts may be saved when they are exact reusable workflow assets, but must be marked as non-runnable.
 
@@ -90,7 +91,7 @@ docs/
 
 ### JM105 / Intronsaurus
 
-Status: active project context. Canonical JM105 analysis and transformation helper scripts have been imported in prior backfill work; many older Intronsaurus/JM101 scripts remain source-recovery targets.
+Status: active project context. Canonical JM105 analysis and transformation helper scripts have been imported in prior backfill work; Intronsaurus browser helpers for the vNext3I Explore repair were imported in the current pass.
 
 Known constraints:
 
@@ -110,6 +111,10 @@ Known constraints:
 | `projects/jm105-intronsaurus/transformation-protocol-rnaseq/transformation-protocol-samples.tsv` | Sample manifest for JM62-JM73. | Imported; no raw reads. |
 | `projects/jm105-intronsaurus/transformation-protocol-rnaseq/run-transformation-expression.sbatch` | Slurm wrapper for transformation-protocol expression workflow. | Imported; real workflow. |
 | `projects/jm105-intronsaurus/transformation-protocol-rnaseq/check-transformation-job.ps1` | Windows helper for Euler job/log checks. | Imported; administrative helper. |
+| `projects/jm105-intronsaurus/intronsaurus-browser/intronsaurus-explore-restored-data-fix-v3i.sbatch` | Slurm wrapper for vNext3I, which restores original total/rRNA-depleted Explore graphs and adds poly-A views. | Imported exact helper source; requires full Python builder and patch-chain dependencies on Euler. |
+| `projects/jm105-intronsaurus/intronsaurus-browser/upload-submit-intronsaurus-explore-restored-data-fix-v3i.ps1` | Uploads vNext3I bundle and submits the Euler build job. | Imported exact helper source. |
+| `projects/jm105-intronsaurus/intronsaurus-browser/retrieve-intronsaurus-explore-restored-data-fix-v3i.ps1` | Retrieves and opens the vNext3I HTML archive from Euler. | Imported exact helper source. |
+| `projects/jm105-intronsaurus/intronsaurus-browser/check-intronsaurus-explore-restored-data-fix-v3i-status.sh` | Checks Slurm status and logs for vNext3I. | Imported exact helper source. |
 
 #### Imported JM105 scientific/context documents
 
@@ -150,7 +155,7 @@ scripts/28_make_synopsis_aligned_all_intron_RNAseq_plots.py
 scripts/29_old_cell_leaky_intron_determinants.py original SVG-rich Euler draft
 ```
 
-Other JM105 source-recovery targets retained in `docs/legacy-code-backfill.md`: JM133 weak-5SS/Mud1 source, Figure 2 candidate-gate script, Intronsaurus vNext3AH fix10 archive, JM101/JM105 integration, STAR/sbatch, Rsubread step 2/3, IRFinder drafts, and Intronsaurus reader bundles.
+Other JM105 source-recovery targets retained in `docs/legacy-code-backfill.md`: JM133 weak-5SS/Mud1 source, Figure 2 candidate-gate script, Intronsaurus vNext3I Python builder and patch chain, JM101/JM105 integration, STAR/sbatch, Rsubread step 2/3, IRFinder drafts, and Intronsaurus reader bundles.
 
 ### Figure rendering / manuscript mockups
 
@@ -252,9 +257,10 @@ A good daily handoff should say:
 - Imported transformation-protocol helper files in an earlier backfill pass: `resolve-fastq-files.py`, `transformation-protocol-samples.tsv`, `run-transformation-expression.sbatch`, and `check-transformation-job.ps1`.
 - Imported exact prompt/spec artifacts for Figure 5 rendering, manuscript figure-sequence redesign, and legacy-code backfill workflow.
 - Imported `projects/jm105-intronsaurus/docs/what-data-shows-summary.md` as a scientific interpretation guardrail, not code.
-- Updated `projects/README.md`, `projects/jm105-intronsaurus/README.md`, `projects/figure-rendering/README.md`, `projects/personal-intelligence-agency/README.md`, figure-rendering legacy docs, and this wiki across the 2026-07-08 backfill passes.
+- Imported Intronsaurus vNext3I helper scripts for upload/submit, Slurm run, retrieval, and status checking; full large Python builder remains a documented recovery/import target.
+- Updated `projects/README.md`, `projects/jm105-intronsaurus/README.md`, `projects/jm105-intronsaurus/intronsaurus-browser/README.md`, `projects/figure-rendering/README.md`, `projects/personal-intelligence-agency/README.md`, figure-rendering legacy docs, and this wiki across the 2026-07-08 backfill passes.
 - Binary/generated artifacts deliberately not committed: PNG/PDF/SVG renders, xlsx templates/results, tarballs, docx/pptx manuscript artifacts, raw sequencing/microscopy data.
-- Full exact source not yet recovered/imported for ImageJ/Fiji macros, language-learning HTML apps, Intronsaurus reader bundles, and older JM101/Rsubread/STAR scripts.
+- Full exact source not yet imported for ImageJ/Fiji macros, language-learning HTML apps, some Intronsaurus reader bundles/builders, and older JM101/Rsubread/STAR scripts.
 
 ## Open risks / self-counterintelligence
 
