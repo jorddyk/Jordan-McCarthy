@@ -17,5 +17,6 @@ Daily handoffs may cite these files, but the code itself should live here, not i
 |---|---|---|
 | `jm105-intronsaurus/` | JM105 / Intronsaurus analysis | RNA-seq, intron retention, leakage, NMD, Mud1/CR, manuscript-support code |
 | `figure-rendering/` | Figure rendering and manuscript mockups | Figure-layout scripts, plotting utilities, Nature Aging-style mockups |
+| `imagej-fiji-aging-chips/` | ImageJ / Fiji aging-chip macros | Fiji/ImageJ/Groovy macros for aging-chip, MitoSOX, ROS, BF/FL, ND2 splitting, stitching, and quantitative microscopy workflows |
 | `language-learning/` | Language-learning apps | German/TELC active-recall apps and study tools |
 | `personal-intelligence-agency/` | Personal intelligence agency | Scheduled-task prompts, scoring rubrics, and automation support |
