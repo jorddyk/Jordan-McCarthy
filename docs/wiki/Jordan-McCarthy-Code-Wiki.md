@@ -172,6 +172,8 @@ Known constraints:
 - Avoid text overlap, spillover, irrelevant panels, and unused whitespace.
 - SVG text remains editable text; fixed canvas exports should not use `bbox_inches="tight"`.
 - For JM105 Figure 2-related work, do not introduce poly-A / P-versus-T / mRNA-like logic unless Jordan explicitly restores it.
+- Resolve visual problems by lane geometry and exact collision inventories, not by silently deleting information.
+- Final transparent SVG/PDF/PNG outputs must remain transparent unless explicitly requested; white-preview PNGs are separate review assets.
 
 #### Imported runnable source
 
@@ -185,6 +187,8 @@ Known constraints:
 |---|---|---|
 | `projects/figure-rendering/prompts/render-jm105-figure5-powershell-euler.md` | Exact Figure 5 rendering contract: PowerShell + Euler, lane map, collision inventory, provenance manifest, fixed-canvas SVG/PDF/PNG/white-preview PNG, and `NO DATA — experiment pending` rules. | Imported exact prompt/spec; not runnable code. |
 | `projects/figure-rendering/prompts/redesign-jm105-manuscript-figure-sequence.md` | Exact Nature Aging / Yves-compatible figure-sequence redesign prompt with input gate, confidence tags, panel inventory, claim architecture, and execution checklist. | Imported exact prompt/spec; not runnable code. |
+| `projects/figure-rendering/prompts/figure-panel-generation-lane-audit-contract.md` | Exact Figure 2 Panel F postmortem-derived lane/audit contract covering biological purpose, data transformations, lane maps, collision inventories, transparent outputs, editable SVG text, footer/descriptor axes, and semantic visual QA. | Imported exact prompt/spec; not runnable code. |
+| `projects/figure-rendering/prompts/figure-render-artifact-package-workflow.md` | Exact workflow prompt for one downloadable ZIP plus one PowerShell runner that uploads/runs on Euler and retrieves figure outputs under strict data-integrity mode. | Imported exact prompt/spec; not runnable code. |
 
 #### Runnable source still needing recovery
 
@@ -194,6 +198,7 @@ projects/figure-rendering/nature-aging-mockups/score-figure-story-architecture.p
 projects/figure-rendering/panel-renderers/render-no-data-placeholder.py
 projects/figure-rendering/nature-aging-mockups/figure-5-layout-renderer.py
 projects/figure-rendering/panel-renderers/avoid-label-overlap-audit.py
+projects/figure-rendering/panel-renderers/render-figure2-panel-f-mud1-dependence.py
 ```
 
 ### ImageJ/Fiji aging-chip macros
@@ -270,10 +275,10 @@ A good daily handoff should say:
 - GitHub permissions: admin/push available through connector.
 - Imported `projects/jm105-intronsaurus/analysis/jm105-old-cell-leaky-intron-determinants.py` in an earlier backfill pass.
 - Imported transformation-protocol helper files in an earlier backfill pass: `resolve-fastq-files.py`, `transformation-protocol-samples.tsv`, `run-transformation-expression.sbatch`, and `check-transformation-job.ps1`.
-- Imported exact prompt/spec artifacts for Figure 5 rendering, manuscript figure-sequence redesign, legacy-code backfill workflow, and all five active personal-intelligence scheduled tasks.
+- Imported exact prompt/spec artifacts for Figure 5 rendering, manuscript figure-sequence redesign, Figure 2-style lane/audit panel generation, figure ZIP+PowerShell artifact packaging, legacy-code backfill workflow, and all five active personal-intelligence scheduled tasks.
 - Imported `projects/figure-rendering/panel-renderers/render-figure1ef-total-rrna-print.ps1` as the first canonical runnable figure-panel renderer.
 - Imported `projects/jm105-intronsaurus/docs/what-data-shows-summary.md` as a scientific interpretation guardrail, not code.
 - Imported Intronsaurus vNext3I helper scripts for upload/submit, Slurm run, retrieval, and status checking; full large Python builder remains a documented recovery/import target.
 - Updated `projects/README.md`, `projects/jm105-intronsaurus/README.md`, `projects/jm105-intronsaurus/intronsaurus-browser/README.md`, `projects/figure-rendering/README.md`, `projects/figure-rendering/panel-renderers/README.md`, `projects/figure-rendering/docs/legacy-code-backfill.md`, `projects/personal-intelligence-agency/README.md`, figure-rendering legacy docs, personal-intelligence legacy docs, and this wiki across the 2026-07-08 backfill passes.
 - Binary/generated artifacts deliberately not committed: PNG/PDF/SVG renders, xlsx templates/results, tarballs, docx/pptx manuscript artifacts, raw sequencing/microscopy data.
-- Full exact source not yet imported for ImageJ/Fiji macros, language-learning HTML apps, some Intronsaurus reader bundles/builders, and older JM101/Rsubread/STAR scripts.
+- Full exact source not yet imported for ImageJ/Fiji macros, language-learning HTML apps, some Intronsaurus reader bundles/builders, Figure 2F final renderer complete script, and older JM101/Rsubread/STAR scripts.
