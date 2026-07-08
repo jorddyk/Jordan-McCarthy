@@ -2,7 +2,7 @@
 
 Human goal: preserve canonical code supporting Jordan's JM105 RNA-seq, intron retention, NMD-hidden leakage, Mud1/CR, aging, and manuscript figure workflows.
 
-This project is for analysis code and reusable figure-generation code, not raw sequencing data.
+This project is for analysis code and reusable figure-generation/browser code, not raw sequencing data.
 
 ## Intended structure
 
@@ -21,7 +21,7 @@ projects/jm105-intronsaurus/
   figure2-candidate-gate/
     Total/rRNA-depleted Figure 2 candidate-gate analysis.
   intronsaurus-browser/
-    Intronsaurus browser/export code.
+    Intronsaurus browser/export code and Windows/Euler helpers.
   metadata/
     Small, human-readable sample maps or schema documents only. No raw sequencing files.
   docs/
@@ -48,6 +48,10 @@ projects/jm105-intronsaurus/
 | `transformation-protocol-rnaseq/transformation-protocol-samples.tsv` | imported in legacy backfill | Sample manifest for JM62-JM73 transformation-protocol subset. | Real sample metadata; no raw reads. |
 | `transformation-protocol-rnaseq/run-transformation-expression.sbatch` | imported in legacy backfill | Slurm wrapper for transformation-protocol expression workflow. | Real workflow; no fake biological data. |
 | `transformation-protocol-rnaseq/check-transformation-job.ps1` | imported in legacy backfill | Windows helper to inspect Euler Slurm status and logs. | Administrative helper; no biological data modified. |
+| `intronsaurus-browser/run-integrate-sun-matched-rna-protein-gene-stories.sbatch` | imported in this pass | Slurm wrapper for Intronsaurus vNext3Y single-entry Gene Stories with matched JM105 RNA and Sun protein-abundance groups. | Real JM105/Sun workflow; no raw data committed. |
+| `intronsaurus-browser/upload-submit-intronsaurus-matched-rna-protein-gene-stories.ps1` | imported in this pass | Windows helper to upload and submit the vNext3Y build to Euler. | Administrative helper; no raw data committed. |
+| `intronsaurus-browser/retrieve-intronsaurus-matched-rna-protein-gene-stories.ps1` | imported in this pass | Windows helper to retrieve vNext3Y HTML, validation, tables, and archive from Euler. | Administrative helper; no raw data committed. |
+| `intronsaurus-browser/check-intronsaurus-matched-rna-protein-gene-stories.sh` | imported in this pass | Safe Euler checker for vNext3Y Slurm status/logs. | Administrative helper; no raw data committed. |
 
 ## Backfilled scientific/context documents
 
@@ -57,4 +61,4 @@ projects/jm105-intronsaurus/
 
 ## Canonical code still targeted for recovery
 
-See `docs/legacy-code-backfill.md` for exact historical filenames and source clues. Highest-priority unrecovered targets include the remaining JM105 transformation-protocol builder/downloader scripts, JM134 beta-binomial scripts, JM133 weak-5SS analysis, Figure 2 candidate-gate scripts, JM101/JM105 Intronsaurus integration scripts, STAR/sbatch jobs, Rsubread step 2/3 scripts, IRFinder drafts, and Intronsaurus reader bundles.
+See `docs/legacy-code-backfill.md` for exact historical filenames and source clues. Highest-priority unrecovered targets include the remaining JM105 transformation-protocol builder/downloader scripts, JM134 beta-binomial scripts, JM133 weak-5SS analysis, Figure 2 candidate-gate scripts, JM101/JM105 Intronsaurus integration scripts, STAR/sbatch jobs, Rsubread step 2/3 scripts, IRFinder drafts, and the full text source for the large Intronsaurus vNext3Y Python builder.
