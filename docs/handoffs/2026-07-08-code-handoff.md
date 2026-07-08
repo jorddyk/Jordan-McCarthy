@@ -14,22 +14,21 @@ No PR opened. Safe Markdown updates, exact prompt/spec artifacts, interpretation
 
 ## Project area
 
-Primary: JM105 / Intronsaurus.
+Primary current pass: Personal intelligence agency prompt/spec backfill.
 
-Secondary: figure rendering / Nature Aging mockups; personal intelligence agency prompt management; global code wiki.
+Earlier 2026-07-08 passes: JM105 / Intronsaurus, figure rendering / Nature Aging mockups, global code wiki.
 
 ## Human purpose
 
-Continue the one-time legacy code backfill by importing exact reusable project assets where full text was available and documenting source-recovery targets where only summaries, filenames, partial snippets, or very large builders still need a safer text-source import.
+Continue the one-time legacy code backfill by importing exact reusable project assets where full text was available and documenting source-recovery targets where only summaries, filenames, partial snippets, or large builders still need a safer text-source import.
+
+This current pass specifically moved active scheduled-task prompt logic out of daily/automation-only state and into the project-organized repo under `projects/personal-intelligence-agency/`.
 
 ## Files created/updated
 
-Created in earlier pass:
+Created in earlier passes:
 
 - `projects/jm105-intronsaurus/analysis/jm105-old-cell-leaky-intron-determinants.py`
-
-Created in this pass:
-
 - `projects/figure-rendering/prompts/render-jm105-figure5-powershell-euler.md`
 - `projects/figure-rendering/prompts/redesign-jm105-manuscript-figure-sequence.md`
 - `projects/jm105-intronsaurus/docs/what-data-shows-summary.md`
@@ -39,6 +38,15 @@ Created in this pass:
 - `projects/jm105-intronsaurus/intronsaurus-browser/upload-submit-intronsaurus-matched-rna-protein-gene-stories.ps1`
 - `projects/jm105-intronsaurus/intronsaurus-browser/retrieve-intronsaurus-matched-rna-protein-gene-stories.ps1`
 - `projects/jm105-intronsaurus/intronsaurus-browser/check-intronsaurus-matched-rna-protein-gene-stories.sh`
+
+Created in this pass:
+
+- `projects/personal-intelligence-agency/prompts/code-handoff.md`
+- `projects/personal-intelligence-agency/prompts/strategic-alert-triage.md`
+- `projects/personal-intelligence-agency/prompts/science-preemption-watch.md`
+- `projects/personal-intelligence-agency/prompts/swiss-leverage-radar.md`
+- `projects/personal-intelligence-agency/prompts/weekly-strategic-brief-redteam.md`
+- `projects/personal-intelligence-agency/docs/legacy-code-backfill.md`
 
 Updated across the 2026-07-08 passes:
 
@@ -58,11 +66,12 @@ Updated across the 2026-07-08 passes:
 - Sun workbook `11357_2021_412_MOESM3_ESM.xlsx`; it is an input data workbook, not repo code.
 - Intronsaurus generated HTML and tar.gz outputs.
 - Intermediate Intronsaurus Sun integration versions v3P-v3X; v3Y is the current canonical target.
-- The large Python builder `141_intronsaurus_matched_rna_protein_gene_stories_v3Y.py` was recovered exactly in the active sandbox but still needs a full text-source import. It was not reconstructed or partially committed.
+- The large Python builder `141_intronsaurus_matched_rna_protein_gene_stories_v3Y.py` was recovered exactly in the active sandbox in an earlier pass but still needs a full text-source import. It was not reconstructed or partially committed.
 - ImageJ/Fiji/Groovy macros whose exact complete source was not recovered.
 - Language-learning HTML apps whose full `<!DOCTYPE html>` to `</html>` source was not recovered.
 - Reconstructed versions of older Rsubread/STAR/IRFinder scripts where only provenance summaries were found.
 - Runnable Figure 5 renderer code, because the available source was an exact prompt/spec, not the generated PowerShell/Bash/Python itself.
+- Raw Gmail/calendar contents and transient personal-intelligence task outputs. Only reusable prompt/spec logic was imported.
 
 ## Scientific/data status
 
@@ -71,6 +80,8 @@ The imported JM105 determinant script uses real JM105 Euler-side tables as input
 The Intronsaurus vNext3Y helpers support a real-data build from JM105 total/rRNA-depleted Intronsaurus inputs and Sun et al. 2021 processed proteomics. The workflow keeps RNA/host transcript abundance distinct from protein abundance, maps Sun systematic ORF IDs to common gene names, and does not call caloric restriction starvation.
 
 The imported Figure 5 prompt/spec and interpretation Markdown files are not biological data and are not runnable code. They preserve exact workflow/scientific constraints, including: no fake data; `NO DATA — experiment pending` for missing experiments; Figure 2 total/rRNA-depleted-only unless explicitly changed; no unsupported poly-A/P-versus-T/mRNA-like/P−T additions; RNA abundance distinguished from protein abundance; CR not called starvation.
+
+The personal intelligence files imported in this pass are exact prompt/spec artifacts from active scheduled tasks. They contain no raw private inbox/calendar dumps and no generated daily intelligence output.
 
 ## Implementation notes
 
@@ -91,6 +102,8 @@ Young-cell CR: young CR vs young 2%
 JM105 regulatory tests
 ```
 
+The personal-intelligence prompt files were recovered from active automations. The recovered metadata showed `notifications_enabled: false` and `email_enabled: false`; the repo files preserve exact task logic, but operational email delivery settings must be checked in the ChatGPT automation UI when delivery matters.
+
 GitHub connector status:
 
 - Repository resolved: `jorddyk/Jordan-McCarthy`
@@ -110,11 +123,17 @@ projects/figure-rendering/prompts/render-jm105-figure5-powershell-euler.md
 projects/figure-rendering/prompts/redesign-jm105-manuscript-figure-sequence.md
 projects/jm105-intronsaurus/docs/what-data-shows-summary.md
 projects/personal-intelligence-agency/prompts/legacy-code-backfill-github-import.md
+projects/personal-intelligence-agency/prompts/code-handoff.md
+projects/personal-intelligence-agency/prompts/strategic-alert-triage.md
+projects/personal-intelligence-agency/prompts/science-preemption-watch.md
+projects/personal-intelligence-agency/prompts/swiss-leverage-radar.md
+projects/personal-intelligence-agency/prompts/weekly-strategic-brief-redteam.md
+projects/personal-intelligence-agency/docs/legacy-code-backfill.md
 ```
 
 ## Legacy-backfill progress
 
-Recovered and committed one canonical JM105 analysis script in an earlier pass. In this pass, recovered and committed exact prompt/spec artifacts, a scientific interpretation summary, and vNext3Y Intronsaurus operational helpers. The full large vNext3Y Python builder source is recovered locally but remains a top source-import target; it was not reconstructed.
+Recovered and committed one canonical JM105 analysis script in an earlier pass. Subsequent passes recovered and committed exact prompt/spec artifacts, a scientific interpretation summary, vNext3Y Intronsaurus operational helpers, and now the exact active personal-intelligence scheduled-task prompts.
 
 Updated the recovery queues with specific next targets:
 
@@ -136,10 +155,10 @@ JM101 IRFinder draft workflow
 Intronsaurus vNext3 / vNext3AE reader bundles
 JM128/JM129 Fiji/Groovy microscopy scripts
 language-learning active-recall HTML apps
-personal intelligence agency prompts/rubrics beyond the legacy-code-backfill prompt
 runnable Figure 5 PowerShell/Bash/Python renderer source
 JM134 beta-binomial / final layout repair scripts
 JM133 weak-5SS/Mud1 source from Euler
+personal intelligence exact scoring rubric and report templates
 ```
 
 ## Code-focused self-counterintelligence
