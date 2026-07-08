@@ -4,7 +4,7 @@ _Last updated: 2026-07-08 Europe/Zurich_
 
 ## Repository purpose
 
-This private repository is the canonical code vault for Jordan McCarthy's useful code, analysis scripts, figure-rendering workflows, web apps, and reproducibility support.
+This private repository is the canonical code vault for Jordan McCarthy's useful code, analysis scripts, figure-rendering workflows, web apps, prompts, and reproducibility support.
 
 Canonical repository: `jorddyk/Jordan-McCarthy`
 
@@ -36,6 +36,7 @@ projects/
     nature-aging-mockups/
     panel-renderers/
     templates/
+    prompts/
   imagej-fiji-aging-chips/
     README.md
     macros/
@@ -65,6 +66,7 @@ docs/
 | JM105 transformation protocol RNA-seq | `projects/jm105-intronsaurus/transformation-protocol-rnaseq/` | `build-relative-transcript-abundance-excel.py` |
 | JM134 starvation-switch comparison | `projects/jm105-intronsaurus/jm134-starvation-switch/` | `jm134-matched-splicing-index.py` |
 | Figure mockups / Nature Aging layouts | `projects/figure-rendering/nature-aging-mockups/` | `render-main-figure-layouts.py` |
+| Figure prompt/spec artifacts | `projects/figure-rendering/prompts/` | `render-jm105-figure5-powershell-euler.md` |
 | ImageJ/Fiji aging-chip macros | `projects/imagej-fiji-aging-chips/macros/` | `jm128-split-nd2-positions-bioformats.ijm` |
 | TELC/German study apps | `projects/language-learning/active-recall-apps/` | `telc-c1-essay-skeleton-active-recall.html` |
 | Personal intelligence automations | `projects/personal-intelligence-agency/prompts/` | `strategic-alert-triage.md` |
@@ -82,12 +84,13 @@ docs/
 7. Do not commit raw FASTQ, BAM, SAM, CRAM, BAI, bigWig, archives, SLURM logs, scratch folders, cache folders, temporary renders, or Euler output clutter.
 8. Do not commit duplicate files named like `final.py`, `final_final.py`, `test.py`, `newplot.py`, `v2_fixed.py`, or `chatgpt_version.py`.
 9. Do not commit truncated code. A code file is canonical only when the complete source is available and runnable.
+10. Prompt/spec artifacts may be saved when they are exact reusable workflow assets, but must be marked as non-runnable.
 
 ## Current project areas
 
 ### JM105 / Intronsaurus
 
-Status: active project context. One canonical JM105 analysis script was imported in the legacy backfill pass; many older Intronsaurus/JM101 scripts remain source-recovery targets.
+Status: active project context. Canonical JM105 analysis and transformation helper scripts have been imported in prior backfill work; many older Intronsaurus/JM101 scripts remain source-recovery targets.
 
 Known constraints:
 
@@ -103,6 +106,16 @@ Known constraints:
 | Path | Purpose | Status |
 |---|---|---|
 | `projects/jm105-intronsaurus/analysis/jm105-old-cell-leaky-intron-determinants.py` | Classifies old-selective NMD-revealed introns and tests functional module / splice-architecture determinants. | Imported; uses real JM105 tables on Euler; no fake biological data. |
+| `projects/jm105-intronsaurus/transformation-protocol-rnaseq/resolve-fastq-files.py` | Resolves FASTQ files for transformation-protocol samples. | Imported; real workflow metadata. |
+| `projects/jm105-intronsaurus/transformation-protocol-rnaseq/transformation-protocol-samples.tsv` | Sample manifest for JM62-JM73. | Imported; no raw reads. |
+| `projects/jm105-intronsaurus/transformation-protocol-rnaseq/run-transformation-expression.sbatch` | Slurm wrapper for transformation-protocol expression workflow. | Imported; real workflow. |
+| `projects/jm105-intronsaurus/transformation-protocol-rnaseq/check-transformation-job.ps1` | Windows helper for Euler job/log checks. | Imported; administrative helper. |
+
+#### Imported JM105 scientific/context documents
+
+| Path | Purpose | Status |
+|---|---|---|
+| `projects/jm105-intronsaurus/docs/what-data-shows-summary.md` | Preserves the current user-provided interpretation of CR/Mud1/NMD-hidden leakage, Mud1-GFP, intron architecture, RP/non-RP stratification, and Parenteau comparison logic. | Imported exact summary; not runnable code. |
 
 #### Recovered source targets
 
@@ -124,11 +137,6 @@ JM134 source clues:
 /mnt/data/JM134_submit_matched_SI.sh
 /mnt/data/JM134_rerender_no_overlap.py
 /mnt/data/81_JM134_symlog_clarity_and_notebook.py
-```
-
-JM134 chat-history source targets still needing full text import:
-
-```text
 scripts/79_JM134_audit_and_beta_binomial.py
 scripts/80_JM134_apply_beta_binomial_and_rerender.py
 scripts/83_JM134_final_guide_repair.py
@@ -142,9 +150,11 @@ scripts/28_make_synopsis_aligned_all_intron_RNAseq_plots.py
 scripts/29_old_cell_leaky_intron_determinants.py original SVG-rich Euler draft
 ```
 
+Other JM105 source-recovery targets retained in `docs/legacy-code-backfill.md`: JM133 weak-5SS/Mud1 source, Figure 2 candidate-gate script, Intronsaurus vNext3AH fix10 archive, JM101/JM105 integration, STAR/sbatch, Rsubread step 2/3, IRFinder drafts, and Intronsaurus reader bundles.
+
 ### Figure rendering / manuscript mockups
 
-Status: active project context; no canonical runnable renderer has yet been imported.
+Status: active project context. No canonical runnable renderer has yet been imported. Exact reusable prompt/spec artifacts have been imported.
 
 Known constraints:
 
@@ -154,6 +164,23 @@ Known constraints:
 - Use existing figure panels where possible; clearly label newly required panels.
 - Avoid text overlap, spillover, irrelevant panels, and unused whitespace.
 - SVG text remains editable text; fixed canvas exports should not use `bbox_inches="tight"`.
+
+#### Imported prompt/spec artifacts
+
+| Path | Purpose | Status |
+|---|---|---|
+| `projects/figure-rendering/prompts/render-jm105-figure5-powershell-euler.md` | Exact Figure 5 rendering contract: PowerShell + Euler, lane map, collision inventory, provenance manifest, fixed-canvas SVG/PDF/PNG/white-preview PNG, and `NO DATA — experiment pending` rules. | Imported exact prompt/spec; not runnable code. |
+| `projects/figure-rendering/prompts/redesign-jm105-manuscript-figure-sequence.md` | Exact Nature Aging / Yves-compatible figure-sequence redesign prompt with input gate, confidence tags, panel inventory, claim architecture, and execution checklist. | Imported exact prompt/spec; not runnable code. |
+
+#### Runnable source still needing recovery
+
+```text
+projects/figure-rendering/nature-aging-mockups/render-main-figure-layouts.py
+projects/figure-rendering/nature-aging-mockups/score-figure-story-architecture.py
+projects/figure-rendering/panel-renderers/render-no-data-placeholder.py
+projects/figure-rendering/nature-aging-mockups/figure-5-layout-renderer.py
+projects/figure-rendering/panel-renderers/avoid-label-overlap-audit.py
+```
 
 ### ImageJ/Fiji aging-chip macros
 
@@ -189,7 +216,13 @@ Import rule: do not commit partial/truncated HTML. A web app is canonical only w
 
 Status: active scheduled-task system. Reusable prompts and rubrics should be stored under `projects/personal-intelligence-agency/`, not buried in daily handoff logs.
 
-Current source targets:
+#### Imported prompt/spec artifacts
+
+| Path | Purpose | Status |
+|---|---|---|
+| `projects/personal-intelligence-agency/prompts/legacy-code-backfill-github-import.md` | Exact prompt for recovering old useful code from project history and committing it into `jorddyk/Jordan-McCarthy`. | Imported exact prompt/spec; not runnable code. |
+
+#### Current source targets
 
 - Strategic alert triage prompt.
 - Science preemption watch prompt.
@@ -215,13 +248,16 @@ A good daily handoff should say:
 - Repository confirmed: `jorddyk/Jordan-McCarthy`.
 - Repository visibility: private.
 - GitHub permissions: admin/push available through connector.
-- Imported `projects/jm105-intronsaurus/analysis/jm105-old-cell-leaky-intron-determinants.py`.
-- Updated `projects/README.md`, `projects/jm105-intronsaurus/README.md`, `projects/jm105-intronsaurus/docs/legacy-code-backfill.md`, `projects/figure-rendering/docs/legacy-code-backfill.md`, and this wiki.
+- Imported `projects/jm105-intronsaurus/analysis/jm105-old-cell-leaky-intron-determinants.py` in an earlier backfill pass.
+- Imported transformation-protocol helper files in an earlier backfill pass: `resolve-fastq-files.py`, `transformation-protocol-samples.tsv`, `run-transformation-expression.sbatch`, and `check-transformation-job.ps1`.
+- Imported exact prompt/spec artifacts for Figure 5 rendering, manuscript figure-sequence redesign, and legacy-code backfill workflow.
+- Imported `projects/jm105-intronsaurus/docs/what-data-shows-summary.md` as a scientific interpretation guardrail, not code.
+- Updated `projects/README.md`, `projects/jm105-intronsaurus/README.md`, `projects/figure-rendering/README.md`, `projects/personal-intelligence-agency/README.md`, figure-rendering legacy docs, and this wiki across the 2026-07-08 backfill passes.
 - Binary/generated artifacts deliberately not committed: PNG/PDF/SVG renders, xlsx templates/results, tarballs, docx/pptx manuscript artifacts, raw sequencing/microscopy data.
 - Full exact source not yet recovered/imported for ImageJ/Fiji macros, language-learning HTML apps, Intronsaurus reader bundles, and older JM101/Rsubread/STAR scripts.
 
 ## Open risks / self-counterintelligence
 
-Current code-focused internal risk: the repo can become a graveyard of daily logs instead of a useful human codebase.
+Current code-focused internal risk: the repo can become a graveyard of daily logs and prompt artifacts instead of a useful human codebase.
 
-Containment action: daily handoffs must update project folders first and handoff logs second.
+Containment action: daily handoffs must update project folders first and handoff logs second; prompt/spec artifacts must be clearly marked non-runnable; missing exact source must stay in recovery docs rather than being reconstructed.
