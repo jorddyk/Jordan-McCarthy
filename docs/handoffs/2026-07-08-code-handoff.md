@@ -10,7 +10,7 @@
 
 ## PR title
 
-No PR opened. Safe Markdown updates, exact prompt/spec artifacts, interpretation summary, and previously recovered small canonical scripts were committed directly to `main`.
+No PR opened. Safe Markdown updates, exact prompt/spec artifacts, interpretation summary, and small canonical helper scripts were committed directly to `main`.
 
 ## Project area
 
@@ -20,7 +20,7 @@ Secondary: figure rendering / Nature Aging mockups; personal intelligence agency
 
 ## Human purpose
 
-Continue the one-time legacy code backfill by importing exact reusable project assets where full text was available and documenting source-recovery targets where only summaries, filenames, or partial snippets were found.
+Continue the one-time legacy code backfill by importing exact reusable project assets where full text was available and documenting source-recovery targets where only summaries, filenames, partial snippets, or very large builders still need a safer text-source import.
 
 ## Files created/updated
 
@@ -34,6 +34,11 @@ Created in this pass:
 - `projects/figure-rendering/prompts/redesign-jm105-manuscript-figure-sequence.md`
 - `projects/jm105-intronsaurus/docs/what-data-shows-summary.md`
 - `projects/personal-intelligence-agency/prompts/legacy-code-backfill-github-import.md`
+- `projects/jm105-intronsaurus/intronsaurus-browser/README.md`
+- `projects/jm105-intronsaurus/intronsaurus-browser/run-integrate-sun-matched-rna-protein-gene-stories.sbatch`
+- `projects/jm105-intronsaurus/intronsaurus-browser/upload-submit-intronsaurus-matched-rna-protein-gene-stories.ps1`
+- `projects/jm105-intronsaurus/intronsaurus-browser/retrieve-intronsaurus-matched-rna-protein-gene-stories.ps1`
+- `projects/jm105-intronsaurus/intronsaurus-browser/check-intronsaurus-matched-rna-protein-gene-stories.sh`
 
 Updated across the 2026-07-08 passes:
 
@@ -50,9 +55,12 @@ Updated across the 2026-07-08 passes:
 ## Files deliberately not committed
 
 - Raw FASTQ, BAM, SAM, CRAM, BAI, bigWig, ND2, TIFF, archives, SLURM logs, scratch folders, generated plots, Excel workbooks, PowerPoint/Word manuscript artifacts, and output tarballs.
+- Sun workbook `11357_2021_412_MOESM3_ESM.xlsx`; it is an input data workbook, not repo code.
+- Intronsaurus generated HTML and tar.gz outputs.
+- Intermediate Intronsaurus Sun integration versions v3P-v3X; v3Y is the current canonical target.
+- The large Python builder `141_intronsaurus_matched_rna_protein_gene_stories_v3Y.py` was recovered exactly in the active sandbox but still needs a full text-source import. It was not reconstructed or partially committed.
 - ImageJ/Fiji/Groovy macros whose exact complete source was not recovered.
 - Language-learning HTML apps whose full `<!DOCTYPE html>` to `</html>` source was not recovered.
-- Intronsaurus reader bundles where only archive names/source clues were available.
 - Reconstructed versions of older Rsubread/STAR/IRFinder scripts where only provenance summaries were found.
 - Runnable Figure 5 renderer code, because the available source was an exact prompt/spec, not the generated PowerShell/Bash/Python itself.
 
@@ -60,7 +68,9 @@ Updated across the 2026-07-08 passes:
 
 The imported JM105 determinant script uses real JM105 Euler-side tables as inputs. It does not generate fake biological data. It preserves the working interpretation that RNA-seq currently supports selective NMD-revealed intron leakage, not a global all-intron burden claim.
 
-The newly imported prompt/spec and interpretation Markdown files are not biological data and are not runnable code. They preserve exact workflow/scientific constraints, including: no fake data; `NO DATA — experiment pending` for missing experiments; Figure 2 total/rRNA-depleted-only unless explicitly changed; no unsupported poly-A/P-versus-T/mRNA-like/P−T additions; RNA abundance distinguished from protein abundance; CR not called starvation.
+The Intronsaurus vNext3Y helpers support a real-data build from JM105 total/rRNA-depleted Intronsaurus inputs and Sun et al. 2021 processed proteomics. The workflow keeps RNA/host transcript abundance distinct from protein abundance, maps Sun systematic ORF IDs to common gene names, and does not call caloric restriction starvation.
+
+The imported Figure 5 prompt/spec and interpretation Markdown files are not biological data and are not runnable code. They preserve exact workflow/scientific constraints, including: no fake data; `NO DATA — experiment pending` for missing experiments; Figure 2 total/rRNA-depleted-only unless explicitly changed; no unsupported poly-A/P-versus-T/mRNA-like/P−T additions; RNA abundance distinguished from protein abundance; CR not called starvation.
 
 ## Implementation notes
 
@@ -72,9 +82,14 @@ Young detector = Young upf1Δ - Young WT
 Old-selective leakage = Old detector - Young detector
 ```
 
-It then compares functional modules and splice-architecture features including 5′ splice site, branchpoint, branchpoint-to-3′SS spacing, 3′ splice site, and polypyrimidine-tract features.
+The vNext3Y Intronsaurus helper set points at the recovered large builder and supports a single-entry Gene Stories design with comparison-matched groups:
 
-The imported Figure 5 render prompt preserves the required rendering contract: lane map before code, collision inventory before patching, data-provenance manifest, fixed 13.333333 × 7.5 inch canvas, transparent SVG/PDF/PNG plus white-preview PNG, editable SVG text, and no `bbox_inches="tight"`.
+```text
+Aging: old vs young
+Old-cell CR: old CR vs old 2%
+Young-cell CR: young CR vs young 2%
+JM105 regulatory tests
+```
 
 GitHub connector status:
 
@@ -87,6 +102,10 @@ GitHub connector status:
 
 ```text
 projects/jm105-intronsaurus/analysis/jm105-old-cell-leaky-intron-determinants.py
+projects/jm105-intronsaurus/intronsaurus-browser/run-integrate-sun-matched-rna-protein-gene-stories.sbatch
+projects/jm105-intronsaurus/intronsaurus-browser/upload-submit-intronsaurus-matched-rna-protein-gene-stories.ps1
+projects/jm105-intronsaurus/intronsaurus-browser/retrieve-intronsaurus-matched-rna-protein-gene-stories.ps1
+projects/jm105-intronsaurus/intronsaurus-browser/check-intronsaurus-matched-rna-protein-gene-stories.sh
 projects/figure-rendering/prompts/render-jm105-figure5-powershell-euler.md
 projects/figure-rendering/prompts/redesign-jm105-manuscript-figure-sequence.md
 projects/jm105-intronsaurus/docs/what-data-shows-summary.md
@@ -95,11 +114,12 @@ projects/personal-intelligence-agency/prompts/legacy-code-backfill-github-import
 
 ## Legacy-backfill progress
 
-Recovered and committed one canonical JM105 analysis script in an earlier pass. In this pass, recovered and committed exact prompt/spec artifacts and a scientific interpretation summary, without pretending they are runnable code.
+Recovered and committed one canonical JM105 analysis script in an earlier pass. In this pass, recovered and committed exact prompt/spec artifacts, a scientific interpretation summary, and vNext3Y Intronsaurus operational helpers. The full large vNext3Y Python builder source is recovered locally but remains a top source-import target; it was not reconstructed.
 
 Updated the recovery queues with specific next targets:
 
 ```text
+intronsaurus-browser/integrate-sun-matched-rna-protein-gene-stories.py
 scripts/26_paired_gene_body_normalized_leakage_test.py
 scripts/28_make_synopsis_aligned_all_intron_RNAseq_plots.py
 scripts/29_old_cell_leaky_intron_determinants.py original SVG-rich Euler draft
@@ -109,8 +129,8 @@ Older high-priority unrecovered targets remain:
 
 ```text
 110_JM101_JM105_integrate_intronsaurus.py
-111_JM101_STAR_align_array.sbatch
-112_JM101_integrate_after_STAR.sbatch
+111/113 JM101 STAR align array sbatch
+112/114 JM101 integrate-after-STAR sbatch
 JM101 Rsubread Step 2/3 scripts
 JM101 IRFinder draft workflow
 Intronsaurus vNext3 / vNext3AE reader bundles
