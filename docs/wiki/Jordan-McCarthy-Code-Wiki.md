@@ -93,7 +93,7 @@ docs/
 
 ### JM105 / Intronsaurus
 
-Status: active project context. Canonical JM105 analysis and transformation helper scripts have been imported in prior backfill work; Intronsaurus browser helpers for the vNext3I/vNext3Y operational workflows have been imported in the 2026-07-08 pass.
+Status: active project context. Canonical JM105 analysis and transformation helper scripts have been imported in prior backfill work; Intronsaurus browser helpers for the vNext3I/vNext3Y operational workflows and the exact vNext3AH fix28 Gene Stories source/provenance patch have been imported in the 2026-07-08 pass.
 
 Known constraints:
 
@@ -117,6 +117,7 @@ Known constraints:
 | `projects/jm105-intronsaurus/intronsaurus-browser/upload-submit-intronsaurus-explore-restored-data-fix-v3i.ps1` | Uploads vNext3I bundle and submits the Euler build job. | Imported exact helper source. |
 | `projects/jm105-intronsaurus/intronsaurus-browser/retrieve-intronsaurus-explore-restored-data-fix-v3i.ps1` | Retrieves and opens the vNext3I HTML archive from Euler. | Imported exact helper source. |
 | `projects/jm105-intronsaurus/intronsaurus-browser/check-intronsaurus-explore-restored-data-fix-v3i-status.sh` | Checks Slurm status and logs for vNext3I. | Imported exact helper source. |
+| `projects/jm105-intronsaurus/intronsaurus-browser/patches/vnext3ah-fix28-gene-story-sources-patch.html` | Collapses duplicate Gene Stories evidence labels and adds source/provenance notes for stored RNA/protein values and deterministic log2 calculations. | Imported exact CSS/JavaScript patch layer; UI/provenance only; does not create biological values. |
 
 #### Imported JM105 scientific/context documents
 
@@ -275,10 +276,11 @@ A good daily handoff should say:
 - GitHub permissions: admin/push available through connector.
 - Imported `projects/jm105-intronsaurus/analysis/jm105-old-cell-leaky-intron-determinants.py` in an earlier backfill pass.
 - Imported transformation-protocol helper files in an earlier backfill pass: `resolve-fastq-files.py`, `transformation-protocol-samples.tsv`, `run-transformation-expression.sbatch`, and `check-transformation-job.ps1`.
+- Imported Intronsaurus vNext3I helper scripts for upload/submit, Slurm run, retrieval, and status checking; full large Python builder remains a documented recovery/import target.
+- Imported exact Intronsaurus vNext3AH fix28 Gene Stories patch layer: `projects/jm105-intronsaurus/intronsaurus-browser/patches/vnext3ah-fix28-gene-story-sources-patch.html`.
 - Imported exact prompt/spec artifacts for Figure 5 rendering, manuscript figure-sequence redesign, Figure 2-style lane/audit panel generation, figure ZIP+PowerShell artifact packaging, legacy-code backfill workflow, and all five active personal-intelligence scheduled tasks.
 - Imported `projects/figure-rendering/panel-renderers/render-figure1ef-total-rrna-print.ps1` as the first canonical runnable figure-panel renderer.
 - Imported `projects/jm105-intronsaurus/docs/what-data-shows-summary.md` as a scientific interpretation guardrail, not code.
-- Imported Intronsaurus vNext3I helper scripts for upload/submit, Slurm run, retrieval, and status checking; full large Python builder remains a documented recovery/import target.
-- Updated `projects/README.md`, `projects/jm105-intronsaurus/README.md`, `projects/jm105-intronsaurus/intronsaurus-browser/README.md`, `projects/figure-rendering/README.md`, `projects/figure-rendering/panel-renderers/README.md`, `projects/figure-rendering/docs/legacy-code-backfill.md`, `projects/personal-intelligence-agency/README.md`, figure-rendering legacy docs, personal-intelligence legacy docs, and this wiki across the 2026-07-08 backfill passes.
-- Binary/generated artifacts deliberately not committed: PNG/PDF/SVG renders, xlsx templates/results, tarballs, docx/pptx manuscript artifacts, raw sequencing/microscopy data.
+- Updated `projects/README.md`, `projects/jm105-intronsaurus/README.md`, `projects/jm105-intronsaurus/intronsaurus-browser/README.md`, `projects/jm105-intronsaurus/intronsaurus-browser/patches/README.md`, `projects/figure-rendering/README.md`, `projects/figure-rendering/panel-renderers/README.md`, `projects/figure-rendering/docs/legacy-code-backfill.md`, `projects/personal-intelligence-agency/README.md`, figure-rendering legacy docs, personal-intelligence legacy docs, and this wiki across the 2026-07-08 backfill passes.
+- Binary/generated artifacts deliberately not committed: PNG/PDF/SVG renders, xlsx templates/results, tarballs, generated standalone Intronsaurus HTML, docx/pptx manuscript artifacts, raw sequencing/microscopy data.
 - Full exact source not yet imported for ImageJ/Fiji macros, language-learning HTML apps, some Intronsaurus reader bundles/builders, Figure 2F final renderer complete script, and older JM101/Rsubread/STAR scripts.
