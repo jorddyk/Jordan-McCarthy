@@ -10,84 +10,97 @@
 
 ## PR title
 
-No PR opened. Safe Markdown bootstrap committed directly to `main` because the repository was empty and the change was unambiguous.
+No PR opened. Safe Markdown updates and one small canonical JM105 analysis script were committed directly to `main`.
 
-## Commit message
+## Project area
 
-`Initialize code handoff wiki and current repository policy`
+Primary: JM105 / Intronsaurus.
 
-Actual commits created during this repair:
+Secondary documentation touched: figure rendering and global code wiki.
 
-1. `Initialize Jordan code handoff wiki`
-2. `Add 2026-07-08 code handoff`
+## Human purpose
 
-## Files to create/update
+Begin the one-time legacy code backfill by importing exact usable code where full source was available and documenting source-recovery targets where only summaries, filenames, or partial snippets were found.
+
+## Files created/updated
 
 Created:
 
+- `projects/jm105-intronsaurus/analysis/jm105-old-cell-leaky-intron-determinants.py`
+
+Updated:
+
+- `projects/README.md`
+- `projects/jm105-intronsaurus/README.md`
+- `projects/jm105-intronsaurus/docs/legacy-code-backfill.md`
+- `projects/figure-rendering/docs/legacy-code-backfill.md`
+- `docs/legacy-code-backfill.md`
 - `docs/wiki/Jordan-McCarthy-Code-Wiki.md`
 - `docs/handoffs/2026-07-08-code-handoff.md`
 
-## Files not to commit
+## Files deliberately not committed
 
-Do not commit:
-
-- raw FASTQ, BAM, SAM, CRAM, BAI, bigWig files
-- archives or compressed data dumps
-- SLURM logs, Euler output clutter, scratch folders, cache folders
-- temporary renders or generated exploratory images
-- duplicate scratch scripts such as `final.py`, `final_final.py`, `test.py`, `newplot.py`, `v2_fixed.py`, or `chatgpt_version.py`
-- fake or simulated biological results unless explicitly marked as toy/simulated and kept separate from real analysis
+- Raw FASTQ, BAM, SAM, CRAM, BAI, bigWig, ND2, TIFF, archives, SLURM logs, scratch folders, generated plots, Excel workbooks, PowerPoint/Word manuscript artifacts, and output tarballs.
+- ImageJ/Fiji/Groovy macros whose exact complete source was not recovered.
+- Language-learning HTML apps whose full `<!DOCTYPE html>` to `</html>` source was not recovered.
+- Intronsaurus reader bundles where only archive names/source clues were available.
+- Reconstructed versions of older Rsubread/STAR/IRFinder scripts where only provenance summaries were found.
 
 ## Scientific/data status
 
-No clean canonical runnable analysis script was verified for commit in this run.
-
-Current verified project constraints from available context:
-
-- JM105 / Intronsaurus remains active.
-- Figure 2 should be total/rRNA-depleted only unless Jordan explicitly reverses this.
-- Poly-A data should not be used or shown for Figure 2 unless Jordan explicitly restores it.
-- Experiments not yet done must be marked `NO DATA`.
-- Do not fake biological data.
-- Distinguish raw NMD-off/upf1D retained signal from NMD-hidden off-minus-on signal.
-- Distinguish RNA/host transcript abundance from protein abundance.
+The imported JM105 determinant script uses real JM105 Euler-side tables as inputs. It does not generate fake biological data. It preserves the working interpretation that RNA-seq currently supports selective NMD-revealed intron leakage, not a global all-intron burden claim.
 
 ## Implementation notes
 
-GitHub connector status at repair time:
+The imported script classifies old-selective leaky introns using the detector logic:
+
+```text
+Old detector   = Old upf1Δ - Old WT
+Young detector = Young upf1Δ - Young WT
+Old-selective leakage = Old detector - Young detector
+```
+
+It then compares functional modules and splice-architecture features including 5′ splice site, branchpoint, branchpoint-to-3′SS spacing, 3′ splice site, and polypyrimidine-tract features.
+
+GitHub connector status:
 
 - Repository resolved: `jorddyk/Jordan-McCarthy`
 - Visibility: private
 - Permissions: admin/push available
 - Default branch: `main`
-- Initial repository size: empty
 
-Repair action:
-
-- Bootstrapped the repository with Markdown-only governance and handoff documentation.
-- No code was committed because no clean, verified canonical code was identified in the current run.
-- This avoids preserving intermediate attempts while creating a stable place for future canonical code handoffs.
-
-## Final code
-
-No runnable code committed today.
-
-The canonical output of this run is repository structure and policy:
+## Final code paths
 
 ```text
-jorddyk/Jordan-McCarthy/
-└── docs/
-    ├── handoffs/
-    │   └── 2026-07-08-code-handoff.md
-    └── wiki/
-        └── Jordan-McCarthy-Code-Wiki.md
+projects/jm105-intronsaurus/analysis/jm105-old-cell-leaky-intron-determinants.py
+```
+
+## Legacy-backfill progress
+
+Recovered and committed one canonical JM105 analysis script. Updated the recovery queues with specific next targets:
+
+```text
+scripts/26_paired_gene_body_normalized_leakage_test.py
+scripts/28_make_synopsis_aligned_all_intron_RNAseq_plots.py
+scripts/29_old_cell_leaky_intron_determinants.py original SVG-rich Euler draft
+```
+
+Older high-priority unrecovered targets remain:
+
+```text
+110_JM101_JM105_integrate_intronsaurus.py
+111_JM101_STAR_align_array.sbatch
+112_JM101_integrate_after_STAR.sbatch
+JM101 Rsubread Step 2/3 scripts
+JM101 IRFinder draft workflow
+Intronsaurus vNext3 / vNext3AE reader bundles
+JM128/JM129 Fiji/Groovy microscopy scripts
+language-learning active-recall HTML apps
+personal intelligence agency prompts/rubrics
 ```
 
 ## Code-focused self-counterintelligence
 
-Detected risk: code and figure-rendering decisions are currently distributed across chats, Drive artifacts, scheduled-task prompts, and memory rather than a repo-centered source of truth.
+Detected risk: the repo can become a graveyard of daily logs instead of a useful human codebase.
 
-Containment action taken: created `docs/wiki/Jordan-McCarthy-Code-Wiki.md` as the initial single source of truth for canonical code status, project constraints, and handoff rules.
-
-Next containment action: when a clean canonical script is identified, commit it under a sensible project path instead of saving another chat-specific or scratch filename.
+Containment action: this handoff updated project folders and the wiki first; the handoff log records what changed but is not the primary code location.
