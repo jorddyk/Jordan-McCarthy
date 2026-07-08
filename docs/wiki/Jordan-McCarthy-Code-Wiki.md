@@ -22,6 +22,9 @@ projects/
   README.md
   jm105-intronsaurus/
     README.md
+    analysis/
+    figures/
+    docs/
     transformation-protocol-rnaseq/
     jm134-starvation-switch/
     jm133-weak-5ss-mud1/
@@ -29,6 +32,7 @@ projects/
     intronsaurus-browser/
   figure-rendering/
     README.md
+    docs/
     nature-aging-mockups/
     panel-renderers/
     templates/
@@ -83,7 +87,7 @@ docs/
 
 ### JM105 / Intronsaurus
 
-Status: active project context; exact source was found for the transformation-protocol workflow and for several JM134 starvation-switch scripts. Initial import is underway.
+Status: active project context. One canonical JM105 analysis script was imported in the legacy backfill pass; many older Intronsaurus/JM101 scripts remain source-recovery targets.
 
 Known constraints:
 
@@ -93,6 +97,12 @@ Known constraints:
 - Distinguish NMD-off/upf1D raw retained signal from NMD-hidden off-minus-on signal.
 - Avoid unsupported claims that caloric restriction equals starvation.
 - For gene stories, distinguish RNA/host transcript abundance from protein abundance.
+
+#### Imported canonical code
+
+| Path | Purpose | Status |
+|---|---|---|
+| `projects/jm105-intronsaurus/analysis/jm105-old-cell-leaky-intron-determinants.py` | Classifies old-selective NMD-revealed introns and tests functional module / splice-architecture determinants. | Imported; uses real JM105 tables on Euler; no fake biological data. |
 
 #### Recovered source targets
 
@@ -124,6 +134,14 @@ scripts/80_JM134_apply_beta_binomial_and_rerender.py
 scripts/83_JM134_final_guide_repair.py
 ```
 
+Current JM105 exact-source targets still needing import:
+
+```text
+scripts/26_paired_gene_body_normalized_leakage_test.py
+scripts/28_make_synopsis_aligned_all_intron_RNAseq_plots.py
+scripts/29_old_cell_leaky_intron_determinants.py original SVG-rich Euler draft
+```
+
 ### Figure rendering / manuscript mockups
 
 Status: active project context; no canonical runnable renderer has yet been imported.
@@ -135,6 +153,7 @@ Known constraints:
 - Match Nature Aging-style storytelling while remaining Yves-compatible.
 - Use existing figure panels where possible; clearly label newly required panels.
 - Avoid text overlap, spillover, irrelevant panels, and unused whitespace.
+- SVG text remains editable text; fixed canvas exports should not use `bbox_inches="tight"`.
 
 ### ImageJ/Fiji aging-chip macros
 
@@ -196,9 +215,10 @@ A good daily handoff should say:
 - Repository confirmed: `jorddyk/Jordan-McCarthy`.
 - Repository visibility: private.
 - GitHub permissions: admin/push available through connector.
-- Initial backfill documentation created at `docs/legacy-code-backfill.md`.
-- Exact source files found for JM105 transformation-protocol workflow and JM134 starvation-switch analysis.
+- Imported `projects/jm105-intronsaurus/analysis/jm105-old-cell-leaky-intron-determinants.py`.
+- Updated `projects/README.md`, `projects/jm105-intronsaurus/README.md`, `projects/jm105-intronsaurus/docs/legacy-code-backfill.md`, `projects/figure-rendering/docs/legacy-code-backfill.md`, and this wiki.
 - Binary/generated artifacts deliberately not committed: PNG/PDF/SVG renders, xlsx templates/results, tarballs, docx/pptx manuscript artifacts, raw sequencing/microscopy data.
+- Full exact source not yet recovered/imported for ImageJ/Fiji macros, language-learning HTML apps, Intronsaurus reader bundles, and older JM101/Rsubread/STAR scripts.
 
 ## Open risks / self-counterintelligence
 
