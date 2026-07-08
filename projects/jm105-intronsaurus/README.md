@@ -25,7 +25,7 @@ projects/jm105-intronsaurus/
   metadata/
     Small, human-readable sample maps or schema documents only. No raw sequencing files.
   docs/
-    Recovery notes and legacy-source audit trails.
+    Recovery notes, scientific interpretation guardrails, and legacy-source audit trails.
   README.md
 ```
 
@@ -48,6 +48,12 @@ projects/jm105-intronsaurus/
 | `transformation-protocol-rnaseq/transformation-protocol-samples.tsv` | imported in legacy backfill | Sample manifest for JM62-JM73 transformation-protocol subset. | Real sample metadata; no raw reads. |
 | `transformation-protocol-rnaseq/run-transformation-expression.sbatch` | imported in legacy backfill | Slurm wrapper for transformation-protocol expression workflow. | Real workflow; no fake biological data. |
 | `transformation-protocol-rnaseq/check-transformation-job.ps1` | imported in legacy backfill | Windows helper to inspect Euler Slurm status and logs. | Administrative helper; no biological data modified. |
+
+## Backfilled scientific/context documents
+
+| Path | Status | Purpose | Data status |
+|---|---|---|---|
+| `docs/what-data-shows-summary.md` | imported exact user-provided summary | Preserves current interpretation of CR/Mud1/NMD-hidden leakage, intron architecture, Mud1-GFP, RP/non-RP stratification, and Parenteau comparison guardrails. | Scientific interpretation summary only; no raw biological data. |
 
 ## Canonical code still targeted for recovery
 
