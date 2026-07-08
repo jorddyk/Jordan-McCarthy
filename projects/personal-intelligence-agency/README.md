@@ -24,6 +24,12 @@ projects/personal-intelligence-agency/
 - Strategic Brief Redteam
 - Code Handoff
 
+## Canonical prompt/spec artifacts
+
+| Path | Purpose | Status |
+|---|---|---|
+| `prompts/legacy-code-backfill-github-import.md` | Exact prompt for recovering useful code from old project conversations and committing canonical source to `jorddyk/Jordan-McCarthy`. | Imported in legacy backfill. |
+
 ## Canonicality rule
 
 Save the reusable system logic here. Do not save every daily alert unless it changes the model, scoring rubric, or task design.
