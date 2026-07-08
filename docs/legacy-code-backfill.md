@@ -17,6 +17,7 @@ This file tracks code recovered from old ChatGPT/project history, uploaded artif
 | Canonical path | Project | Purpose | Scientific/data status |
 |---|---|---|---|
 | `projects/jm105-intronsaurus/analysis/jm105-old-cell-leaky-intron-determinants.py` | JM105 / Intronsaurus | Classifies old-selective NMD-revealed introns and tests module + splice-architecture determinants including 5′SS, branchpoint, 3′SS, and PPT features. | Uses real JM105 Euler tables as inputs. No fake biological data. |
+| `projects/figure-rendering/panel-renderers/render-figure1ef-total-rrna-print.ps1` | Figure rendering | Recovered PowerShell + embedded-Python renderer for JM105 Figure 1E/F content-only print panels. Produces transparent SVG/PNG/3x PNG, white-preview PNG, TSV panel data, and JSON audit/provenance. | Uses real local JM105 total/rRNA-depleted source tables if present. No fake biological data. No poly-A. Panel E uses raw +MUD1 NMD-off/upf1D retained-intron IR; Panel F uses an audited raw NMD-off set definition and does not claim off-minus-on NMD-hidden IR. |
 | `projects/figure-rendering/prompts/render-jm105-figure5-powershell-euler.md` | Figure rendering | Exact prompt/spec for rendering Figure 5 from PowerShell + Euler with NO DATA placeholders, lane-map/collision/provenance workflow, and fixed-canvas export rules. | Prompt/spec only; no biological data; not runnable code. |
 | `projects/figure-rendering/prompts/redesign-jm105-manuscript-figure-sequence.md` | Figure rendering | Exact prompt/spec for Nature Aging / Yves-compatible JM105 figure-sequence redesign. | Prompt/spec only; no biological data; not runnable code. |
 | `projects/personal-intelligence-agency/prompts/legacy-code-backfill-github-import.md` | Personal intelligence agency | Exact reusable prompt for code-backfill/search/commit workflow into `jorddyk/Jordan-McCarthy`. | Prompt/workflow artifact only; no biological data; not runnable code. |
@@ -222,10 +223,14 @@ Status: exact full source not yet recovered; source clue retained.
 Likely canonical path:
 
 ```text
-projects/figure-rendering/nature-aging-mockups/
+projects/figure-rendering/
 ```
 
-Source clues: Figure 5 renderer prompts, PowerPoint/docx panel assets, Nature Aging/Yves-compatible figure-layout mockup code, no-data placeholder renderers, fixed-canvas panel scripts.
+Imported runnable source:
+
+```text
+projects/figure-rendering/panel-renderers/render-figure1ef-total-rrna-print.ps1
+```
 
 Imported prompt/spec artifacts:
 
@@ -234,7 +239,9 @@ projects/figure-rendering/prompts/render-jm105-figure5-powershell-euler.md
 projects/figure-rendering/prompts/redesign-jm105-manuscript-figure-sequence.md
 ```
 
-Status: prompt/spec artifacts imported. Exact runnable figure-rendering source not yet recovered. Do not reconstruct from mockup descriptions; mark missing panels as `NO DATA` when code is recovered.
+Source clues: Figure 5 renderer prompts, PowerPoint/docx panel assets, Nature Aging/Yves-compatible figure-layout mockup code, no-data placeholder renderers, fixed-canvas panel scripts.
+
+Status: first runnable panel-rendering source imported. Exact runnable source for broader mockup rendering, no-data placeholders, and label-overlap auditing is still not recovered. Do not reconstruct from mockup descriptions; mark missing panels as `NO DATA` when code is recovered.
 
 ### German/TELC/language-learning apps
 
@@ -281,3 +288,12 @@ Status: legacy-code-backfill prompt imported. Other exact scheduled-task prompt 
 - Found the open PR `legacy-code-backfill-2026-07-08` containing JM-133 code; because it is open and not mergeable from the connector context, this pass did not duplicate or overwrite that runnable code on `main`.
 - Updated ImageJ/Fiji recovery documentation with exact JM-076 historical macro paths from the lab notebook.
 - No newly recovered full source code was committed in this continuation pass; only source-clue documentation was updated.
+
+## Current continuation pass — 2026-07-08 figure-rendering renderer recovery
+
+- Verified `jorddyk/Jordan-McCarthy` is private and writable with admin/push permissions.
+- Searched current project context and File Library for Figure 1E/F, Figure 5, Figure 2–5 mockup, and Nature Aging rendering source clues.
+- Recovered and imported the newest useful complete PowerShell/Python renderer for JM105 Figure 1E/F content-only print panels.
+- Updated `projects/figure-rendering/README.md`, `projects/figure-rendering/panel-renderers/README.md`, `projects/figure-rendering/docs/legacy-code-backfill.md`, and `docs/wiki/Jordan-McCarthy-Code-Wiki.md`.
+- Deliberately did not commit generated Figure 2–5 mockup PNGs because they are visual artifacts with schematic/mock values, not source code.
+- Deliberately did not reconstruct missing renderers such as `render-no-data-placeholder.py` or `render-main-figure-layouts.py`; they remain recovery targets until exact source is found.
