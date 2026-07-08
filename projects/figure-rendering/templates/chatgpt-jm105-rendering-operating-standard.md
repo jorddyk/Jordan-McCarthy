@@ -28,19 +28,39 @@ Scope: all JM105 / Intronsaurus / Nature Aging figure-panel rendering work in th
 | “PowerShell failed because of execution policy / system32 / CRLF.” | Prefer paste-in PowerShell blocks over unsigned `.ps1` when possible; set working directory under `C:\Users\jmccarthy\Downloads\...`; convert CRLF to LF before `sbatch`; do not write under `C:\WINDOWS\system32`. |
 | “The job failed but the script kept going.” | Every runner must fail-fast on missing TSVs/log errors and print exact log paths. Never print success paths for nonexistent files. |
 | “This should have been found from previous successful chats.” | Before new rendering code, inspect existing repo contracts under `projects/figure-rendering/` and relevant recovered previous runs; reuse harness rules rather than inventing a one-off. |
+| “Old figure panel names do not automatically become new figure panel names.” | Match the requested panel by the current specification, source deck, slide number, target aspect ratio, and biological metric. Do not select an old folder or previously rendered asset just because it has the same panel label. |
+| “Slide 17 was the starting point, not good enough.” | Treat a referenced PPT slide as a source/starting artifact only. The task is to transform or replace it according to the current spec; do not rerender it as-is and do not treat it as already acceptable unless Jordan explicitly says so. |
+
+## Panel identity rule
+
+Before code, write a panel identity lock with these fields:
+
+```text
+requested_panel:
+source_deck_or_doc:
+source_slide_or_existing_panel:
+source_status: starting point / style reference / final accepted panel / data source
+current_authoritative_spec:
+biological_metric:
+allowed_data_subset:
+forbidden_substitutions:
+```
+
+A render may not proceed unless `source_status` is correctly classified. A slide labeled “existing” or “closest existing” is not automatically a final target. A historical output folder named `Figure_1D` is not automatically the requested new Figure 1D.
 
 ## Mandatory sequence for future ChatGPT figure-panel rendering
 
 1. **Recover prior constraints first.** Read this standard plus `figure-panel-generation-lane-audit-contract.md` before writing renderer code.
-2. **State the biological job in one sentence.** Include exact metric definitions and forbidden data subsets.
-3. **Emit lane map.** Every object gets exactly one lane.
-4. **Emit collision inventory.** Name exact likely collisions and geometry resolutions.
-5. **Discover data sources.** On Euler, inventory candidate source tables/scripts and write `source_manifest.tsv` before deriving panel TSV.
-6. **Build panel TSV.** Validate required columns and write `panel_input.tsv`; stop if absent.
-7. **Render only after validation.** Generate fixed-canvas transparent SVG/PDF/PNG plus white preview.
-8. **Audit outputs.** Write text clipping/overlap audit, manifest, run summary, transparency check, and `DATA_CHANGED=False` unless intentionally modified.
-9. **Retrieve outputs.** PowerShell runner copies the entire output folder to a user-owned Windows directory and prints the exact files to open.
-10. **If failure occurs, classify it.** Data discovery, data coverage, syntax, scheduler, renderer, serialization, or retrieval. Do not guess.
+2. **Lock panel identity.** Confirm the requested panel by current spec, source deck/slide, aspect ratio, biological metric, and allowed data subset. Do not substitute a historical same-letter panel.
+3. **State the biological job in one sentence.** Include exact metric definitions and forbidden data subsets.
+4. **Emit lane map.** Every object gets exactly one lane.
+5. **Emit collision inventory.** Name exact likely collisions and geometry resolutions.
+6. **Discover data sources.** On Euler, inventory candidate source tables/scripts and write `source_manifest.tsv` before deriving panel TSV.
+7. **Build panel TSV.** Validate required columns and write `panel_input.tsv`; stop if absent.
+8. **Render only after validation.** Generate fixed-canvas transparent SVG/PDF/PNG plus white preview.
+9. **Audit outputs.** Write text clipping/overlap audit, manifest, run summary, transparency check, and `DATA_CHANGED=False` unless intentionally modified.
+10. **Retrieve outputs.** PowerShell runner copies the entire output folder to a user-owned Windows directory and prints the exact files to open.
+11. **If failure occurs, classify it.** Data discovery, data coverage, syntax, scheduler, renderer, serialization, or retrieval. Do not guess.
 
 ## Required constants/comments in figure code where applicable
 
