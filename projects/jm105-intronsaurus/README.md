@@ -14,6 +14,8 @@ projects/jm105-intronsaurus/
     Scripts that generate manuscript figure panels from real inputs.
   metadata/
     Small, human-readable sample maps or schema documents only. No raw sequencing files.
+  docs/
+    Recovery notes and legacy-source audit trails.
   README.md
 ```
 
@@ -27,13 +29,12 @@ projects/jm105-intronsaurus/
 - Distinguish RNA/host transcript abundance from protein abundance.
 - Avoid claiming caloric restriction is starvation.
 
-## Canonical code status
+## Canonical code imported
 
-No verified canonical runnable JM105/Intronsaurus script has been imported yet.
+| Path | Status | Purpose | Data status |
+|---|---|---|---|
+| `analysis/jm105-old-cell-leaky-intron-determinants.py` | imported | Classifies old-selective NMD-revealed introns and compares gene module / splice-site / branchpoint / 3′SS / PPT features against nonleaker comparison introns. | Uses real JM105 tables on Euler; no simulated biological data. |
 
-When imported, scripts should have human names such as:
+## Canonical code still targeted for recovery
 
-- `analysis/calculate-nmd-hidden-intron-retention.py`
-- `analysis/compare-mud1-cr-aging-effects.R`
-- `figures/render-figure-2-total-rna-intron-module.py`
-- `figures/render-nature-aging-layout-mockups.py`
+See `docs/legacy-code-backfill.md` for exact historical filenames and source clues. Highest-priority unrecovered targets include the JM101/JM105 Intronsaurus integration scripts, STAR/sbatch jobs, Rsubread step 2/3 scripts, IRFinder drafts, and Intronsaurus reader bundles.
