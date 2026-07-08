@@ -1,0 +1,88 @@
+<!--
+Human purpose:
+  Late Intronsaurus vNext3AH patch layer that fixes duplicate Gene Stories evidence labels and adds a provenance drawer explaining where displayed fold-change values come from.
+
+Original source clue / conversation context:
+  Recovered exactly from the standalone current-session artifact:
+  /mnt/data/intronsaurus_fix28_gene_story_sources/Intronsaurus_Explore_Restored_vNext3AH_fix28_gene_story_sources.html
+  Patch marker in source: "fix28: Gene stories duplicate-row labels + provenance note".
+
+Expected inputs:
+  A rendered Intronsaurus vNext3AH-style HTML page containing the Gene stories DOM, including elements such as #stories, #v3mRoot, .v3abEvidence, .v3abMetricGroup, .v3abGroupTitle, .v3abMetricRow, .v3abMetricName, and .v3abTrack.
+
+Expected outputs:
+  Browser-side UI changes only: repeated one-row labels are collapsed, two retained-intron rows are relabeled as total RNA / poly-A RNA, and a "Where these values come from" drawer is inserted into Gene stories.
+
+Known assumptions:
+  The underlying standalone HTML still embeds the scientific data in PAYLOAD.stories[].metric_json, PAYLOAD.stories[].sun_metric_json, and DATA.geneExpression.hostExpressionAllConditions.
+  This patch does not regenerate or edit biological values.
+
+Data status:
+  Uses real embedded JM105/Sun values already present in the standalone HTML. It does not call an AI model, invent fold changes, or generate fake biological data.
+-->
+
+<!-- fix28: Gene stories duplicate-row labels + provenance note -->
+<style id="v3ah-fix28-gene-story-source-style">
+#stories .v28SourceBox{border:1px solid #d7e3ee;background:#f8fbff;border-radius:16px;padding:10px 12px;margin:10px 0 14px;color:#334155;font-size:13px;line-height:1.38}
+#stories .v28SourceBox summary{cursor:pointer;font-weight:850;color:#17304b}
+#stories .v28SourceBox code{background:#eef4fb;border:1px solid #dbe7f2;border-radius:7px;padding:1px 4px;font-size:12px;color:#17304b}
+#stories .v28SourceGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px;margin-top:8px}
+#stories .v28SourceItem{border:1px solid #e0e9f2;background:#fff;border-radius:12px;padding:8px 9px}
+#stories .v28SourceItem b{display:block;margin-bottom:2px;color:#17304b}
+#stories .v28CollapsedMetric .v3abGroupHead{align-items:center;margin-bottom:0}
+#stories .v28CollapsedMetric .v3abGroupHead .v3abTrack{width:var(--ab-track)}
+#stories .v28CollapsedMetric .v3abRows{display:none!important}
+#stories .v28CollapsedMetric .v3abGroupTitle .v3abQDot{margin-left:6px}
+#stories .v28TwoRetained .v3abMetricName{font-size:12.4px;color:#43576d;font-weight:850;text-transform:none;letter-spacing:0}
+</style>
+<script id="v3ah-fix28-gene-story-source-script">
+(function(){
+  if(window.INTRONSAURUS_V3AH_FIX28_GENE_STORY_SOURCE) return;
+  window.INTRONSAURUS_V3AH_FIX28_GENE_STORY_SOURCE = true;
+  const $=id=>document.getElementById(id);
+  function norm(s){return String(s||'').toLowerCase().replace(/·.*$/,'').replace(/\s+/g,' ').trim();}
+  function ensureSourceBox(){
+    const root=$('v3mRoot') || $('stories'); if(!root) return;
+    if(root.querySelector('.v28SourceBox')) return;
+    const box=document.createElement('details');
+    box.className='v28SourceBox';
+    box.innerHTML='<summary>Where these values come from</summary><div class="v28SourceGrid"><div class="v28SourceItem"><b>Project RNA</b>Embedded in this HTML under <code>PAYLOAD.stories[].metric_json</code>. Some condition-matched rows are calculated from <code>DATA.geneExpression.hostExpressionAllConditions</code>.</div><div class="v28SourceItem"><b>Calculation</b>For condition rows, the page uses <code>log2((condition A + 0.5)/(condition B + 0.5))</code> on retained-intron CPM or host-gene CPM.</div><div class="v28SourceItem"><b>Protein abundance</b>Embedded under <code>PAYLOAD.stories[].sun_metric_json</code> from Sun et al. 2021 / PXD018917 / MOESM3 Processed_data.</div><div class="v28SourceItem"><b>Runtime</b>The browser reads static JSON in the file. It does not call an AI model or generate new fold changes.</div></div>';
+    const primer=root.querySelector('.v3u3StoryExample') || root.querySelector('.v3u3SourceLegend') || root.querySelector('.sectionLead') || root.querySelector('h2');
+    if(primer) primer.insertAdjacentElement('afterend',box); else root.insertAdjacentElement('afterbegin',box);
+  }
+  function compactDuplicateEvidenceLabels(){
+    const sec=$('stories'); if(!sec) return;
+    sec.querySelectorAll('.v3abEvidence .v3abMetricGroup').forEach(group=>{
+      if(group.dataset.v28Done==='1') return;
+      const title=group.querySelector('.v3abGroupTitle');
+      const rows=Array.from(group.querySelectorAll('.v3abMetricRow'));
+      const names=rows.map(r=>r.querySelector('.v3abMetricName')).filter(Boolean);
+      if(!title || !rows.length || !names.length) return;
+      const t=norm(title.textContent);
+      if(rows.length===1 && norm(names[0].textContent)===t){
+        const q=names[0].querySelector('.v3abQDot');
+        if(q) title.appendChild(q.cloneNode(true));
+        const track=rows[0].querySelector('.v3abTrack');
+        if(track){
+          const note=group.querySelector('.v3abGroupNote');
+          if(note) note.replaceWith(track);
+          else title.insertAdjacentElement('afterend',track);
+          group.classList.add('v28CollapsedMetric');
+          group.dataset.v28Done='1';
+        }
+      } else if(t==='retained-intron rna' && rows.length===2){
+        group.classList.add('v28TwoRetained');
+        if(names[0]) names[0].textContent='total RNA';
+        if(names[1]) names[1].textContent='poly-A RNA';
+        group.dataset.v28Done='1';
+      }
+    });
+  }
+  function apply(){ensureSourceBox(); compactDuplicateEvidenceLabels();}
+  function schedule(){[0,80,220,600,1200,2200].forEach(ms=>setTimeout(apply,ms));}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',schedule); else schedule();
+  document.addEventListener('click',e=>{if(e.target && e.target.closest && e.target.closest('.tab,.v3mCard,#stories')) setTimeout(apply,90);},true);
+  const mo=new MutationObserver(()=>{clearTimeout(window.__v28GeneStoryTimer); window.__v28GeneStoryTimer=setTimeout(apply,160);});
+  if(document.body) mo.observe(document.body,{childList:true,subtree:true});
+})();
+</script>
