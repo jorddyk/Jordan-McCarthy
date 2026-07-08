@@ -46,6 +46,7 @@ projects/
     active-recall-apps/
   personal-intelligence-agency/
     README.md
+    docs/
     prompts/
     rubrics/
     reports/
@@ -78,7 +79,7 @@ docs/
 
 1. Preserve only clean, useful, most-current code.
 2. Do not preserve intermediate attempts, duplicate scratch scripts, or one-off failed variants.
-3. Prefer updating canonical files over creating new files.
+3. Prefer updating existing canonical files over creating new files.
 4. Never generate fake biological data.
 5. If an experiment has not been done, outputs must clearly say `NO DATA`.
 6. Distinguish real data, simulated toy data, and `NO DATA` placeholders.
@@ -91,7 +92,7 @@ docs/
 
 ### JM105 / Intronsaurus
 
-Status: active project context. Canonical JM105 analysis and transformation helper scripts have been imported in prior backfill work; Intronsaurus browser helpers for the vNext3I Explore repair were imported in the current pass.
+Status: active project context. Canonical JM105 analysis and transformation helper scripts have been imported in prior backfill work; Intronsaurus browser helpers for the vNext3I/vNext3Y operational workflows have been imported in the 2026-07-08 pass.
 
 Known constraints:
 
@@ -155,7 +156,7 @@ scripts/28_make_synopsis_aligned_all_intron_RNAseq_plots.py
 scripts/29_old_cell_leaky_intron_determinants.py original SVG-rich Euler draft
 ```
 
-Other JM105 source-recovery targets retained in `docs/legacy-code-backfill.md`: JM133 weak-5SS/Mud1 source, Figure 2 candidate-gate script, Intronsaurus vNext3I Python builder and patch chain, JM101/JM105 integration, STAR/sbatch, Rsubread step 2/3, IRFinder drafts, and Intronsaurus reader bundles.
+Other JM105 source-recovery targets retained in `docs/legacy-code-backfill.md`: JM133 weak-5SS/Mud1 source, Figure 2 candidate-gate script, Intronsaurus vNext3I/vNext3Y Python builders and patch chain, JM101/JM105 integration, STAR/sbatch, Rsubread step 2/3, IRFinder drafts, and Intronsaurus reader bundles.
 
 ### Figure rendering / manuscript mockups
 
@@ -219,21 +220,27 @@ Import rule: do not commit partial/truncated HTML. A web app is canonical only w
 
 ### Personal intelligence agency
 
-Status: active scheduled-task system. Reusable prompts and rubrics should be stored under `projects/personal-intelligence-agency/`, not buried in daily handoff logs.
+Status: active scheduled-task system. Exact active scheduled-task prompts were imported on 2026-07-08. Reusable prompts and rubrics should be stored under `projects/personal-intelligence-agency/`, not buried in daily handoff logs.
 
 #### Imported prompt/spec artifacts
 
 | Path | Purpose | Status |
 |---|---|---|
 | `projects/personal-intelligence-agency/prompts/legacy-code-backfill-github-import.md` | Exact prompt for recovering old useful code from project history and committing it into `jorddyk/Jordan-McCarthy`. | Imported exact prompt/spec; not runnable code. |
+| `projects/personal-intelligence-agency/prompts/code-handoff.md` | Exact active scheduled-task prompt for daily code handoff and ongoing legacy-source recovery. | Imported exact prompt/spec from active automation; not runnable code. |
+| `projects/personal-intelligence-agency/prompts/strategic-alert-triage.md` | Exact active scheduled-task prompt for urgent strategic signal triage. | Imported exact prompt/spec from active automation; not runnable code. |
+| `projects/personal-intelligence-agency/prompts/science-preemption-watch.md` | Exact active scheduled-task prompt for science/preemption monitoring around JM105/Intronsaurus. | Imported exact prompt/spec from active automation; not runnable code. |
+| `projects/personal-intelligence-agency/prompts/swiss-leverage-radar.md` | Exact active scheduled-task prompt for Swiss/ETH/startup/funding/career leverage monitoring. | Imported exact prompt/spec from active automation; not runnable code. |
+| `projects/personal-intelligence-agency/prompts/weekly-strategic-brief-redteam.md` | Exact active scheduled-task prompt for weekly strategic brief and monthly red-team review. | Imported exact prompt/spec from active automation; not runnable code. |
+| `projects/personal-intelligence-agency/docs/legacy-code-backfill.md` | Project-local recovery record for imported automation prompts and remaining rubric/template targets. | Imported; documentation only. |
 
 #### Current source targets
 
-- Strategic alert triage prompt.
-- Science preemption watch prompt.
-- Swiss leverage radar prompt.
-- Weekly strategic brief/red-team prompt.
-- Daily code handoff prompt.
+- Exact 0-to-21 strategic signal scoring rubric.
+- Reusable report/email templates if they exist outside the prompt bodies.
+- Historical task outputs only if they change reusable logic; otherwise do not import daily output spam.
+
+Caution: automation prompt files preserve task logic, but recovered task metadata showed `notifications_enabled: false` and `email_enabled: false`; operational delivery settings must be verified in ChatGPT automation settings.
 
 ## Daily handoff role
 
@@ -255,10 +262,10 @@ A good daily handoff should say:
 - GitHub permissions: admin/push available through connector.
 - Imported `projects/jm105-intronsaurus/analysis/jm105-old-cell-leaky-intron-determinants.py` in an earlier backfill pass.
 - Imported transformation-protocol helper files in an earlier backfill pass: `resolve-fastq-files.py`, `transformation-protocol-samples.tsv`, `run-transformation-expression.sbatch`, and `check-transformation-job.ps1`.
-- Imported exact prompt/spec artifacts for Figure 5 rendering, manuscript figure-sequence redesign, and legacy-code backfill workflow.
+- Imported exact prompt/spec artifacts for Figure 5 rendering, manuscript figure-sequence redesign, legacy-code backfill workflow, and all five active personal-intelligence scheduled tasks.
 - Imported `projects/jm105-intronsaurus/docs/what-data-shows-summary.md` as a scientific interpretation guardrail, not code.
 - Imported Intronsaurus vNext3I helper scripts for upload/submit, Slurm run, retrieval, and status checking; full large Python builder remains a documented recovery/import target.
-- Updated `projects/README.md`, `projects/jm105-intronsaurus/README.md`, `projects/jm105-intronsaurus/intronsaurus-browser/README.md`, `projects/figure-rendering/README.md`, `projects/personal-intelligence-agency/README.md`, figure-rendering legacy docs, and this wiki across the 2026-07-08 backfill passes.
+- Updated `projects/README.md`, `projects/jm105-intronsaurus/README.md`, `projects/jm105-intronsaurus/intronsaurus-browser/README.md`, `projects/figure-rendering/README.md`, `projects/personal-intelligence-agency/README.md`, figure-rendering legacy docs, personal-intelligence legacy docs, and this wiki across the 2026-07-08 backfill passes.
 - Binary/generated artifacts deliberately not committed: PNG/PDF/SVG renders, xlsx templates/results, tarballs, docx/pptx manuscript artifacts, raw sequencing/microscopy data.
 - Full exact source not yet imported for ImageJ/Fiji macros, language-learning HTML apps, some Intronsaurus reader bundles/builders, and older JM101/Rsubread/STAR scripts.
 
