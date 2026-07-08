@@ -55,6 +55,7 @@ projects/jm105-intronsaurus/
 | `intronsaurus-browser/patches/upload-prebuilt-scientific-wording-dino-v3ah-fix9.ps1` | imported in this pass as legacy helper | Uploads and unpacks the prebuilt Intronsaurus vNext3AH-fix9 scientific-wording/dino archive on Euler. | Deployment helper only; no raw data committed. |
 | `intronsaurus-browser/patches/retrieve-scientific-wording-dino-v3ah-fix9.ps1` | imported in this pass as legacy helper | Retrieves and opens the vNext3AH-fix9 scientific-wording/dino archive. | Retrieval helper only; no raw data committed. |
 | `intronsaurus-browser/patches/check-scientific-wording-dino-v3ah-fix9-status.sh` | imported in this pass as legacy helper | Checks the vNext3AH-fix9 Euler output folder and validation flags. | Status checker only; no raw data committed. |
+| `intronsaurus-browser/patches/vnext3ah-fix28-gene-story-sources-patch.html` | imported in this continuation pass as exact patch layer | Removes duplicate one-row Gene Stories evidence labels and adds a provenance drawer explaining embedded data fields and deterministic fold-change calculations. | Browser UI/provenance patch only; no fake values; uses static embedded JM105/Sun data already present in the standalone HTML. |
 
 ## Backfilled scientific/context documents
 
@@ -64,4 +65,4 @@ projects/jm105-intronsaurus/
 
 ## Canonical code still targeted for recovery
 
-See `docs/legacy-code-backfill.md` for exact historical filenames and source clues. Highest-priority unrecovered targets include the remaining JM105 transformation-protocol builder/downloader scripts, JM134 beta-binomial scripts, JM133 weak-5SS analysis, Figure 2 candidate-gate scripts, JM101/JM105 Intronsaurus integration scripts, STAR/sbatch jobs, Rsubread step 2/3 scripts, IRFinder drafts, and the full text source for the large Intronsaurus vNext3Y Python builder.
+See `docs/legacy-code-backfill.md` for exact historical filenames and source clues. Highest-priority unrecovered targets include the remaining JM105 transformation-protocol builder/downloader scripts, JM134 beta-binomial scripts, JM133 weak-5SS analysis, Figure 2 candidate-gate scripts, JM101/JM105 Intronsaurus integration scripts, STAR/sbatch jobs, Rsubread step 2/3 scripts, IRFinder drafts, the full text source for the large Intronsaurus vNext3Y Python builder, and the full current standalone Intronsaurus HTML builder rather than generated HTML artifacts.
