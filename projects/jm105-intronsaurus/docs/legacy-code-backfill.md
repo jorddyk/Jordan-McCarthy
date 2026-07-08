@@ -18,6 +18,13 @@ Do not treat this file as code. It is a recovery queue.
 | `intronsaurus-browser/retrieve-intronsaurus-matched-rna-protein-gene-stories.ps1` | vNext3Y bundle retrieval helper | Retrieves vNext3Y HTML, validation JSON, Sun tables, and archive from Euler. | Imported exact helper source. |
 | `intronsaurus-browser/check-intronsaurus-matched-rna-protein-gene-stories.sh` | vNext3Y bundle status checker | Uses timeout-wrapped `squeue`/`sacct` plus stdout/stderr tails to check the vNext3Y Slurm job. | Imported exact helper source. |
 
+## Recovered exact code staged outside `main`
+
+| Path / branch | Original source clue / context | Purpose | Status |
+|---|---|---|---|
+| PR #1 branch `legacy-code-backfill-2026-07-08`: `projects/jm105-intronsaurus/analysis/jm133-weak-5ss-need-mud1.py` | JM-133 project: “Do weak 5′ splice sites need Mud1?”; source clue `/cluster/scratch/jmccarthy/JM105_RNAseq/scripts/71_JM133_weak_5SS_need_Mud1.py` | Tests whether Mud1-dependent retained/unspliced introns in an NMD-off background have weaker predicted 5′SS:U1 pairing. Writes real-data tables, statistics, transparent/white-preview figures, and hard checks. | Exact full source is recovered in GitHub PR #1 but not on `main`; PR is open and connector-visible as non-mergeable. Do not duplicate or reconstruct unless manually rebasing/importing from the PR branch. |
+| PR #1 branch `legacy-code-backfill-2026-07-08`: `projects/jm105-intronsaurus/analysis/jm133-weak-5ss-need-mud1.sbatch` | JM-133 Euler launcher for job `JM133_5SS_Mud1` | Slurm wrapper for the JM-133 weak-5SS/Mud1 analysis. | Exact full source is recovered in PR #1 but not on `main`. |
+
 ## Search/backfill results from this pass
 
 | Source searched | What was found | Action |
@@ -25,7 +32,9 @@ Do not treat this file as code. It is a recovery queue.
 | GitHub repo `jorddyk/Jordan-McCarthy` | Repo exists, is private, and authenticated user has admin/push access. Existing project docs and Intronsaurus browser README were present. | Added vNext3Y operational helpers and updated Intronsaurus browser/JM105 docs. |
 | Active project sandbox | Found exact current vNext3Y bundle `Intronsaurus_MatchedRNAProteinGeneStories_vNext3Y_code_bundle`, including the large Python builder, sbatch, PowerShell upload/retrieve helpers, and safe status checker. | Imported helper scripts; documented full Python builder as recovered but still needing text-source import. Did not commit binary workbook, tar archives, generated HTML, or raw data. |
 | Personal/project context search | Confirmed vNext3Y supersedes v3P-v3X for Sun proteomics integration: single-entry Gene Stories, no right-side panel, comparison-matched JM105 RNA/rRNA-depleted and Sun protein-abundance groups, common-name mapping, RNA/protein label distinction. | Marked vNext3Y as canonical target and intermediate v3P-v3X attempts as deliberately not committed. |
+| Personal/project context search, current continuation | Confirmed PR #1 contains exact JM-133 weak-5SS/Mud1 Python and sbatch code, while Figure 5 renderer, ImageJ/Fiji macros, language-learning HTML apps, and some JM134 scripts remain exact-source recovery targets. | Recorded PR #1 as recovered exact code staged outside `main`; did not recreate partial source. |
 | Google Drive search | Searches for `Intronsaurus vNext3Y` and `Intronsaurus` returned no direct Drive code artifacts in this pass. | No Drive files committed. |
+| Google Drive search, current continuation | Search for `MitoSOX macro` and `Step1_DetectAdjustConvertResize` found the lab notebook source clue document with JM-076 macro paths, but not the macro bodies. Searches for `kartoffel_vocabulary_active_recall_WORKING` and `german-drill-6` did not recover complete HTML app source. | Kept these as source-recovery targets only; no invented `.ijm`, Groovy, or HTML code committed. |
 
 ## Highest-priority code to recover
 
@@ -43,6 +52,7 @@ Do not treat this file as code. It is a recovery queue.
 | 10 | `analysis/jm101-irfinder-draft-workflow.R` | Draft R/WSL IRFinder workflow from 2025-08-11 | IRFinder/DESeq2 intron-retention draft using `metadata_filtered.csv` and `Y:/Jordan/JM101/RNA seq GC files` | Exact full source not yet recovered |
 | 11 | `analysis/jm105-paired-gene-body-normalized-leakage-test.py` | Euler script `scripts/26_paired_gene_body_normalized_leakage_test.py`; output `26_PAIRED_GENE_BODY_NORMALIZED_LEAKAGE_TEST` | Tests old-vs-young NMD-revealed leakage with retention fraction and paired-fragment gene-body-normalized boundary reads. | Full current source was visible in project chat but not imported in this pass; next target. |
 | 12 | `figures/jm105-synopsis-aligned-all-intron-rnaseq-plots.py` | Euler script `scripts/28_make_synopsis_aligned_all_intron_RNAseq_plots.py`; output `28_SYNOPSIS_ALIGNED_ALL_INTRON_RNASEQ_PLOTS` | Renders normal all-intron/all-gene RNA-seq plots required by the synopsis, including 2×2 NMD-detector scatter panels and volcano audits. | Full current source was visible in project chat but not imported in this pass; next target. |
+| 13 | `jm133-weak-5ss-mud1/jm133-weak-5ss-need-mud1.py` | PR #1 copy of `analysis/jm133-weak-5ss-need-mud1.py` / Euler clue `scripts/71_JM133_weak_5SS_need_Mud1.py` | Canonical project-folder copy of JM-133 once PR #1 is rebased or manually reconciled. | Exact source recovered in PR #1; not yet copied to `main` project folder. |
 
 ## File Library source clues captured
 
