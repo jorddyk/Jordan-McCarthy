@@ -4,7 +4,14 @@ This file tracks historical JM105 / JM101 / Intronsaurus code that should be rec
 
 Do not treat this file as code. It is a recovery queue.
 
-## Highest-priority code to recover
+## Recovered / canonicalized code now in repo
+
+| Canonical path | Historical name / source clue | Purpose | Current status |
+|---|---|---|---|
+| `analysis/jm133-weak-5ss-need-mud1.py` | Current JM-133 ChatGPT/Euler setup; job clue `JM133_5SS_Mud1`; user question: “Do weak 5′ splice sites need Mud1?” | Test whether Mud1-dependent leaky introns have weak predicted 5′SS:U1 pairing. Produces fixed-canvas SVG/PDF/PNG plus white preview and real-data QC tables. | Canonicalized runnable source committed on branch `legacy-code-backfill-2026-07-08`; not an old hidden file recovered from disk. It was saved from the current complete code conversation. |
+| `analysis/jm133-weak-5ss-need-mud1.sbatch` | Euler launch wrapper for JM-133 | Submit the JM133 5′SS analysis on Euler from `/cluster/scratch/jmccarthy/JM105_RNAseq`. | Canonicalized launcher committed on branch `legacy-code-backfill-2026-07-08`. |
+
+## Highest-priority code still to recover
 
 | Priority | Proposed canonical path | Historical name / source clue | Purpose | Current status |
 |---|---|---|---|---|
@@ -18,6 +25,8 @@ Do not treat this file as code. It is a recovery queue.
 | 8 | `analysis/jm101-rsubread-step2-throughput-turbo.R` | STEP 2 `THROUGHPUT TURBO` R script from 2025-08-15 | Rsubread throughput/SSD staging workflow | Exact full source not yet recovered in this run |
 | 9 | `analysis/jm101-deseq2-step3.R` | Step 3 DESeq2 script from 2025-08-15 | Differential expression analysis from Rsubread counts/annotations | Exact full source not yet recovered in this run |
 | 10 | `analysis/jm101-irfinder-draft-workflow.R` | Draft R/WSL IRFinder workflow from 2025-08-11 | IRFinder/DESeq2 intron-retention draft using `metadata_filtered.csv` and `Y:/Jordan/JM101/RNA seq GC files` | Exact full source not yet recovered in this run |
+| 11 | `analysis/jm105-figure-2-cr-suppression-audit.py` | Script clues `68_REBUILD_FIG2C_SHARED8_FROM_REAL_DATA_AND_COLLECT_ALL.py`, `69_DISCOVER_FIG2_CANDIDATES_REBUILD_FIG2C_AND_COLLECT.py`, and `70_DIAGNOSE_FIG2C_REAL_SOURCE_FAST.py` | Audit/rebuild Figure 2 candidate-set consistency and CR-suppression source tables. Earlier attempts were diagnostic or failed because the source table shape was not matched. | Do not commit as canonical yet; exact successful source and real source table not yet recovered/proven |
+| 12 | `analysis/jm105-poster-final-bundle-collector.py` | Bundle clues `63_POSTER_FINAL_ALL_LATEST_ORIGINAL_JM100_SURVIVAL_FIXED_20260607` and later 68/69 attempts | Collect poster-ready PDFs/PNGs/SVGs and exclude legacy Fig2C. | Exact successful source not recovered; do not commit partial/failing variants |
 
 ## Current project constraints to preserve during import
 
@@ -28,6 +37,7 @@ Do not treat this file as code. It is a recovery queue.
 - Do not fake biological data.
 - Distinguish raw NMD-off/upf1Δ retained signal from NMD-hidden off-minus-on signal.
 - Distinguish RNA/host transcript abundance from protein abundance.
+- Do not claim caloric restriction is starvation.
 
 ## Backfill method
 
@@ -36,3 +46,10 @@ Do not treat this file as code. It is a recovery queue.
 3. Search local/source artifact names if surfaced in conversation.
 4. If full exact code is recovered, commit it under the proposed canonical path or a better human path.
 5. If only a summary is recovered, keep it here and do not pretend it is the source code.
+
+## Current run notes — 2026-07-08
+
+- Repo verified as `jorddyk/Jordan-McCarthy`, private, with admin/push permission.
+- Exact historical source for the older JM101/JM105 R/Python/PowerShell scripts was not recovered from accessible uploaded/project context in this run.
+- The current complete JM-133 analysis code was available in the conversation and was saved under a human project path.
+- Failed/diagnostic Figure 2 rebuild scripts were deliberately not committed as canonical code because their outputs did not complete and the real source table still needs source-shape resolution.
