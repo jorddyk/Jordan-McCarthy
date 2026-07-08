@@ -12,6 +12,12 @@ This file tracks code recovered from old ChatGPT/project history, uploaded artif
 - Do not commit raw FASTQ/BAM/ND2/TIFF or generated figure images unless explicitly needed as small examples.
 - For JM105/Intronsaurus, preserve the current scientific constraints: Figure 2 is total/rRNA-depleted only; no poly-A for Figure 2 unless explicitly restored; distinguish raw NMD-off/upf1Δ retained signal from NMD-hidden off-minus-on signal; distinguish RNA abundance from protein abundance; do not equate CR with starvation.
 
+## Imported in the 2026-07-08 legacy backfill pass
+
+| Canonical path | Project | Purpose | Scientific/data status |
+|---|---|---|---|
+| `projects/jm105-intronsaurus/analysis/jm105-old-cell-leaky-intron-determinants.py` | JM105 / Intronsaurus | Classifies old-selective NMD-revealed introns and tests module + splice-architecture determinants including 5′SS, branchpoint, 3′SS, and PPT features. | Uses real JM105 Euler tables as inputs. No fake biological data. |
+
 ## Recovered exact source files identified in current project context
 
 ### JM105 transformation-protocol RNA-seq deliverable
@@ -44,7 +50,7 @@ README_JM105_Transformation_Protocol.txt
 
 Scientific/data status: real JM105 transformation-protocol RNA-seq support workflow; no fake biological data. Binary Excel template and generated output workbook were deliberately not committed in this initial pass.
 
-Status: exact full source recovered locally; small scripts/config should be imported first; larger builder script is queued for source-preserving import.
+Status: exact full source recovered locally in an earlier run; small scripts/config should be imported first; larger builder script is queued for source-preserving import.
 
 ### JM-134 matched splicing-index / Parenteau starvation-switch analysis
 
@@ -130,6 +136,29 @@ joint_score = min(aging_effect, CR_suppression)
 ```
 
 Status: exact full source not yet recovered; source clue retained.
+
+### JM105 current RNA-seq poster scripts
+
+Likely canonical paths:
+
+```text
+projects/jm105-intronsaurus/analysis/jm105-paired-gene-body-normalized-leakage-test.py
+projects/jm105-intronsaurus/figures/jm105-synopsis-aligned-all-intron-rnaseq-plots.py
+projects/jm105-intronsaurus/analysis/jm105-old-cell-leaky-intron-determinants.py
+```
+
+Source clues:
+
+```text
+scripts/26_paired_gene_body_normalized_leakage_test.py
+scripts/28_make_synopsis_aligned_all_intron_RNAseq_plots.py
+scripts/29_old_cell_leaky_intron_determinants.py
+```
+
+Status:
+
+- `analysis/jm105-old-cell-leaky-intron-determinants.py` imported.
+- Scripts 26 and 28 are next import targets; exact full source was visible in project chat but was not imported during this pass.
 
 ### Intronsaurus vNext3AH fix10 archive
 
