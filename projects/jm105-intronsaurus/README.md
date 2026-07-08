@@ -48,10 +48,13 @@ projects/jm105-intronsaurus/
 | `transformation-protocol-rnaseq/transformation-protocol-samples.tsv` | imported in legacy backfill | Sample manifest for JM62-JM73 transformation-protocol subset. | Real sample metadata; no raw reads. |
 | `transformation-protocol-rnaseq/run-transformation-expression.sbatch` | imported in legacy backfill | Slurm wrapper for transformation-protocol expression workflow. | Real workflow; no fake biological data. |
 | `transformation-protocol-rnaseq/check-transformation-job.ps1` | imported in legacy backfill | Windows helper to inspect Euler Slurm status and logs. | Administrative helper; no biological data modified. |
-| `intronsaurus-browser/run-integrate-sun-matched-rna-protein-gene-stories.sbatch` | imported in this pass | Slurm wrapper for Intronsaurus vNext3Y single-entry Gene Stories with matched JM105 RNA and Sun protein-abundance groups. | Real JM105/Sun workflow; no raw data committed. |
-| `intronsaurus-browser/upload-submit-intronsaurus-matched-rna-protein-gene-stories.ps1` | imported in this pass | Windows helper to upload and submit the vNext3Y build to Euler. | Administrative helper; no raw data committed. |
-| `intronsaurus-browser/retrieve-intronsaurus-matched-rna-protein-gene-stories.ps1` | imported in this pass | Windows helper to retrieve vNext3Y HTML, validation, tables, and archive from Euler. | Administrative helper; no raw data committed. |
-| `intronsaurus-browser/check-intronsaurus-matched-rna-protein-gene-stories.sh` | imported in this pass | Safe Euler checker for vNext3Y Slurm status/logs. | Administrative helper; no raw data committed. |
+| `intronsaurus-browser/run-integrate-sun-matched-rna-protein-gene-stories.sbatch` | imported in prior pass | Slurm wrapper for Intronsaurus vNext3Y single-entry Gene Stories with matched JM105 RNA and Sun protein-abundance groups. | Real JM105/Sun workflow; no raw data committed. |
+| `intronsaurus-browser/upload-submit-intronsaurus-matched-rna-protein-gene-stories.ps1` | imported in prior pass | Windows helper to upload and submit the vNext3Y build to Euler. | Administrative helper; no raw data committed. |
+| `intronsaurus-browser/retrieve-intronsaurus-matched-rna-protein-gene-stories.ps1` | imported in prior pass | Windows helper to retrieve vNext3Y HTML, validation, tables, and archive from Euler. | Administrative helper; no raw data committed. |
+| `intronsaurus-browser/check-intronsaurus-matched-rna-protein-gene-stories.sh` | imported in prior pass | Safe Euler checker for vNext3Y Slurm status/logs. | Administrative helper; no raw data committed. |
+| `intronsaurus-browser/patches/upload-prebuilt-scientific-wording-dino-v3ah-fix9.ps1` | imported in this pass as legacy helper | Uploads and unpacks the prebuilt Intronsaurus vNext3AH-fix9 scientific-wording/dino archive on Euler. | Deployment helper only; no raw data committed. |
+| `intronsaurus-browser/patches/retrieve-scientific-wording-dino-v3ah-fix9.ps1` | imported in this pass as legacy helper | Retrieves and opens the vNext3AH-fix9 scientific-wording/dino archive. | Retrieval helper only; no raw data committed. |
+| `intronsaurus-browser/patches/check-scientific-wording-dino-v3ah-fix9-status.sh` | imported in this pass as legacy helper | Checks the vNext3AH-fix9 Euler output folder and validation flags. | Status checker only; no raw data committed. |
 
 ## Backfilled scientific/context documents
 
