@@ -14,6 +14,8 @@ projects/figure-rendering/
     Standalone panel rendering utilities.
   templates/
     Style/layout templates and reusable configuration files.
+  prompts/
+    Reusable prompt/spec artifacts for figure redesign and rendering.
 ```
 
 ## Guardrails
@@ -23,6 +25,8 @@ projects/figure-rendering/
 - Avoid text overlap, spillover, irrelevant panels, and unused whitespace.
 - Clearly distinguish existing panels from newly required panels.
 - If data are absent, mark the panel as `NO DATA`.
+- SVG text should remain editable text.
+- Fixed-canvas rendering scripts should not use `bbox_inches="tight"`.
 
 ## Canonical code status
 
@@ -33,3 +37,10 @@ When imported, use human names such as:
 - `nature-aging-mockups/render-main-figure-layouts.py`
 - `nature-aging-mockups/score-figure-story-architecture.py`
 - `panel-renderers/render-no-data-placeholder.py`
+
+## Backfilled prompt/spec artifacts
+
+| Path | Status | Purpose |
+|---|---|---|
+| `prompts/render-jm105-figure5-powershell-euler.md` | imported exact prompt/spec | Defines the Figure 5 PowerShell + Euler rendering contract, NO DATA rules, lane-map/collision/provenance workflow, and fixed-canvas export requirements. |
+| `prompts/redesign-jm105-manuscript-figure-sequence.md` | imported exact prompt/spec | Defines the Nature Aging / Yves-compatible figure-sequence redesign task, confidence tags, panel inventory, claim architecture, and execution checklist. |
