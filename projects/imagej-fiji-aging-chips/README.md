@@ -29,6 +29,18 @@ These are the highest-priority historical scripts to recover from old ChatGPT ch
 | 4 | `macros/jm128-merge-ros-bf-fl.ijm` | Merge `PosX_BF.tif` + `PosX_FL.tif` from `.../seperate_positions/ROS/`; output to `.../ROS/Merge/`; output `Nup60Gcn5MitoSoxRed_ROS_Pos{outPos}_merged.tif`; `outputOffset = 1`, `firstSourcePos = 0`, `lastSourcePos = 29`; applies frame-1 auto-style contrast for visualization; saves merged TIFFs without altering originals | Exact full macro not yet recovered in this run |
 | 5 | `groovy/jm129-mitosox-virtual-hyperstack-background-subtraction.groovy` | JM129 MitoSOX script for `MitosoxRedInducibleFusionsRepeat.nd2`, `Continue001.nd2`, `Continue002.nd2`; dimensions `2048x2044`, `C=2`, `Z=60`, `T=107/139/145`; global ranges `1-107`, `108-246`, `247-391`; output virtual hyperstack `C=1, Z=60, T=66` or equivalent real MitoSOX frames; rolling-ball background subtraction `100 px`; no 8-bit conversion/auto-contrast for quantitative MitoSOX | Exact full Groovy source not yet recovered in this run |
 
+## Additional recovered source clues, not yet source code
+
+The Google Drive document `Lab Notebook complete copy and paste text dump` contains a JM-076 aging-chip processing protocol for intronless nuclear-encoded mitochondrial genes tagged with Tom70-yemScarlet3. It names exact historical Fiji macro paths, but does not contain the macro bodies. These should be recovered from the Windows path or old chat/file artifacts before committing.
+
+| Historical macro path | Proposed canonical path | Purpose inferred from protocol | Current status |
+|---|---|---|---|
+| `Y:\Jordan\JM076\Macros\Step1_DetectAdjustConvertResize.ijm` | `macros/jm076-detect-adjust-convert-resize.ijm` | First-pass processing of OME-TIFF aging-chip position chunks before manual/stack concatenation. | Exact full source not yet recovered; do not reconstruct from protocol summary |
+| `Y:\Jordan\JM076\Macros\Step2_BriightfieldExtractor.ijm` | `macros/jm076-brightfield-extractor.ijm` | Extract brightfield stack after chunk concatenation; historical filename spelling `Briightfield` preserved as a source clue. | Exact full source not yet recovered; do not reconstruct from protocol summary |
+| `Y:\Jordan\JM076\Macros\Step_3ConvertResize.ijm` | `macros/jm076-convert-resize.ijm` | Convert/resize channel stack before brightfield-slice removal and red-channel extraction. | Exact full source not yet recovered; do not reconstruct from protocol summary |
+| `Y:\Jordan\JM076\Macros\Step4_RemovebrightfieldSlicesFromStack.ijm` | `macros/jm076-remove-brightfield-slices-from-stack.ijm` | Remove brightfield slices from a combined aging-chip stack. | Exact full source not yet recovered; do not reconstruct from protocol summary |
+| `Y:\Jordan\JM076\Macros\Step6_RedChannelMacro.ijm` | `macros/jm076-red-channel-extractor.ijm` | Extract red-channel mitochondrial signal before saving, inversion, and MultiStackReg registration. | Exact full source not yet recovered; do not reconstruct from protocol summary |
+
 ## Quantification guardrails
 
 - For MitoSOX quantitative analysis, do not convert to 8-bit.
