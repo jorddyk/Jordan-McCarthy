@@ -22,24 +22,30 @@ projects/
   README.md
   jm105-intronsaurus/
     README.md
-    analysis/
-    figures/
-    metadata/
+    transformation-protocol-rnaseq/
+    jm134-starvation-switch/
+    jm133-weak-5ss-mud1/
+    figure2-candidate-gate/
+    intronsaurus-browser/
   figure-rendering/
     README.md
     nature-aging-mockups/
     panel-renderers/
     templates/
+  imagej-fiji-aging-chips/
+    README.md
+    macros/
+    groovy/
   language-learning/
     README.md
     active-recall-apps/
-      README.md
   personal-intelligence-agency/
     README.md
     prompts/
     rubrics/
     reports/
 docs/
+  legacy-code-backfill.md
   wiki/
     Jordan-McCarthy-Code-Wiki.md
   handoffs/
@@ -52,7 +58,10 @@ docs/
 |---|---|---|
 | JM105 RNA-seq / intron retention analysis | `projects/jm105-intronsaurus/analysis/` | `calculate-nmd-hidden-intron-retention.py` |
 | JM105 manuscript figures | `projects/jm105-intronsaurus/figures/` | `render-figure-2-total-rna-intron-module.py` |
+| JM105 transformation protocol RNA-seq | `projects/jm105-intronsaurus/transformation-protocol-rnaseq/` | `build-relative-transcript-abundance-excel.py` |
+| JM134 starvation-switch comparison | `projects/jm105-intronsaurus/jm134-starvation-switch/` | `jm134-matched-splicing-index.py` |
 | Figure mockups / Nature Aging layouts | `projects/figure-rendering/nature-aging-mockups/` | `render-main-figure-layouts.py` |
+| ImageJ/Fiji aging-chip macros | `projects/imagej-fiji-aging-chips/macros/` | `jm128-split-nd2-positions-bioformats.ijm` |
 | TELC/German study apps | `projects/language-learning/active-recall-apps/` | `telc-c1-essay-skeleton-active-recall.html` |
 | Personal intelligence automations | `projects/personal-intelligence-agency/prompts/` | `strategic-alert-triage.md` |
 | Signal scoring models | `projects/personal-intelligence-agency/rubrics/` | `strategic-signal-score-0-to-21.md` |
@@ -74,7 +83,7 @@ docs/
 
 ### JM105 / Intronsaurus
 
-Status: active project context; no canonical runnable analysis script has yet been imported.
+Status: active project context; exact source was found for the transformation-protocol workflow and for several JM134 starvation-switch scripts. Initial import is underway.
 
 Known constraints:
 
@@ -84,6 +93,36 @@ Known constraints:
 - Distinguish NMD-off/upf1D raw retained signal from NMD-hidden off-minus-on signal.
 - Avoid unsupported claims that caloric restriction equals starvation.
 - For gene stories, distinguish RNA/host transcript abundance from protein abundance.
+
+#### Recovered source targets
+
+```text
+projects/jm105-intronsaurus/transformation-protocol-rnaseq/
+projects/jm105-intronsaurus/jm134-starvation-switch/
+```
+
+Transformation-protocol source clue:
+
+```text
+/mnt/data/JM105_Transformation_Protocol_Pipeline/
+```
+
+JM134 source clues:
+
+```text
+/mnt/data/JM134_matched_splicing_index.py
+/mnt/data/JM134_submit_matched_SI.sh
+/mnt/data/JM134_rerender_no_overlap.py
+/mnt/data/81_JM134_symlog_clarity_and_notebook.py
+```
+
+JM134 chat-history source targets still needing full text import:
+
+```text
+scripts/79_JM134_audit_and_beta_binomial.py
+scripts/80_JM134_apply_beta_binomial_and_rerender.py
+scripts/83_JM134_final_guide_repair.py
+```
 
 ### Figure rendering / manuscript mockups
 
@@ -96,6 +135,25 @@ Known constraints:
 - Match Nature Aging-style storytelling while remaining Yves-compatible.
 - Use existing figure panels where possible; clearly label newly required panels.
 - Avoid text overlap, spillover, irrelevant panels, and unused whitespace.
+
+### ImageJ/Fiji aging-chip macros
+
+Status: source clues recovered, exact full macro source not yet imported.
+
+Source clues:
+
+```text
+jm128-split-nd2-positions-bioformats.ijm
+jm128-extract-mitosox-c2-every6-zpositions.ijm
+jm129-mitosox-virtual-hyperstack-background-subtraction.groovy
+```
+
+Import constraints:
+
+- Do not commit raw ND2/TIFF stacks.
+- Do not silently convert quantitative data to 8-bit.
+- Do not silently apply auto-contrast to quantitative data.
+- Document channel, Z, T, frame sampling, background subtraction, and output naming.
 
 ### Language-learning apps
 
@@ -112,6 +170,14 @@ Import rule: do not commit partial/truncated HTML. A web app is canonical only w
 
 Status: active scheduled-task system. Reusable prompts and rubrics should be stored under `projects/personal-intelligence-agency/`, not buried in daily handoff logs.
 
+Current source targets:
+
+- Strategic alert triage prompt.
+- Science preemption watch prompt.
+- Swiss leverage radar prompt.
+- Weekly strategic brief/red-team prompt.
+- Daily code handoff prompt.
+
 ## Daily handoff role
 
 Daily handoffs are audit trails, not the repo's main structure.
@@ -127,12 +193,12 @@ A good daily handoff should say:
 
 ### 2026-07-08
 
-- Repository confirmed: `jorddyk/Jordan-McCarthy`
-- Repository visibility: private
-- GitHub permissions: admin/push available through connector
-- Initial bootstrap created `docs/wiki/` and `docs/handoffs/`
-- Repo was then reorganized around `projects/` as the human-facing layer
-- No runnable analysis code committed yet because no complete, verified canonical source file was available in the current run
+- Repository confirmed: `jorddyk/Jordan-McCarthy`.
+- Repository visibility: private.
+- GitHub permissions: admin/push available through connector.
+- Initial backfill documentation created at `docs/legacy-code-backfill.md`.
+- Exact source files found for JM105 transformation-protocol workflow and JM134 starvation-switch analysis.
+- Binary/generated artifacts deliberately not committed: PNG/PDF/SVG renders, xlsx templates/results, tarballs, docx/pptx manuscript artifacts, raw sequencing/microscopy data.
 
 ## Open risks / self-counterintelligence
 
