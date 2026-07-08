@@ -4,9 +4,59 @@ _Last updated: 2026-07-08 Europe/Zurich_
 
 ## Repository purpose
 
-This private repository is the canonical code vault for Jordan McCarthy's ChatGPT-assisted code, analysis, figure-rendering workflows, and reproducibility handoffs.
+This private repository is the canonical code vault for Jordan McCarthy's useful code, analysis scripts, figure-rendering workflows, web apps, and reproducibility support.
 
 Canonical repository: `jorddyk/Jordan-McCarthy`
+
+## Primary organization principle
+
+The repo is organized by **project and purpose**, not by daily code handoff date.
+
+A file belongs where a human would look for it later.
+
+## Human-facing repository map
+
+```text
+README.md
+projects/
+  README.md
+  jm105-intronsaurus/
+    README.md
+    analysis/
+    figures/
+    metadata/
+  figure-rendering/
+    README.md
+    nature-aging-mockups/
+    panel-renderers/
+    templates/
+  language-learning/
+    README.md
+    active-recall-apps/
+      README.md
+  personal-intelligence-agency/
+    README.md
+    prompts/
+    rubrics/
+    reports/
+docs/
+  wiki/
+    Jordan-McCarthy-Code-Wiki.md
+  handoffs/
+    YYYY-MM-DD-code-handoff.md
+```
+
+## What belongs where
+
+| Code type | Human project path | Example human file name |
+|---|---|---|
+| JM105 RNA-seq / intron retention analysis | `projects/jm105-intronsaurus/analysis/` | `calculate-nmd-hidden-intron-retention.py` |
+| JM105 manuscript figures | `projects/jm105-intronsaurus/figures/` | `render-figure-2-total-rna-intron-module.py` |
+| Figure mockups / Nature Aging layouts | `projects/figure-rendering/nature-aging-mockups/` | `render-main-figure-layouts.py` |
+| TELC/German study apps | `projects/language-learning/active-recall-apps/` | `telc-c1-essay-skeleton-active-recall.html` |
+| Personal intelligence automations | `projects/personal-intelligence-agency/prompts/` | `strategic-alert-triage.md` |
+| Signal scoring models | `projects/personal-intelligence-agency/rubrics/` | `strategic-signal-score-0-to-21.md` |
+| Daily audit trail | `docs/handoffs/` | `2026-07-08-code-handoff.md` |
 
 ## Operating rules
 
@@ -18,12 +68,13 @@ Canonical repository: `jorddyk/Jordan-McCarthy`
 6. Distinguish real data, simulated toy data, and `NO DATA` placeholders.
 7. Do not commit raw FASTQ, BAM, SAM, CRAM, BAI, bigWig, archives, SLURM logs, scratch folders, cache folders, temporary renders, or Euler output clutter.
 8. Do not commit duplicate files named like `final.py`, `final_final.py`, `test.py`, `newplot.py`, `v2_fixed.py`, or `chatgpt_version.py`.
+9. Do not commit truncated code. A code file is canonical only when the complete source is available and runnable.
 
 ## Current project areas
 
 ### JM105 / Intronsaurus
 
-Status: active project context, but no canonical runnable analysis script was verified for commit in the 2026-07-08 handoff.
+Status: active project context; no canonical runnable analysis script has yet been imported.
 
 Known constraints:
 
@@ -36,7 +87,7 @@ Known constraints:
 
 ### Figure rendering / manuscript mockups
 
-Status: active, but no canonical script verified for commit in this handoff.
+Status: active project context; no canonical runnable renderer has yet been imported.
 
 Known constraints:
 
@@ -46,33 +97,45 @@ Known constraints:
 - Use existing figure panels where possible; clearly label newly required panels.
 - Avoid text overlap, spillover, irrelevant panels, and unused whitespace.
 
-### Code handoff workflow
+### Language-learning apps
 
-Each handoff should include:
+Status: candidate source files detected, but full source import still required.
 
-- Repo
-- Branch name
-- PR title
-- Commit message
-- Files to create/update
-- Files not to commit
-- Scientific/data status
-- Implementation notes
-- Final code
+Candidates:
 
-## Last-known canonical handoff decisions
+- `kartoffel_vocabulary_active_recall_WORKING.html` -> proposed canonical path `projects/language-learning/active-recall-apps/kartoffel-vocabulary-active-recall.html`
+- `german-drill-6.html` -> proposed canonical path `projects/language-learning/active-recall-apps/telc-c1-essay-skeleton-active-recall.html`
+
+Import rule: do not commit partial/truncated HTML. A web app is canonical only when the complete file from `<!DOCTYPE html>` through `</html>` is available.
+
+### Personal intelligence agency
+
+Status: active scheduled-task system. Reusable prompts and rubrics should be stored under `projects/personal-intelligence-agency/`, not buried in daily handoff logs.
+
+## Daily handoff role
+
+Daily handoffs are audit trails, not the repo's main structure.
+
+A good daily handoff should say:
+
+- What project files changed.
+- Why they changed.
+- Whether canonical code was imported, updated, or not found.
+- What was deliberately not committed.
+
+## Last-known canonical decisions
 
 ### 2026-07-08
 
 - Repository confirmed: `jorddyk/Jordan-McCarthy`
 - Repository visibility: private
 - GitHub permissions: admin/push available through connector
-- Repo was initially empty at time of bootstrap
-- Created this wiki as the initial canonical code-governance document
-- No runnable analysis code committed because no clean, verified canonical code was identified in the current run
+- Initial bootstrap created `docs/wiki/` and `docs/handoffs/`
+- Repo was then reorganized around `projects/` as the human-facing layer
+- No runnable analysis code committed yet because no complete, verified canonical source file was available in the current run
 
 ## Open risks / self-counterintelligence
 
-Current code-focused internal risk: code and figure-generation context is spread across chats, Drive artifacts, and task prompts rather than a single repository structure.
+Current code-focused internal risk: the repo can become a graveyard of daily logs instead of a useful human codebase.
 
-Containment action: use this wiki as the single source of truth for canonical code status and update it only from verified handoff content.
+Containment action: daily handoffs must update project folders first and handoff logs second.
