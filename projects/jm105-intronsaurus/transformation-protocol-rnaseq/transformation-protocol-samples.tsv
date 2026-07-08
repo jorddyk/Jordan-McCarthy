@@ -1,0 +1,19 @@
+# Purpose: sample manifest for the 12 JM105 transformation-protocol RNA-seq samples.
+# Original source clue: recovered from uploaded folder `/mnt/data/JM105_Transformation_Protocol_Pipeline/JM105_transformation_protocol_samples.tsv`.
+# Expected inputs: consumed by resolve-fastq-files.py and the Euler pipeline.
+# Expected outputs: none; this is configuration metadata.
+# Known assumptions: sample numbers 62-73 correspond to the transformation-protocol subset; aliases support FASTQ discovery.
+# Data status: real sample metadata; not raw sequencing data and not simulated data.
+sample_number	sample_id	condition	replicate	aliases
+62	PEGDNA_1	PEG	1	PEGDNA_1;PEG_1;Sample62;Sample_62;S62
+63	PEGDNA_2	PEG	2	PEGDNA_2;PEG_2;Sample63;Sample_63;S63
+64	PEGDNA_3	PEG	3	PEGDNA_3;PEG_3;Sample64;Sample_64;S64
+65	LOG_1	LOG	1	LOG_1;Sample65;Sample_65;S65
+66	LOG_2	LOG	2	LOG_2;Sample66;Sample_66;S66
+67	LOG_3	LOG	3	LOG_3;Sample67;Sample_67;S67
+68	AFTER_HS_1	AFTER_HS	1	AFTER_HS_1;AFTERHS_1;Sample68;Sample_68;S68
+69	AFTER_HS_2	AFTER_HS	2	AFTER_HS_2;AFTERHS_2;Sample69;Sample_69;S69
+70	AFTER_HS_3	AFTER_HS	3	AFTER_HS_3;AFTERHS_3;Sample70;Sample_70;S70
+71	2H_RECOVERY_1	2H_RECOVERY	1	2H_RECOVERY_1;2HRECOVERY_1;Sample71;Sample_71;S71
+72	2H_RECOVERY_2	2H_RECOVERY	2	2H_RECOVERY_2;2HRECOVERY_2;Sample72;Sample_72;S72
+73	2H_RECOVERY_3	2H_RECOVERY	3	2H_RECOVERY_3;2HRECOVERY_3;Sample73;Sample_73;S73
