@@ -6,7 +6,7 @@ Human purpose: preserve canonical code for the interactive JM105/JM101 Intronsau
 
 | File | Purpose | Status |
 |---|---|---|
-| `integrate-sun-matched-rna-protein-gene-stories.py` | Builds Intronsaurus vNext3Y from the precise v3M base and integrates Sun et al. 2021 MOESM3 protein-abundance comparisons into single-entry Gene Stories. | Exact source recovered from the vNext3Y code bundle and imported. |
+| `integrate-sun-matched-rna-protein-gene-stories.py` | Builds Intronsaurus vNext3Y from the precise v3M base and integrates Sun et al. 2021 MOESM3 protein-abundance comparisons into single-entry Gene Stories. | Exact source recovered from the vNext3Y code bundle in the active project sandbox; full text-source import still pending because this pass successfully imported the operational helpers first. Do not reconstruct from summary. |
 | `run-integrate-sun-matched-rna-protein-gene-stories.sbatch` | Euler Slurm wrapper for the vNext3Y build. | Exact source recovered and imported. |
 | `upload-submit-intronsaurus-matched-rna-protein-gene-stories.ps1` | Windows helper to upload the builder, source archive, Sun workbook, and status checker to Euler and submit the job. | Exact source recovered and imported. |
 | `retrieve-intronsaurus-matched-rna-protein-gene-stories.ps1` | Windows helper to retrieve vNext3Y HTML, validation, tables, and archive from Euler. | Exact source recovered and imported. |
@@ -42,4 +42,4 @@ Status: exact full Python source was recovered in the active project sandbox and
 
 ## vNext3Y design decision
 
-The canonical imported version is vNext3Y because it supersedes intermediate v3P-v3X attempts. v3Y keeps Gene Stories as a single main entry with no right-side gene panel, groups comparisons by biological contrast, and shows the matching JM105 RNA/rRNA-depleted and Sun protein-abundance layers together.
+The canonical target version is vNext3Y because it supersedes intermediate v3P-v3X attempts. v3Y keeps Gene Stories as a single main entry with no right-side gene panel, groups comparisons by biological contrast, and shows the matching JM105 RNA/rRNA-depleted and Sun protein-abundance layers together.
