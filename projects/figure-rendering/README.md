@@ -36,6 +36,7 @@ projects/figure-rendering/
 | Path | Status | Purpose | Data status |
 |---|---|---|---|
 | `panel-renderers/render-figure1ef-total-rrna-print.ps1` | imported from current project chat | PowerShell orchestration that writes and runs the recovered Python renderer for JM105 Figure 1E/F content-only, print-typography panels; outputs transparent SVG/PNG/3x PNG, white preview PNG, TSVs, and JSON audit. | Uses real local JM105 total/rRNA-depleted source tables if present. No fake biological data. No poly-A data. Panel E uses raw +MUD1 NMD-off/upf1D IR; Panel F uses an audited raw NMD-off set definition, not off-minus-on NMD-hidden IR. |
+| `panel-renderers/jm105-figure3-mud1-cr-panels/` | partial exact-source import from current project chat | Recovered final v21 JM105 Figure 3 Mud1/CR panel-renderer package. README and Euler runner are committed; the complete Python source package remains a follow-up exact-source decomposition target from the recovered tarball. | Uses real JM105 total/rRNA-depleted summary tables. No fake biological data. No poly-A / P-versus-T / mRNA-like / P−T construct data. Final recovered run had `TEXT_OVERLAPS_TOTAL=0` and `TEXT_CLIPPED_TOTAL=0`. |
 
 ## Backfilled prompt/spec artifacts
 
