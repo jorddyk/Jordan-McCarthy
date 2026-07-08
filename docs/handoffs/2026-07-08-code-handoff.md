@@ -60,6 +60,15 @@ Updated across the 2026-07-08 passes:
 - `docs/wiki/Jordan-McCarthy-Code-Wiki.md`
 - `docs/handoffs/2026-07-08-code-handoff.md`
 
+Continuation cleanup audit:
+
+- Verified repo remains private and writable on `main` with admin/push permission.
+- Verified active personal-intelligence scheduled-task prompts are already canonicalized at the five paths listed above.
+- Verified project-level personal-intelligence backfill tracking exists at `projects/personal-intelligence-agency/docs/legacy-code-backfill.md`.
+- Removed two duplicate prompt files that were accidentally created during a continuation audit, preserving the canonical filenames:
+  - `projects/personal-intelligence-agency/prompts/code-handoff-scheduled-task.md`
+  - `projects/personal-intelligence-agency/prompts/strategic-brief-redteam.md`
+
 ## Files deliberately not committed
 
 - Raw FASTQ, BAM, SAM, CRAM, BAI, bigWig, ND2, TIFF, archives, SLURM logs, scratch folders, generated plots, Excel workbooks, PowerPoint/Word manuscript artifacts, and output tarballs.
@@ -72,6 +81,7 @@ Updated across the 2026-07-08 passes:
 - Reconstructed versions of older Rsubread/STAR/IRFinder scripts where only provenance summaries were found.
 - Runnable Figure 5 renderer code, because the available source was an exact prompt/spec, not the generated PowerShell/Bash/Python itself.
 - Raw Gmail/calendar contents and transient personal-intelligence task outputs. Only reusable prompt/spec logic was imported.
+- During the continuation audit, no additional runnable source was imported because searches returned already-imported prompt/spec artifacts, scientific documents, source clues, or incomplete summaries rather than complete runnable code.
 
 ## Scientific/data status
 
@@ -110,6 +120,12 @@ GitHub connector status:
 - Visibility: private
 - Permissions: admin/push available
 - Default branch: `main`
+
+Continuation audit search status:
+
+- File search found uploaded Figure 5 prompt/spec files and manuscript documents, including `Fig5_McCarthy.docx`, `Fig2_McCarthy.docx`, and `What Data Shows.docx`, but not additional full runnable source code.
+- Google Drive search found MitoSOX and lab-notebook source clues, including `Lab Notebook complete copy and paste text dump`, but not complete `.ijm`/Groovy macro bodies.
+- GitHub PR audit found open PR #1, `Legacy code backfill: JM133 and recovery docs`, containing JM133 weak-5SS/Mud1 code on branch `legacy-code-backfill-2026-07-08`; it remains open and unmerged in the connector-visible state.
 
 ## Final code / prompt paths
 
@@ -157,7 +173,7 @@ JM128/JM129 Fiji/Groovy microscopy scripts
 language-learning active-recall HTML apps
 runnable Figure 5 PowerShell/Bash/Python renderer source
 JM134 beta-binomial / final layout repair scripts
-JM133 weak-5SS/Mud1 source from Euler
+JM133 weak-5SS/Mud1 source from Euler or open PR #1 if it should be merged to main
 personal intelligence exact scoring rubric and report templates
 ```
 
@@ -166,3 +182,7 @@ personal intelligence exact scoring rubric and report templates
 Detected risk: the repo can become a graveyard of daily logs and prompt artifacts instead of a useful human codebase.
 
 Containment action: prompt/spec artifacts were saved only when exact and reusable, clearly marked non-runnable, and placed under project-purpose folders. Missing source remains in recovery docs rather than being reconstructed.
+
+Continuation audit risk: duplicate prompt files can appear when a continuation run does not first inspect existing canonical filenames.
+
+Containment action: duplicate prompt files created during the continuation audit were deleted, and the handoff now records the canonical filenames to use going forward.
