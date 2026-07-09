@@ -2,7 +2,7 @@
 
 Purpose: persistent project rulebook for future ChatGPT sessions that render JM105/Intronsaurus/Nature Aging figure panels. This file exists because Jordan repeatedly had to restate the same requirements after failed render attempts: complete runnable PowerShell/Euler code, real data provenance, source discovery before plotting, large text, fixed lanes, no clipping, and proper artifact outputs.
 
-Scope: all JM105 / Intronsaurus / Nature Aging figure-panel rendering work in this repository. Treat this as an allowlist-style operating contract, not a suggestion list.
+Scope: all JM105 / Intronsaurus / Nature Aging figure-panel rendering work in this repository, including adjacent JM132/JM133/JM134 control panels that are part of the same manuscript figure-rendering workflow. Treat this as an allowlist-style operating contract, not a suggestion list.
 
 ## Closed criticism ledger
 
@@ -33,6 +33,7 @@ Scope: all JM105 / Intronsaurus / Nature Aging figure-panel rendering work in th
 | “Searches need to use both systematic and common names.” | Any gene lookup, force-label list, story-gene audit, candidate query, or label selection must resolve both systematic IDs and standard/common gene names before declaring a gene absent. Use SGD/GFF-derived maps plus hardcoded overrides for known story genes when needed. |
 | “Only common names should ever be shown on the figure panel.” | Figure-panel labels must display standard/common gene names only. Systematic ORF IDs may appear in source TSVs/audits/manifests, but not as visible panel labels unless no standard name exists and Jordan explicitly allows systematic IDs. |
 | “There are unexplained symbols on the right side.” | Do not use marker shape as an extra visual channel unless the biological meaning is explained in a legend or right lane. If marker shape only encodes gene identity redundantly, use one consistent marker and direct common-name labels instead. |
+| “For JM132, starting at column H, adjacent cells are division frame numbers.” | For JM132 cell-cycle Excel workbooks, do not sort all numeric cells and do not infer timepoints from arbitrary numeric columns. Use the explicitly defined division-frame columns starting at Excel column H. For division interval `i`, subtract the adjacent frame columns: `frame[i+1] - frame[i]`, then multiply by 10 minutes/frame. Preserve row order, audit nonmonotonic/duplicate adjacent pairs, ask Jordan if the start column or frame interval is ambiguous, and use SEM for plotted mean error bars unless the source plot explicitly states SD. |
 
 ## Panel identity rule
 
@@ -74,6 +75,19 @@ NSP1 -> YJL041W
 ## Visual encoding rule
 
 Every visual channel must either carry a clear biological meaning or be removed. Color, shape, size, alpha, line style, and outline must not encode unexplained categories. If a marker shape is used, the legend or right lane must say exactly what shape means. If shape only distinguishes named genes that are already directly labeled, use one shared reference marker instead.
+
+## JM132 cell-cycle Excel parsing rule
+
+For `JM132 Cell Cycle Length CR.xlsx` and related JM132 cell-cycle workbooks:
+
+1. The source is an Excel workbook of division frame numbers, not precomputed cell-cycle lengths and not an RNA-seq table.
+2. Starting at Excel column **H**, values are sequential frame numbers at which divisions occurred.
+3. Each plotted cell-cycle interval is computed from adjacent frame columns in the same row: `interval_i_frames = frame_column_(i+1) - frame_column_i`; `cell_cycle_length_minutes = interval_i_frames * 10`.
+4. Do not sort all numeric values to create a monotonic pseudo-series. Preserve adjacent column order. If an adjacent pair is nonmonotonic, duplicated, blank, or negative, audit it and either skip that pair or stop and ask Jordan, depending on severity.
+5. Do not include metadata columns, cell numbers, glucose percentage, position, or other numeric fields as division frames.
+6. Plotted error bars for the line plots should be **SEM**, not SD, unless the source plot explicitly says otherwise.
+7. Proper statistics must respect the nested/repeated-measures structure. Do not treat every interval point as independent. Use mother cell as the primary statistical unit or use a mixed/repeated-measures model; report the chosen statistical unit in the manifest.
+8. If the start column, frame interval, or meaning of “Dies on chip?” changes or is ambiguous, ask Jordan before rendering.
 
 ## Mandatory sequence for future ChatGPT figure-panel rendering
 
