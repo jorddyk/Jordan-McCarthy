@@ -8,7 +8,7 @@ Scope: JM132 cell-cycle panels, especially Figure 3H / `JM132 Cell Cycle Length 
 - Each row is one mother cell.
 - Starting at Excel column **G**, each additional column to the right is the frame number for the next observed division event for that same cell.
 - For division interval `i`, compute `frames_i = frame_column_(i+1) - frame_column_i` within the same row.
-- Convert to minutes as `cell_cycle_length_minutes = frames_i * 15` for the JM132 Figure 3H workbook, matching the original analysis convention.
+- Convert to minutes as `cell_cycle_length_minutes = frames_i * 10` for the JM132 Figure 3H workbook.
 - Do not sort frame values.
 - Do not infer timepoints from arbitrary numeric cells.
 - Do not use metadata columns, glucose percentage, cell number, position, or any numeric fields before column G as division frames.
@@ -27,17 +27,13 @@ Scope: JM132 cell-cycle panels, especially Figure 3H / `JM132 Cell Cycle Length 
 
 ## Y-axis rule
 
-For final Nature Aging-style panels:
+For JM132 Figure 3H final-style panels:
 
-1. Compute candidate y-axis limits from the actual plotted quantities, including raw interval points and mean ± SEM bounds.
-2. Use the same y-axis limits across glucose-condition subplots unless the panel explicitly argues for separate scales.
-3. The default lower bound is 0 minutes unless negative values exist; negative values should normally trigger a data audit because cell-cycle lengths cannot be negative.
-4. The upper bound must include all plotted mean+SEM bars and all raw points under the explicit inclusion rules. Do not silently omit outlier values to make the panel prettier.
-5. Do not hardcode 0–400 merely because an older draft used it.
-6. Snap the upper bound to a readable Nature-style tick step after adding breathing room.
-7. Prefer 50-minute ticks when the upper limit is ≤250, 100-minute ticks when ≤600, 200-minute ticks when ≤1200, and 500-minute ticks above that.
-8. Write `y_axis_audit.tsv` containing raw min/max, SEM min/max, chosen limits, tick step, clipping count, and whether both panels share the scale.
-9. Fail before rendering if any plotted point or error bar would be clipped by the chosen axis.
+1. Use a fixed shared visible y-axis of **0–400 minutes** for both glucose-condition subplots, matching the intended Figure 3H display.
+2. Plot all positive adjacent intervals; do not filter outliers to make the plot prettier.
+3. Write `values_above_visible_y_axis_audit.tsv` if any raw point or mean ± SEM bound is above 400 minutes, so clipping/visibility is explicit and not silent.
+4. Write `y_axis_audit.tsv` containing raw min/max, SEM min/max, chosen limits, tick step, clipping count, and whether both panels share the scale.
+5. If a value exceeds 400, do not pretend it was removed; state in the manifest that the visible axis is fixed to 0–400 and above-axis values are audited.
 
 ## Visual/layout rule
 
