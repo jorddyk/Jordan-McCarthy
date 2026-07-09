@@ -5,12 +5,15 @@ Scope: JM132 cell-cycle panels, especially Figure 3H / `JM132 Cell Cycle Length 
 ## Non-negotiable parsing rule
 
 - The workbook contains division frame numbers, not precomputed cell-cycle lengths.
-- Starting at Excel column **H**, the values are sequential division frames.
+- Each row is one mother cell.
+- Starting at Excel column **G**, each additional column to the right is the frame number for the next observed division event for that same cell.
 - For division interval `i`, compute `frames_i = frame_column_(i+1) - frame_column_i` within the same row.
 - Convert to minutes as `cell_cycle_length_minutes = frames_i * 15` for the JM132 Figure 3H workbook, matching the original analysis convention.
 - Do not sort frame values.
 - Do not infer timepoints from arbitrary numeric cells.
-- Do not use metadata columns, glucose percentage, cell number, position, or any numeric fields before column H as division frames.
+- Do not use metadata columns, glucose percentage, cell number, position, or any numeric fields before column G as division frames.
+- A row with `k` contiguous numeric frame columns from G contributes exactly `k - 1` division intervals, numbered `1..k-1`. It is impossible for a cell to contribute intervals to the right of its last numeric frame column.
+- The maximum plotted division interval must equal the maximum contiguous-frame-count minus one across rows; fail if a renderer creates division intervals beyond that.
 - Do not skip or winsorize outlier intervals by default. Plot the data honestly and audit extremes rather than removing them.
 - Preserve adjacent column order and audit every adjacent pair.
 - If the start column or frame interval is ambiguous, ask Jordan before rendering.
