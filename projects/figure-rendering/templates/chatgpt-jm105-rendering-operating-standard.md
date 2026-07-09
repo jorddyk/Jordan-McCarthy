@@ -19,7 +19,7 @@ Scope: all JM105 / Intronsaurus / Nature Aging figure-panel rendering work in th
 | “I need SVG/PDF/PNG plus preview.” | Required outputs: transparent SVG, transparent PDF, transparent PNG, white-background preview PNG, source TSV, manifest, and render audit. |
 | “You are playing layout whack-a-mole.” | Emit lane map before code and collision inventory before patching. Patch exact named collisions by reallocating lane geometry, not random nudges. |
 | “It has too much white space / does not fill the canvas.” | The occupied plot/design footprint must be audited against the declared canvas. Use the panel canvas efficiently while preserving aspect ratio and lanes. |
-| “Preserve panel aspect ratios.” | Existing rendered/PPT panel aspect ratios are constraints unless Jordan explicitly allows shrinking. Mud1-deck panels may be shrinkable only when explicitly stated. |
+| “Preserve panel aspect ratios.” | Existing rendered/PPT panel aspect ratios are constraints unless resizing is explicitly allowed. Mud1-deck panels may be shrinkable only when explicitly stated. |
 | “This looks AI-generated.” | Figure titles/panels must use human manuscript wording: claim-first, concise, Yves-compatible, and Nature Aging-style. Avoid generic labels like “state-space” unless the manuscript actually argues that. |
 | “No fake data.” | No simulated biology. If a data source is missing, write `NO DATA` or fail with an audit. Do not fabricate a panel to satisfy the render. |
 | “Figure 2 must not use poly-A/P-vs-T/mRNA-like/P−T.” | For JM105 Figure 2 and adjacent candidate-gate panels, only touch total/rRNA-depleted JM105 data unless Jordan explicitly reverses this. Enforce by allowlisting the allowed subset, not by post-hoc exclusion. |
@@ -30,6 +30,8 @@ Scope: all JM105 / Intronsaurus / Nature Aging figure-panel rendering work in th
 | “This should have been found from previous successful chats.” | Before new rendering code, inspect existing repo contracts under `projects/figure-rendering/` and relevant recovered previous runs; reuse harness rules rather than inventing a one-off. |
 | “Old figure panel names do not automatically become new figure panel names.” | Match the requested panel by the current specification, source deck, slide number, target aspect ratio, and biological metric. Do not select an old folder or previously rendered asset just because it has the same panel label. |
 | “Slide 17 was the starting point, not good enough.” | Treat a referenced PPT slide as a source/starting artifact only. The task is to transform or replace it according to the current spec; do not rerender it as-is and do not treat it as already acceptable unless Jordan explicitly says so. |
+| “Searches need to use both systematic and common names.” | Any gene lookup, force-label list, story-gene audit, candidate query, or label selection must resolve both systematic IDs and standard/common gene names before declaring a gene absent. Use SGD/GFF-derived maps plus hardcoded overrides for known story genes when needed. |
+| “Only common names should ever be shown on the figure panel.” | Figure-panel labels must display standard/common gene names only. Systematic ORF IDs may appear in source TSVs/audits/manifests, but not as visible panel labels unless no standard name exists and Jordan explicitly allows systematic IDs. |
 
 ## Panel identity rule
 
@@ -48,19 +50,40 @@ forbidden_substitutions:
 
 A render may not proceed unless `source_status` is correctly classified. A slide labeled “existing” or “closest existing” is not automatically a final target. A historical output folder named `Figure_1D` is not automatically the requested new Figure 1D.
 
+## Gene identity and labeling rule
+
+Before any gene-specific search, forced label, story-gene audit, or on-panel gene label:
+
+1. Build a bidirectional alias map from available annotation files, preferably the current SGD GFF/GTF used by the analysis.
+2. Add manual overrides for manuscript story genes and known suffix variants when annotation tables collapse suffixes, for example `NBL1` may need both `YHR199C` and `YHR199C-A` depending on the source table.
+3. Search every requested gene against both standard/common names and systematic IDs.
+4. Record the exact matched key in a TSV audit.
+5. Show only the common/standard name on the figure panel. Keep systematic IDs in TSV/provenance only.
+6. Do not report “not found” until both common and systematic aliases have been tested.
+
+For current JM105 Figure 1D story genes, the minimum hardcoded rescue map is:
+
+```text
+GLC7 -> YER133W
+MCM21 -> YDR318W
+NBL1 -> YHR199C,YHR199C-A
+NSP1 -> YJL041W
+```
+
 ## Mandatory sequence for future ChatGPT figure-panel rendering
 
 1. **Recover prior constraints first.** Read this standard plus `figure-panel-generation-lane-audit-contract.md` before writing renderer code.
 2. **Lock panel identity.** Confirm the requested panel by current spec, source deck/slide, aspect ratio, biological metric, and allowed data subset. Do not substitute a historical same-letter panel.
-3. **State the biological job in one sentence.** Include exact metric definitions and forbidden data subsets.
-4. **Emit lane map.** Every object gets exactly one lane.
-5. **Emit collision inventory.** Name exact likely collisions and geometry resolutions.
-6. **Discover data sources.** On Euler, inventory candidate source tables/scripts and write `source_manifest.tsv` before deriving panel TSV.
-7. **Build panel TSV.** Validate required columns and write `panel_input.tsv`; stop if absent.
-8. **Render only after validation.** Generate fixed-canvas transparent SVG/PDF/PNG plus white preview.
-9. **Audit outputs.** Write text clipping/overlap audit, manifest, run summary, transparency check, and `DATA_CHANGED=False` unless intentionally modified.
-10. **Retrieve outputs.** PowerShell runner copies the entire output folder to a user-owned Windows directory and prints the exact files to open.
-11. **If failure occurs, classify it.** Data discovery, data coverage, syntax, scheduler, renderer, serialization, or retrieval. Do not guess.
+3. **Resolve gene identities.** Build common/systematic alias maps before any force labels, story-gene audit, or candidate search. Visible panel labels must be common names only.
+4. **State the biological job in one sentence.** Include exact metric definitions and forbidden data subsets.
+5. **Emit lane map.** Every object gets exactly one lane.
+6. **Emit collision inventory.** Name exact likely collisions and geometry resolutions.
+7. **Discover data sources.** On Euler, inventory candidate source tables/scripts and write `source_manifest.tsv` before deriving panel TSV.
+8. **Build panel TSV.** Validate required columns and write `panel_input.tsv`; stop if absent.
+9. **Render only after validation.** Generate fixed-canvas transparent SVG/PDF/PNG plus white preview.
+10. **Audit outputs.** Write text clipping/overlap audit, manifest, run summary, transparency check, and `DATA_CHANGED=False` unless intentionally modified.
+11. **Retrieve outputs.** PowerShell runner copies the entire output folder to a user-owned Windows directory and prints the exact files to open.
+12. **If failure occurs, classify it.** Data discovery, data coverage, schema validation, gene-alias resolution, syntax, scheduler, rendering, serialization, or retrieval. Do not guess.
 
 ## Required constants/comments in figure code where applicable
 
@@ -81,6 +104,7 @@ Figure 2 data subset = total/rRNA-depleted JM105 only; no poly-A, P-versus-T, mR
 - Complete runnable code: imports, entry point, no undefined variables, no placeholders.
 - Euler and PowerShell compatibility.
 - Source manifest and run audit.
+- Common/systematic gene-alias audit for any story genes or forced labels.
 - Output existence checks before success message.
 
 ## Default output folder convention
