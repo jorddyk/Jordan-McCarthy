@@ -4,6 +4,46 @@ Purpose: persistent project rulebook for future ChatGPT sessions that render JM1
 
 Scope: all JM105 / Intronsaurus / Nature Aging figure-panel rendering work in this repository, including adjacent JM132/JM133/JM134 control panels that are part of the same manuscript figure-rendering workflow. Treat this as an allowlist-style operating contract, not a suggestion list.
 
+## Start-here files for future chats
+
+When a new ChatGPT conversation starts for panel-by-panel PowerPoint figure audit work, consult these repo files before rendering:
+
+```text
+projects/figure-rendering/templates/chatgpt-jm105-rendering-operating-standard.md
+projects/figure-rendering/templates/nature-aging-panel-audit-new-chat-prompt.md
+projects/figure-rendering/templates/jm132-cell-cycle-rendering-rules.md
+projects/figure-rendering/panel-renderers/jm132-cell-cycle-fig3h/README.md
+projects/figure-rendering/panel-renderers/jm132-cell-cycle-fig3h/run_jm132_fig3h_g_column_10min_y400.ps1
+projects/figure-rendering/panel-renderers/jm105-rendering-harness/README.md
+projects/figure-rendering/panel-renderers/jm105-rendering-harness/jm105_source_inventory.py
+projects/figure-rendering/panel-renderers/jm105-rendering-harness/run-jm105-source-inventory-from-windows.ps1
+projects/figure-rendering/README.md
+```
+
+The `nature-aging-panel-audit-new-chat-prompt.md` file is the canonical prompt to paste into a new conversation. It tells the next assistant to integrate the standards, inspect the source panel and provenance, and wait for Jordan to specify the next panel/source before rendering.
+
+## Nature Aging visual style target
+
+The desired visual style is reverse engineered from successful Nature Aging papers: clean, restrained, high-information but uncluttered, with strong typographic hierarchy and no decorative excess. Panels should look like final manuscript panels rather than exploratory analysis plots.
+
+Implementation rules:
+
+- Use simple sans-serif typography, preferably Arial-compatible.
+- Use clean white preview backgrounds and transparent final assets.
+- Use restrained colors with biological meaning; do not introduce arbitrary marker shapes or colors.
+- Use light gridlines only when they help quantitative reading.
+- Keep axes readable at final panel size.
+- Use compact legends that do not compete with the data.
+- Use direct, precise condition labels.
+- Move explanatory prose to captions/manifests rather than crowding the panel.
+- Fill the allotted panel area; do not leave huge unused margins or shrink the plot into a tiny island.
+- Preserve original panel aspect ratio when required by the PowerPoint/composite.
+- When a panel must fit a new slot, play layout Tetris without distorting the intended visualization.
+- If the composite supplies the panel letter/title, do not duplicate it inside the rendered panel.
+- Do not shrink text to solve crowding; allocate lanes or simplify nonessential visible text.
+- For statistics, show only the compact statistic needed to interpret the panel; put full methods/statistical details in TSV audits/manifests.
+- A Nature Aging editor should see honest data, clear biological comparison, readable axes, no unexplained decorative choices, no hidden exclusions, and no visual trickery.
+
 ## Closed criticism ledger
 
 | Repeated criticism from Jordan | Permanent implementation rule |
@@ -33,7 +73,8 @@ Scope: all JM105 / Intronsaurus / Nature Aging figure-panel rendering work in th
 | “Searches need to use both systematic and common names.” | Any gene lookup, force-label list, story-gene audit, candidate query, or label selection must resolve both systematic IDs and standard/common gene names before declaring a gene absent. Use SGD/GFF-derived maps plus hardcoded overrides for known story genes when needed. |
 | “Only common names should ever be shown on the figure panel.” | Figure-panel labels must display standard/common gene names only. Systematic ORF IDs may appear in source TSVs/audits/manifests, but not as visible panel labels unless no standard name exists and Jordan explicitly allows systematic IDs. |
 | “There are unexplained symbols on the right side.” | Do not use marker shape as an extra visual channel unless the biological meaning is explained in a legend or right lane. If marker shape only encodes gene identity redundantly, use one consistent marker and direct common-name labels instead. |
-| “For JM132, starting at column H, adjacent cells are division frame numbers.” | For JM132 cell-cycle Excel workbooks, do not sort all numeric cells and do not infer timepoints from arbitrary numeric columns. Use the explicitly defined division-frame columns starting at Excel column H. For division interval `i`, subtract the adjacent frame columns: `frame[i+1] - frame[i]`, then multiply by 10 minutes/frame. Preserve row order, audit nonmonotonic/duplicate adjacent pairs, ask Jordan if the start column or frame interval is ambiguous, and use SEM for plotted mean error bars unless the source plot explicitly states SD. |
+| “For JM132, you guessed the workbook structure repeatedly.” | For JM132 Figure 3H, use the dedicated rule file and successful renderer: each row is one mother cell; Excel column G onward contains ordered division-event frame numbers; adjacent subtraction within row; 10 minutes/frame; a row with k frames contributes exactly k−1 intervals; fixed visible y-axis 0–400; SEM; all cells included regardless of Dies on chip unless Jordan explicitly changes the rule. |
+| “PowerShell executed Python because the heredoc broke.” | For long renderers, prefer a PowerShell block that writes a local Python file and local Bash runner, uploads both to Euler, runs `python3 -m py_compile`, captures `render.log`, retrieves the `out` folder, and opens the white preview PNG. Avoid fragile nested Bash heredocs inside interactive PowerShell. |
 
 ## Panel identity rule
 
@@ -78,26 +119,50 @@ Every visual channel must either carry a clear biological meaning or be removed.
 
 ## JM132 cell-cycle Excel parsing rule
 
-For `JM132 Cell Cycle Length CR.xlsx` and related JM132 cell-cycle workbooks:
+For `JM132 Cell Cycle Length CR.xlsx` and related JM132 Figure 3H workbooks, the currently accepted rule is in `projects/figure-rendering/templates/jm132-cell-cycle-rendering-rules.md` and the successful implementation is in `projects/figure-rendering/panel-renderers/jm132-cell-cycle-fig3h/run_jm132_fig3h_g_column_10min_y400.ps1`.
+
+Summary of the accepted JM132 Figure 3H rule:
 
 1. The source is an Excel workbook of division frame numbers, not precomputed cell-cycle lengths and not an RNA-seq table.
-2. Starting at Excel column **H**, values are sequential frame numbers at which divisions occurred.
-3. Each plotted cell-cycle interval is computed from adjacent frame columns in the same row: `interval_i_frames = frame_column_(i+1) - frame_column_i`; `cell_cycle_length_minutes = interval_i_frames * 10`.
-4. Do not sort all numeric values to create a monotonic pseudo-series. Preserve adjacent column order. If an adjacent pair is nonmonotonic, duplicated, blank, or negative, audit it and either skip that pair or stop and ask Jordan, depending on severity.
-5. Do not include metadata columns, cell numbers, glucose percentage, position, or other numeric fields as division frames.
-6. Plotted error bars for the line plots should be **SEM**, not SD, unless the source plot explicitly says otherwise.
-7. Proper statistics must respect the nested/repeated-measures structure. Do not treat every interval point as independent. Use mother cell as the primary statistical unit or use a mixed/repeated-measures model; report the chosen statistical unit in the manifest.
-8. If the start column, frame interval, or meaning of “Dies on chip?” changes or is ambiguous, ask Jordan before rendering.
+2. Each row is one mother cell.
+3. Starting at Excel column **G**, each additional column to the right is the next division-event frame number for that same cell.
+4. Each plotted cell-cycle interval is computed from adjacent frame columns in the same row: `interval_i_frames = frame_column_(i+1) - frame_column_i`; `cell_cycle_length_minutes = interval_i_frames * 10`.
+5. A row with `k` contiguous numeric frame values from G contributes exactly `k - 1` intervals. No renderer may create intervals beyond the row’s last numeric frame column.
+6. Do not sort all numeric values to create a monotonic pseudo-series. Preserve adjacent column order.
+7. Do not include metadata columns, cell numbers, glucose percentage, position, or other numeric fields before column G as division frames.
+8. Include all cells regardless of `Dies on chip?` unless Jordan explicitly asks otherwise.
+9. Do not skip or winsorize high intervals unless Jordan explicitly asks. Values above the visible axis are audited, not removed.
+10. The approved final-style visible y-axis for Fig3H is fixed at 0–400 minutes, shared across glucose-condition subplots.
+11. Plotted error bars are SEM, not SD, unless the source plot explicitly states otherwise.
+12. Proper statistics must respect the nested/repeated-measures structure. Do not treat every interval point as independent. Use mother cell as the primary statistical unit or use a mixed/repeated-measures model; report the chosen statistical unit in the manifest.
+13. If the start column, frame interval, or meaning of `Dies on chip?` changes or is ambiguous, ask Jordan before rendering.
+
+## PowerShell + Euler delivery pattern
+
+For long panel renderers, Jordan prefers a single complete PowerShell block that can be pasted directly into PowerShell. The block should:
+
+1. Set `$ErrorActionPreference = "Stop"`.
+2. Use a clear `C:\Users\jmccarthy\Downloads\...` local output folder.
+3. Write a local Python renderer file and a local Bash runner file as UTF-8 without BOM.
+4. Upload the source data, Python file, and Bash runner to Euler with `scp`.
+5. Convert CRLF to LF on Euler using `perl -pi -e 's/\r$//'`.
+6. Run `python3 -m py_compile` before executing the renderer.
+7. Capture stdout/stderr to `render.log`.
+8. Retrieve the full remote `out` folder.
+9. Open the white-background preview PNG automatically.
+10. If the preview is missing, list retrieved files and throw a clear error pointing to `render.log` and `RUN_SUMMARY.txt`.
+
+Avoid fragile nested Bash heredocs in interactive PowerShell for long renderers because broken heredocs can cause Python to execute as PowerShell.
 
 ## Mandatory sequence for future ChatGPT figure-panel rendering
 
-1. **Recover prior constraints first.** Read this standard plus `figure-panel-generation-lane-audit-contract.md` before writing renderer code.
+1. **Recover prior constraints first.** Read this standard plus relevant panel-specific standards before writing renderer code.
 2. **Lock panel identity.** Confirm the requested panel by current spec, source deck/slide, aspect ratio, biological metric, and allowed data subset. Do not substitute a historical same-letter panel.
 3. **Resolve gene identities.** Build common/systematic alias maps before any force labels, story-gene audit, or candidate search. Visible panel labels must be common names only.
 4. **State the biological job in one sentence.** Include exact metric definitions and forbidden data subsets.
 5. **Emit lane map.** Every object gets exactly one lane.
 6. **Emit collision inventory.** Name exact likely collisions and geometry resolutions.
-7. **Discover data sources.** On Euler, inventory candidate source tables/scripts and write `source_manifest.tsv` before deriving panel TSV.
+7. **Discover data sources.** On Euler, inventory candidate source tables/scripts and write `source_manifest.tsv` before deriving panel TSV, unless Jordan has supplied an unambiguous source workbook/table and asks not to search.
 8. **Build panel TSV.** Validate required columns and write `panel_input.tsv`; stop if absent.
 9. **Render only after validation.** Generate fixed-canvas transparent SVG/PDF/PNG plus white preview.
 10. **Audit outputs.** Write text clipping/overlap audit, manifest, run summary, transparency check, and `DATA_CHANGED=False` unless intentionally modified.
