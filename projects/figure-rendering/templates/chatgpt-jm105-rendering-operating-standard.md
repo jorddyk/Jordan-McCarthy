@@ -32,6 +32,7 @@ Scope: all JM105 / Intronsaurus / Nature Aging figure-panel rendering work in th
 | “Slide 17 was the starting point, not good enough.” | Treat a referenced PPT slide as a source/starting artifact only. The task is to transform or replace it according to the current spec; do not rerender it as-is and do not treat it as already acceptable unless Jordan explicitly says so. |
 | “Searches need to use both systematic and common names.” | Any gene lookup, force-label list, story-gene audit, candidate query, or label selection must resolve both systematic IDs and standard/common gene names before declaring a gene absent. Use SGD/GFF-derived maps plus hardcoded overrides for known story genes when needed. |
 | “Only common names should ever be shown on the figure panel.” | Figure-panel labels must display standard/common gene names only. Systematic ORF IDs may appear in source TSVs/audits/manifests, but not as visible panel labels unless no standard name exists and Jordan explicitly allows systematic IDs. |
+| “There are unexplained symbols on the right side.” | Do not use marker shape as an extra visual channel unless the biological meaning is explained in a legend or right lane. If marker shape only encodes gene identity redundantly, use one consistent marker and direct common-name labels instead. |
 
 ## Panel identity rule
 
@@ -70,6 +71,10 @@ NBL1 -> YHR199C,YHR199C-A
 NSP1 -> YJL041W
 ```
 
+## Visual encoding rule
+
+Every visual channel must either carry a clear biological meaning or be removed. Color, shape, size, alpha, line style, and outline must not encode unexplained categories. If a marker shape is used, the legend or right lane must say exactly what shape means. If shape only distinguishes named genes that are already directly labeled, use one shared reference marker instead.
+
 ## Mandatory sequence for future ChatGPT figure-panel rendering
 
 1. **Recover prior constraints first.** Read this standard plus `figure-panel-generation-lane-audit-contract.md` before writing renderer code.
@@ -105,6 +110,7 @@ Figure 2 data subset = total/rRNA-depleted JM105 only; no poly-A, P-versus-T, mR
 - Euler and PowerShell compatibility.
 - Source manifest and run audit.
 - Common/systematic gene-alias audit for any story genes or forced labels.
+- Visual-encoding audit: no unexplained shape/size/alpha/color channel.
 - Output existence checks before success message.
 
 ## Default output folder convention
