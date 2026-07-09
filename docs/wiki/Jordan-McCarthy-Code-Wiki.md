@@ -1,6 +1,6 @@
 # Jordan McCarthy Code Wiki
 
-_Last updated: 2026-07-08 Europe/Zurich_
+_Last updated: 2026-07-09 Europe/Zurich_
 
 ## Repository purpose
 
@@ -10,9 +10,7 @@ Canonical repository: `jorddyk/Jordan-McCarthy`
 
 ## Primary organization principle
 
-The repo is organized by **project and purpose**, not by daily code handoff date.
-
-A file belongs where a human would look for it later.
+The repo is organized by **project and purpose**, not by daily code handoff date. A file belongs where a human would look for it later.
 
 ## Human-facing repository map
 
@@ -71,10 +69,10 @@ docs/
 | Figure prompt/spec artifacts | `projects/figure-rendering/prompts/` | `render-jm105-figure5-powershell-euler.md` |
 | Figure panel renderers | `projects/figure-rendering/panel-renderers/` | `render-figure1ef-total-rrna-print.ps1` |
 | ImageJ/Fiji aging-chip macros | `projects/imagej-fiji-aging-chips/macros/` | `jm128-split-nd2-positions-bioformats.ijm` |
-| TELC/German study apps | `projects/language-learning/active-recall-apps/` | `telc-c1-essay-skeleton-active-recall.html` |
+| TELC/German study apps | `projects/language-learning/active-recall-apps/` | `kartoffel-vocabulary-active-recall.html` |
 | Personal intelligence automations | `projects/personal-intelligence-agency/prompts/` | `strategic-alert-triage.md` |
 | Signal scoring models | `projects/personal-intelligence-agency/rubrics/` | `strategic-signal-score-0-to-21.md` |
-| Daily audit trail | `docs/handoffs/` | `2026-07-08-code-handoff.md` |
+| Daily audit trail | `docs/handoffs/` | `2026-07-09-code-handoff.md` |
 
 ## Operating rules
 
@@ -84,7 +82,7 @@ docs/
 4. Never generate fake biological data.
 5. If an experiment has not been done, outputs must clearly say `NO DATA`.
 6. Distinguish real data, simulated toy data, and `NO DATA` placeholders.
-7. Do not commit raw FASTQ, BAM, SAM, CRAM, BAI, bigWig, archives, SLURM logs, scratch folders, cache folders, temporary renders, or Euler output clutter.
+7. Do not commit raw FASTQ, BAM, SAM, CRAM, BAI, bigWig, archives, SLURM logs, scratch folders, cache folders, temporary renders, Euler output clutter, raw ND2 files, or raw TIFF stacks.
 8. Do not commit duplicate files named like `final.py`, `final_final.py`, `test.py`, `newplot.py`, or `v2_fixed.py`.
 9. Do not commit truncated code. A code file is canonical only when the complete source is available and runnable.
 10. Prompt/spec artifacts may be saved when they are exact reusable workflow assets, but must be marked as non-runnable.
@@ -125,44 +123,26 @@ Known constraints:
 |---|---|---|
 | `projects/jm105-intronsaurus/docs/what-data-shows-summary.md` | Preserves the current user-provided interpretation of CR/Mud1/NMD-hidden leakage, Mud1-GFP, intron architecture, RP/non-RP stratification, and Parenteau comparison logic. | Imported exact summary; not runnable code. |
 
-#### Recovered source targets
-
-```text
-projects/jm105-intronsaurus/transformation-protocol-rnaseq/
-projects/jm105-intronsaurus/jm134-starvation-switch/
-```
-
-Transformation-protocol source clue:
-
-```text
-/mnt/data/JM105_Transformation_Protocol_Pipeline/
-```
-
-JM134 source clues:
-
-```text
-/mnt/data/JM134_matched_splicing_index.py
-/mnt/data/JM134_submit_matched_SI.sh
-/mnt/data/JM134_rerender_no_overlap.py
-/mnt/data/81_JM134_symlog_clarity_and_notebook.py
-scripts/79_JM134_audit_and_beta_binomial.py
-scripts/80_JM134_apply_beta_binomial_and_rerender.py
-scripts/83_JM134_final_guide_repair.py
-```
-
-Current JM105 exact-source targets still needing import:
+#### Current JM105 exact-source targets still needing import
 
 ```text
 scripts/26_paired_gene_body_normalized_leakage_test.py
 scripts/28_make_synopsis_aligned_all_intron_RNAseq_plots.py
 scripts/29_old_cell_leaky_intron_determinants.py original SVG-rich Euler draft
+110_JM101_JM105_integrate_intronsaurus.py
+111_JM101_STAR_align_array.sbatch
+112_JM101_integrate_after_STAR.sbatch
+Rsubread Step 2 hard-resume/turbo scripts
+Step 3 DESeq2
+IRFinder drafts
+Intronsaurus vNext3/vNext3AE/vNext3I/vNext3Y Python builders and reader bundles
+JM133 weak-5SS/Mud1 source
+Figure 2 candidate-gate script
 ```
-
-Other JM105 source-recovery targets retained in `docs/legacy-code-backfill.md`: JM133 weak-5SS/Mud1 source, Figure 2 candidate-gate script, Intronsaurus vNext3I/vNext3Y Python builders and patch chain, JM101/JM105 integration, STAR/sbatch, Rsubread step 2/3, IRFinder drafts, and Intronsaurus reader bundles.
 
 ### Figure rendering / manuscript mockups
 
-Status: active project context. The first canonical runnable panel renderer has now been imported, along with exact reusable prompt/spec artifacts.
+Status: active project context. The first canonical runnable panel renderer has been imported, along with exact reusable prompt/spec artifacts.
 
 Known constraints:
 
@@ -180,7 +160,7 @@ Known constraints:
 
 | Path | Purpose | Status |
 |---|---|---|
-| `projects/figure-rendering/panel-renderers/render-figure1ef-total-rrna-print.ps1` | Recovered PowerShell + embedded-Python renderer for JM105 Figure 1E/F content-only print panels. It writes SVG, transparent PNG, 3x PNG, white preview PNG, TSV panel data, and JSON audit/provenance. | Imported runnable source from current project chat. Uses real local JM105 total/rRNA-depleted tables if present; no fake data; no poly-A. Panel E uses raw +MUD1 NMD-off/upf1D IR; Panel F is explicitly an audited raw NMD-off set, not off-minus-on NMD-hidden IR. |
+| `projects/figure-rendering/panel-renderers/render-figure1ef-total-rrna-print.ps1` | Recovered PowerShell + embedded-Python renderer for JM105 Figure 1E/F content-only print panels. It writes SVG, transparent PNG, 3x PNG, white preview PNG, TSV panel data, and JSON audit/provenance. | Imported runnable source from project chat. Uses real local JM105 total/rRNA-depleted tables if present; no fake data; no poly-A. Panel E uses raw +MUD1 NMD-off/upf1D IR; Panel F is explicitly an audited raw NMD-off set, not off-minus-on NMD-hidden IR. |
 
 #### Imported prompt/spec artifacts
 
@@ -212,23 +192,40 @@ Source clues:
 jm128-split-nd2-positions-bioformats.ijm
 jm128-extract-mitosox-c2-every6-zpositions.ijm
 jm129-mitosox-virtual-hyperstack-background-subtraction.groovy
+Image001.nd2
+Image001_Pos0_Hyperstack.tif
+Y:/Laura/JM128 How do superoxide levels change during aging/seperate_positions
+MitosoxRedInducibleFusionsRepeat.nd2
+Continue001.nd2
+Continue002.nd2
+rollingBallRadius=100
+C=2
+Z=60
+T=107/139/145
+Nup60Gcn5MitoSoxRed_RLS_Pos0.tif
+Nup60Gcn5MitoSoxRed_ROS_Pos{outPos}_merged.tif
 ```
 
 Import constraints:
 
-- Do not commit raw ND2/TIFF stacks.
+- Do not commit raw ND2 or TIFF stacks.
 - Do not silently convert quantitative data to 8-bit.
 - Do not silently apply auto-contrast to quantitative data.
 - Document channel, Z, T, frame sampling, background subtraction, and output naming.
 
 ### Language-learning apps
 
-Status: candidate source files detected, but full source import still required.
+Status: first complete single-file HTML app imported on 2026-07-09. Additional app source remains pending.
 
-Candidates:
+#### Imported runnable source
 
-- `kartoffel_vocabulary_active_recall_WORKING.html` -> proposed canonical path `projects/language-learning/active-recall-apps/kartoffel-vocabulary-active-recall.html`
-- `german-drill-6.html` -> proposed canonical path `projects/language-learning/active-recall-apps/telc-c1-essay-skeleton-active-recall.html`
+| Path | Purpose | Status |
+|---|---|---|
+| `projects/language-learning/active-recall-apps/kartoffel-vocabulary-active-recall.html` | English-to-German Kartoffel-text vocabulary trainer with aliases, missed pile, shuffle/loop controls, timer ring, typo tolerance, and mobile-friendly single-page UI. | Imported complete source from File Library artifact `kartoffel_vocabulary_active_recall_WORKING.html`; exact file included `<!DOCTYPE html>` through `</html>`. |
+
+#### Current source candidates
+
+- `german-drill-6.html` -> proposed canonical path `projects/language-learning/active-recall-apps/telc-c1-essay-skeleton-active-recall.html`; pending exact full-source recovery.
 
 Import rule: do not commit partial/truncated HTML. A web app is canonical only when the complete file from `<!DOCTYPE html>` through `</html>` is available.
 
@@ -269,6 +266,17 @@ A good daily handoff should say:
 
 ## Last-known canonical decisions
 
+### 2026-07-09
+
+- Repository confirmed: `jorddyk/Jordan-McCarthy`.
+- Repository visibility: private.
+- GitHub permissions: admin/push available through connector.
+- Imported full runnable language-learning web app: `projects/language-learning/active-recall-apps/kartoffel-vocabulary-active-recall.html`.
+- Updated `projects/language-learning/README.md` so the Kartoffel app is no longer merely a candidate.
+- File Library source evidence: `kartoffel_vocabulary_active_recall_WORKING.html` was opened and contained complete source from `<!DOCTYPE html>` through `</html>`.
+- Containment action for code-sprawl risk: moved a recovered complete web app into project-first structure and removed it from the pending-candidate list rather than leaving it in handoff/backfill notes.
+- No scientific data or microscopy raw files were committed.
+
 ### 2026-07-08
 
 - Repository confirmed: `jorddyk/Jordan-McCarthy`.
@@ -281,6 +289,4 @@ A good daily handoff should say:
 - Imported exact prompt/spec artifacts for Figure 5 rendering, manuscript figure-sequence redesign, Figure 2-style lane/audit panel generation, figure ZIP+PowerShell artifact packaging, legacy-code backfill workflow, and all five active personal-intelligence scheduled tasks.
 - Imported `projects/figure-rendering/panel-renderers/render-figure1ef-total-rrna-print.ps1` as the first canonical runnable figure-panel renderer.
 - Imported `projects/jm105-intronsaurus/docs/what-data-shows-summary.md` as a scientific interpretation guardrail, not code.
-- Updated `projects/README.md`, `projects/jm105-intronsaurus/README.md`, `projects/jm105-intronsaurus/intronsaurus-browser/README.md`, `projects/jm105-intronsaurus/intronsaurus-browser/patches/README.md`, `projects/figure-rendering/README.md`, `projects/figure-rendering/panel-renderers/README.md`, `projects/figure-rendering/docs/legacy-code-backfill.md`, `projects/personal-intelligence-agency/README.md`, figure-rendering legacy docs, personal-intelligence legacy docs, and this wiki across the 2026-07-08 backfill passes.
 - Binary/generated artifacts deliberately not committed: PNG/PDF/SVG renders, xlsx templates/results, tarballs, generated standalone Intronsaurus HTML, docx/pptx manuscript artifacts, raw sequencing/microscopy data.
-- Full exact source not yet imported for ImageJ/Fiji macros, language-learning HTML apps, some Intronsaurus reader bundles/builders, Figure 2F final renderer complete script, and older JM101/Rsubread/STAR scripts.
