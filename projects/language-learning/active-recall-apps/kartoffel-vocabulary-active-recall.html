@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Kartoffel Vocabulary — Active Recall</title>
+<style>
+:root{
+  --bg:#121927; --bg2:#1b2537; --card:#202b3d; --card2:#182131;
+  --ink:#f1eadf; --muted:#8d99aa; --faint:#5f6b7d;
+  --accent:#e6b566; --good:#9fc6b1; --bad:#e68a8a; --line:rgba(241,234,223,.12);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;background:radial-gradient(100% 90% at 50% 0%,#243049 0%,var(--bg) 55%,#0d1320 100%);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+body{display:flex;justify-content:center;padding:18px 14px calc(20px + env(safe-area-inset-bottom))}
+.app{width:100%;max-width:520px;display:flex;flex-direction:column;gap:16px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;color:var(--faint);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding-top:4px}
+.top b{color:var(--accent);font-weight:500;letter-spacing:.08em}
+.card{
+  min-height:390px;border:1px solid var(--line);border-radius:24px;
+  background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+  box-shadow:0 30px 80px -45px #000,inset 0 1px 0 rgba(255,255,255,.05);
+  padding:24px 20px;display:flex;flex-direction:column;gap:16px;align-items:center
+}
+.label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.cue{width:100%;min-height:88px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:1.42rem;line-height:1.32;font-weight:650}
+.context{width:100%;text-align:center;color:var(--muted);font-size:.93rem;line-height:1.38;min-height:42px}
+.ringbox{position:relative;width:96px;height:96px;margin:2px 0 4px}
+.ring{width:96px;height:96px;transform:rotate(-90deg)}
+.track{fill:none;stroke:rgba(241,234,223,.09);stroke-width:6}
+.fill{fill:none;stroke:var(--accent);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .2s linear;filter:drop-shadow(0 0 8px rgba(230,181,102,.4))}
+.timer{position:absolute;inset:0;display:grid;place-items:center;font-size:2rem;font-variant-numeric:tabular-nums}
+.inputrow{display:flex;width:100%;gap:9px}
+input{
+  width:100%;border:1px solid var(--line);border-radius:15px;background:rgba(0,0,0,.18);
+  color:var(--ink);padding:15px 14px;font-size:1.05rem;outline:none
+}
+input:focus{border-color:rgba(230,181,102,.65);box-shadow:0 0 0 3px rgba(230,181,102,.12)}
+button{
+  appearance:none;border:1px solid var(--line);background:rgba(255,255,255,.045);color:var(--ink);
+  border-radius:999px;padding:12px 15px;font-size:.95rem;font-weight:700;cursor:pointer
+}
+button:active{transform:scale(.98)}
+.primary{background:var(--accent);border-color:var(--accent);color:#151b27}
+.answer{
+  width:100%;display:none;text-align:center;border-top:1px solid var(--line);padding-top:16px;
+  font-family:Georgia,"Times New Roman",serif;color:var(--good);font-size:1.75rem;line-height:1.24
+}
+.answer small{display:block;margin-top:8px;color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:.88rem;line-height:1.35}
+.feedback{min-height:24px;text-align:center;font-weight:700}
+.good{color:var(--good)} .bad{color:var(--bad)} .meh{color:var(--accent)}
+.progress{height:4px;background:rgba(241,234,223,.09);border-radius:3px;overflow:hidden}
+.progress i{display:block;height:100%;width:0%;background:var(--accent);border-radius:3px;transition:width .25s ease}
+.controls{display:flex;flex-direction:column;gap:12px;align-items:center}
+.row{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
+.pill{display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:6px;background:rgba(255,255,255,.035)}
+.pill button{padding:6px 11px;border:none;background:transparent}
+.pill span{min-width:36px;text-align:center;color:var(--accent);font-weight:700;font-variant-numeric:tabular-nums}
+.stats{color:var(--muted);font-size:.86rem;text-align:center;line-height:1.35}
+.toggle.on{background:var(--accent);border-color:var(--accent);color:#151b27}
+.list{display:none;border:1px solid var(--line);border-radius:18px;padding:12px;background:rgba(255,255,255,.025);max-height:220px;overflow:auto}
+.list h3{font-size:.9rem;color:var(--accent);margin:0 0 8px}
+.list p{margin:8px 0;color:var(--muted);font-size:.9rem;line-height:1.35}
+@media(max-width:390px){.cue{font-size:1.28rem}.answer{font-size:1.55rem}.card{min-height:380px;padding:22px 17px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top"><span>Kartoffel text · active recall</span><b id="count">1 / 1</b></div>
+  <div class="card">
+    <div class="label">English → German</div>
+    <div class="cue" id="cue"></div>
+    <div class="context" id="context"></div>
+    <div class="ringbox" aria-hidden="true">
+      <svg class="ring" viewBox="0 0 100 100">
+        <circle class="track" cx="50" cy="50" r="43"></circle>
+        <circle class="fill" id="ring" cx="50" cy="50" r="43"></circle>
+      </svg>
+      <div class="timer" id="timer">8</div>
+    </div>
+    <div class="inputrow">
+      <input id="guess" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Type the German…" />
+      <button class="primary" id="check">Check</button>
+    </div>
+    <div class="feedback" id="feedback"></div>
+    <div class="answer" id="answer"></div>
+  </div>
+  <div class="progress"><i id="bar"></i></div>
+  <div class="controls">
+    <div class="row">
+      <button id="reveal">Reveal</button>
+      <button class="primary" id="next">Next</button>
+      <button id="missed">Missed pile</button>
+      <button id="restart">Restart</button>
+    </div>
+    <div class="row">
+      <button class="toggle" id="shuffle">Shuffle</button>
+      <button class="toggle" id="loop">Loop</button>
+      <div class="pill"><button id="minus">−</button><span id="pauseVal">8s</span><button id="plus">+</button></div>
+    </div>
+    <div class="stats" id="stats"></div>
+  </div>
+  <div class="list" id="missedList"></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+const baseItems = [
+  {en:"living; alive", de:"lebenden", aliases:["lebend","lebenden"], note:"die dort lebenden Menschen"},
+  {en:"cultivated; grew deliberately", de:"kultivierten", aliases:["kultivieren","kultivierten","kultiviert"], note:"kultivierten Kartoffeln"},
+  {en:"cultivation locations / growing conditions", de:"Anbaulagen", aliases:["anbaulagen","die anbaulagen","anbaulage"], note:"verschiedensten Anbaulagen"},
+  {en:"original forms / ancestral forms", de:"Urformen", aliases:["urformen","die urformen","urform"], note:"weit entfernt von den Urformen"},
+  {en:"brought forth; produced by nature", de:"hervorgebracht", aliases:["hervorgebracht","hervorbringen"], note:"wie von der Natur hervorgebracht"},
+  {en:"barren; harsh; meagre", de:"kargen", aliases:["karg","kargen","karge"], note:"in den kargen Bergen / diese karge Insel"},
+  {en:"to thrive; grow well", de:"gedeihen", aliases:["gedeihen","gedeiht"], note:"wo Mais nur noch ... gedeihen kann"},
+  {en:"provisions; food supplies for a journey", de:"Proviant", aliases:["proviant","der proviant"], note:"als Proviant für die Heimreise"},
+  {en:"ended", de:"endete", aliases:["endete","enden"], note:"Das Verzehren ... endete oft mit ..."},
+  {en:"symptoms; manifestations; appearances", de:"Erscheinungen", aliases:["erscheinungen","die erscheinungen","erscheinung"], note:"Vergiftungserscheinungen"},
+  {en:"prejudices", de:"Vorurteile", aliases:["vorurteile","die vorurteile","vorurteil"], note:"Vorurteile gegenüber dieser Pflanze"},
+  {en:"blooming; flowering", de:"blühenden", aliases:["blühend","blühenden","blühende"], note:"dieser schön blühenden Pflanze"},
+  {en:"contradictory", de:"widersprüchliche", aliases:["widersprüchlich","widerspruechlich","widersprüchliche","widerspruechliche"], note:"widersprüchliche Geschichten"},
+  {en:"contemporary; of that time", de:"zeitgenössischen", aliases:["zeitgenössisch","zeitgenoessisch","zeitgenössischen","zeitgenoessischen"], note:"zeitgenössischen Berichte"},
+  {en:"reporters; chroniclers", de:"Berichterstattern", aliases:["berichterstatter","berichterstattern","den berichterstattern"], note:"von damaligen Berichterstattern"},
+  {en:"all too; excessively", de:"allzu", aliases:["allzu"], note:"allzu oft"},
+  {en:"confused with; mistaken for", de:"verwechselt", aliases:["verwechselt","verwechseln"], note:"mit Yamswurzel ... verwechselt"},
+  {en:"admittedly; indeed; although in a zwar...aber structure", de:"zwar", aliases:["zwar"], note:"haben zwar ... sind aber ..."},
+  {en:"tradition-conditioned; caused by tradition", de:"traditionsbedingte", aliases:["traditionsbedingt","traditionsbedingte"], note:"traditionsbedingte Hemmnisse"},
+  {en:"obstacles; hindrances; inhibitions", de:"Hemmnisse", aliases:["hemmnisse","die hemmnisse","hemmnis"], note:"Hemmnisse standen ihr im Weg"},
+  {en:"planting / spreading / application", de:"Ausbringung", aliases:["ausbringung","die ausbringung"], note:"Ausbringung und Ernte"},
+  {en:"harvest", de:"Ernte", aliases:["ernte","die ernte"], note:"Ausbringung und Ernte"},
+  {en:"grazing", de:"weidendes", aliases:["weidend","weidendes","weidende"], note:"Wild und weidendes Vieh"},
+  {en:"livestock; cattle", de:"Vieh", aliases:["vieh","das vieh"], note:"weidendes Vieh / Vieh und Getreide"},
+  {en:"to damage; to harm someone/something", de:"Schaden zufügen", aliases:["schaden zufügen","schaden zufuegen","zufügen","zufuegen"], note:"keinen Schaden zuzufügen"},
+  {en:"to thresh grain", de:"dreschen", aliases:["dreschen"], note:"weder dreschen, noch mahlen"},
+  {en:"to grind; to mill", de:"mahlen", aliases:["mahlen"], note:"weder dreschen, noch mahlen"},
+  {en:"neither / not either; used with noch", de:"weder", aliases:["weder"], note:"weder dreschen, noch mahlen"},
+  {en:"modest; humble; simple", de:"bescheidenen", aliases:["bescheiden","bescheidenen"], note:"an dem bescheidenen Torffeuer"},
+  {en:"peat fire", de:"Torffeuer", aliases:["torffeuer","das torffeuer"], note:"an dem bescheidenen Torffeuer"},
+  {en:"grain; cereal crops", de:"Getreide", aliases:["getreide","das getreide"], note:"Vieh und Getreide"}
+];
+
+let items = baseItems.slice();
+let index = 0, correct = 0, attempted = 0, pauseSec = 8, loop = false, shuffle = false, timer = null, startedAt = 0;
+const R = 43, C = 2 * Math.PI * R;
+
+const cue = document.getElementById("cue");
+const context = document.getElementById("context");
+const guess = document.getElementById("guess");
+const check = document.getElementById("check");
+const reveal = document.getElementById("reveal");
+const next = document.getElementById("next");
+const feedback = document.getElementById("feedback");
+const answer = document.getElementById("answer");
+const count = document.getElementById("count");
+const bar = document.getElementById("bar");
+const stats = document.getElementById("stats");
+const ring = document.getElementById("ring");
+const timerEl = document.getElementById("timer");
+const missedBtn = document.getElementById("missed");
+const missedList = document.getElementById("missedList");
+const restartBtn = document.getElementById("restart");
+const shuffleBtn = document.getElementById("shuffle");
+const loopBtn = document.getElementById("loop");
+const minus = document.getElementById("minus");
+const plus = document.getElementById("plus");
+const pauseVal = document.getElementById("pauseVal");
+
+ring.style.strokeDasharray = C;
+let misses = [];
+
+function norm(s){
+  return (s || "")
+    .toLowerCase()
+    .trim()
+    .replace(/[.,;:!?()[\]{}"“”„]/g," ")
+    .replace(/\b(der|die|das|den|dem|des|ein|eine|einen|einem|einer|eines)\b/g," ")
+    .replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss")
+    .replace(/\s+/g," ")
+    .trim();
+}
+function lev(a,b){
+  const m=a.length,n=b.length,dp=[];
+  for(let i=0;i<=m;i++){dp[i]=[i]}
+  for(let j=1;j<=n;j++){dp[0][j]=j}
+  for(let i=1;i<=m;i++){
+    for(let j=1;j<=n;j++){
+      dp[i][j]=Math.min(dp[i-1][j]+1,dp[i][j-1]+1,dp[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+    }
+  }
+  return dp[m][n];
+}
+function setRing(frac){
+  ring.style.strokeDashoffset = C*(1-frac);
+  timerEl.textContent = Math.max(0, Math.ceil(frac*pauseSec));
+}
+function current(){ return items[index]; }
+function render(){
+  clearInterval(timer);
+  const it = current();
+  cue.textContent = it.en;
+  context.textContent = "From the potato text: " + it.note;
+  guess.value = "";
+  feedback.textContent = "";
+  feedback.className = "feedback";
+  answer.style.display = "none";
+  answer.innerHTML = "";
+  count.textContent = (index+1) + " / " + items.length;
+  bar.style.width = (index/items.length*100) + "%";
+  stats.textContent = "Score: " + correct + " correct out of " + attempted + " checked answers · Missed: " + misses.length;
+  setRing(1);
+  startedAt = Date.now();
+  timer = setInterval(function(){
+    const elapsed = (Date.now() - startedAt)/1000;
+    const frac = Math.max(0, 1 - elapsed/pauseSec);
+    setRing(frac);
+    if(frac <= 0) clearInterval(timer);
+  }, 120);
+  setTimeout(()=>guess.focus(),50);
+}
+function showAnswer(msg, cls){
+  const it = current();
+  clearInterval(timer);
+  answer.style.display = "block";
+  answer.innerHTML = it.de + "<small>" + it.note + "</small>";
+  if(msg){
+    feedback.textContent = msg;
+    feedback.className = "feedback " + cls;
+  }
+  bar.style.width = ((index+1)/items.length*100) + "%";
+}
+function checkAnswer(){
+  const it = current();
+  const g = norm(guess.value);
+  if(!g){ feedback.textContent = "Type something first, or tap Reveal."; feedback.className = "feedback meh"; return; }
+  const aliases = it.aliases.map(norm);
+  const exact = aliases.includes(g);
+  const close = aliases.some(a => a.length > 4 && lev(g,a) <= 1) || aliases.some(a => a.length > 8 && lev(g,a) <= 2);
+  attempted++;
+  if(exact || close){
+    correct++;
+    showAnswer(exact ? "Correct." : "Close enough — check spelling/ending.", exact ? "good" : "meh");
+  } else {
+    if(!misses.some(x => x.de === it.de)) misses.push(it);
+    showAnswer("Missed. Say the answer aloud once before moving on.", "bad");
+  }
+  stats.textContent = "Score: " + correct + " correct out of " + attempted + " checked answers · Missed: " + misses.length;
+}
+function nextItem(){
+  if(index < items.length-1){ index++; render(); return; }
+  if(loop){ index = 0; if(shuffle) shuffleItems(); render(); return; }
+  clearInterval(timer);
+  cue.textContent = "Done.";
+  context.textContent = "Use Missed pile for the only words your brain actually failed to retrieve.";
+  answer.style.display = "block";
+  answer.innerHTML = "Final score: " + correct + " / " + attempted + "<small>" + misses.length + " in missed pile.</small>";
+  feedback.textContent = "";
+  count.textContent = items.length + " / " + items.length;
+  bar.style.width = "100%";
+}
+function shuffleItems(){
+  for(let i=items.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [items[i],items[j]]=[items[j],items[i]];
+  }
+}
+function restart(all=true){
+  if(all){ items = baseItems.slice(); if(shuffle) shuffleItems(); }
+  index = 0; correct = 0; attempted = 0; misses = [];
+  missedList.style.display = "none";
+  render();
+}
+function showMissed(){
+  missedList.style.display = missedList.style.display === "block" ? "none" : "block";
+  if(missedList.style.display === "block"){
+    if(!misses.length){ missedList.innerHTML = "<h3>Missed pile</h3><p>Nothing missed yet.</p>"; return; }
+    missedList.innerHTML = "<h3>Missed pile</h3>" + misses.map(x => "<p><b>"+x.en+"</b><br><span style='color:var(--good)'>"+x.de+"</span><br>"+x.note+"</p>").join("");
+  }
+}
+check.addEventListener("click", checkAnswer);
+reveal.addEventListener("click", () => showAnswer("Revealed. Count it as missed if you could not retrieve it.", "meh"));
+next.addEventListener("click", nextItem);
+restartBtn.addEventListener("click", () => restart(true));
+missedBtn.addEventListener("click", showMissed);
+shuffleBtn.addEventListener("click", () => { shuffle = !shuffle; shuffleBtn.classList.toggle("on", shuffle); restart(true); });
+loopBtn.addEventListener("click", () => { loop = !loop; loopBtn.classList.toggle("on", loop); });
+minus.addEventListener("click", () => { pauseSec = Math.max(3, pauseSec-1); pauseVal.textContent = pauseSec+"s"; render(); });
+plus.addEventListener("click", () => { pauseSec = Math.min(20, pauseSec+1); pauseVal.textContent = pauseSec+"s"; render(); });
+guess.addEventListener("keydown", e => {
+  if(e.key === "Enter"){
+    if(answer.style.display === "block") nextItem();
+    else checkAnswer();
+  }
+});
+render();
+})();
+</script>
+</body>
+</html>
