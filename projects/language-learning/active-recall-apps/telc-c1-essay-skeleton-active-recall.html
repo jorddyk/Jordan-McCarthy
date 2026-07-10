@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Active Recall — telc C1 · Set 6</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono&display=swap');
+
+  :root{
+    --bg:#1a212e;
+    --bg-deep:#141a25;
+    --ink:#ECE7DD;
+    --muted:#8893a6;
+    --faint:#5d6678;
+    --accent:#E6B566;
+    --accent-soft:rgba(230,181,102,.14);
+    --de:#9fc6b1;
+    --line:rgba(236,231,221,.10);
+    --serif:'Newsreader',Georgia,'Times New Roman',serif;
+    --sans:'Hanken Grotesk',system-ui,-apple-system,sans-serif;
+    --mono:'Space Mono',ui-monospace,monospace;
+  }
+
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;height:100%}
+  body{
+    font-family:var(--sans);
+    color:var(--ink);
+    background:
+      radial-gradient(120% 80% at 50% -10%, #222c3d 0%, var(--bg) 46%, var(--bg-deep) 100%);
+    min-height:100dvh;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:24px 20px calc(24px + env(safe-area-inset-bottom));
+    overflow:hidden;
+  }
+
+  .wrap{width:100%;max-width:480px;display:flex;flex-direction:column;gap:22px}
+
+  .eyebrow{
+    display:flex;align-items:baseline;justify-content:space-between;
+    font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--faint);
+  }
+  .eyebrow .count{color:var(--accent);font-size:11px;letter-spacing:.12em}
+
+  .card{
+    position:relative;
+    background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015));
+    border:1px solid var(--line);
+    border-radius:22px;
+    padding:30px 26px 34px;
+    min-height:330px;
+    display:flex;flex-direction:column;align-items:center;
+    box-shadow:0 24px 60px -30px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.04);
+  }
+
+  .cue{
+    width:100%;text-align:center;
+    font-size:1.35rem;line-height:1.42;font-weight:500;
+    color:var(--ink);
+    min-height:3.4em;display:flex;align-items:center;justify-content:center;
+    letter-spacing:.002em;
+  }
+  .card[data-state="idle"] .cue{color:var(--muted);font-weight:400;font-size:1.06rem;line-height:1.55}
+
+  .stage{flex:1;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:150px}
+
+  .ringwrap{display:none;flex-direction:column;align-items:center;gap:14px}
+  .ringbox{position:relative;width:118px;height:118px}
+  .ring{width:100%;height:100%;transform:rotate(-90deg)}
+  .ring-track{fill:none;stroke:rgba(236,231,221,.08);stroke-width:5}
+  .ring-fill{fill:none;stroke:var(--accent);stroke-width:5;stroke-linecap:round;
+    transition:stroke-dashoffset .12s linear;
+    filter:drop-shadow(0 0 7px rgba(230,181,102,.45));}
+  .ring-num{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:2.1rem;color:var(--ink);font-weight:400;
+  }
+  .saynow{font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600}
+
+  .answer{display:none;width:100%;text-align:center;
+    font-family:var(--serif);font-size:1.7rem;line-height:1.4;color:var(--de);
+    font-weight:400;letter-spacing:.004em;padding:0 4px;}
+
+  .card[data-state="gap"] .ringwrap{display:flex}
+  .card[data-state="answer"] .answer{display:block;animation:rise .42s ease both}
+  .card[data-state="idle"] .ringwrap{display:flex;opacity:.42}
+  .card[data-state="idle"] .saynow{visibility:hidden}
+  .card[data-state="done"] .answer{display:block;color:var(--muted);font-family:var(--sans);font-size:1.05rem}
+
+  @keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+
+  .pulse .ring-fill{animation:breathe 2.4s ease-in-out infinite}
+  @keyframes breathe{0%,100%{filter:drop-shadow(0 0 6px rgba(230,181,102,.3))}50%{filter:drop-shadow(0 0 13px rgba(230,181,102,.65))}}
+
+  .track{height:3px;width:100%;background:rgba(236,231,221,.08);border-radius:3px;overflow:hidden}
+  .track > i{display:block;height:100%;width:0;background:var(--accent);border-radius:3px;transition:width .35s ease}
+
+  .controls{display:flex;flex-direction:column;align-items:center;gap:20px}
+  .play{
+    width:78px;height:78px;border-radius:50%;border:1px solid var(--line);
+    background:radial-gradient(120% 120% at 50% 25%, #2c3850, #20293a);
+    color:var(--ink);cursor:pointer;display:grid;place-items:center;
+    box-shadow:0 16px 34px -16px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.07);
+    transition:transform .12s ease, border-color .2s ease;
+  }
+  .play:hover{border-color:rgba(230,181,102,.4)}
+  .play:active{transform:scale(.95)}
+  .play svg{width:30px;height:30px;fill:var(--ink)}
+
+  .sub{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+  .chip{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:999px;
+    padding:8px 12px;color:var(--muted);font-size:.86rem;font-weight:500;
+  }
+  .chip button{
+    appearance:none;border:none;background:transparent;color:var(--ink);
+    font-family:var(--sans);font-size:1.2rem;line-height:1;cursor:pointer;
+    width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  }
+  .chip button:hover{background:rgba(255,255,255,.06)}
+  .chip .val{font-variant-numeric:tabular-nums;min-width:30px;text-align:center;color:var(--ink)}
+  .chip.label{color:var(--faint);font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;cursor:default}
+
+  .icon-btn{
+    appearance:none;border:1px solid var(--line);background:rgba(255,255,255,.035);
+    color:var(--muted);border-radius:999px;padding:9px 14px;cursor:pointer;
+    font-family:var(--sans);font-size:.84rem;font-weight:600;display:inline-flex;align-items:center;gap:7px;
+    transition:color .2s, border-color .2s, background .2s;
+  }
+  .icon-btn:hover{color:var(--ink)}
+  .icon-btn.on{color:#1a212e;background:var(--accent);border-color:var(--accent)}
+  .icon-btn svg{width:15px;height:15px;fill:currentColor}
+
+  .status{font-size:.76rem;color:var(--faint);text-align:center;min-height:1em}
+
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+
+  @media (max-width:380px){
+    .cue{font-size:1.2rem}
+    .answer{font-size:1.5rem}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ring-fill{filter:none;transition:none}
+    .pulse .ring-fill{animation:none}
+    .card[data-state="answer"] .answer{animation:none}
+    .track > i{transition:none}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eyebrow"><span>essay skeleton · set 6</span><span class="count" id="count">— / —</span></div>
+
+    <div class="card" id="card" data-state="idle">
+      <div class="cue" id="cue"></div>
+      <div class="stage">
+        <div class="ringwrap" id="ringwrap">
+          <div class="ringbox">
+            <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="ring-track" cx="60" cy="60" r="54"/>
+              <circle class="ring-fill" id="ringFill" cx="60" cy="60" r="54"/>
+            </svg>
+            <div class="ring-num" id="ringNum">5</div>
+          </div>
+          <div class="saynow">say it in German</div>
+        </div>
+        <div class="answer" id="answer"></div>
+      </div>
+    </div>
+
+    <div class="track" aria-hidden="true"><i id="bar"></i></div>
+
+    <div class="controls">
+      <button class="play" id="play" aria-label="Start">
+        <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <div class="sub">
+        <button class="icon-btn" id="restart" aria-label="Restart from the top">
+          <svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/></svg>
+          restart
+        </button>
+        <span class="chip"><button id="minus" aria-label="Shorter pause">–</button>
+          <span class="val"><span id="pauseVal">8</span>s</span>
+          <button id="plus" aria-label="Longer pause">+</button>
+        </span>
+        <button class="icon-btn" id="loop" aria-label="Loop the drill" aria-pressed="false">
+          <svg viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>
+          loop
+        </button>
+      </div>
+      <div class="status" id="status"></div>
+    </div>
+  </div>
+
+<script>
+(function(){
+  "use strict";
+
+  var items = [
+    {en:"[Opener] Lately the question keeps being raised whether the way we've handled this can still be justified.", de:"In jüngster Zeit wird immer wieder die Frage aufgeworfen, ob sich der bisherige Umgang mit diesem Thema noch rechtfertigen lässt."},
+    {en:"[Thesis] In what follows I will weigh the main arguments of both sides and finally take my own position.", de:"Im Folgenden möchte ich die wichtigsten Argumente beider Seiten gegeneinander abwägen und abschließend eine eigene Position beziehen."},
+    {en:"[Addition] Added to this is a further aspect that is often overlooked in this discussion.", de:"Hinzu kommt ein weiterer Aspekt, der in dieser Diskussion häufig übersehen wird."},
+    {en:"[Addition] Beyond that, a further argument can be made that weighs just as heavily.", de:"Darüber hinaus lässt sich ein weiteres Argument anführen, das ebenso schwer wiegt."},
+    {en:"[Addition] Not least, a factor comes into play that has far-reaching consequences.", de:"Nicht zuletzt spielt ein Gesichtspunkt eine Rolle, der weitreichende Folgen hat."},
+    {en:"[Contrast] However, a weighty counterargument stands against this.", de:"Dem steht allerdings ein gewichtiges Gegenargument gegenüber."},
+    {en:"[Contrast] On the other hand, it should not go unmentioned that the matter has its downsides too.", de:"Auf der anderen Seite darf jedoch nicht unerwähnt bleiben, dass die Sache auch ihre Schattenseiten hat."},
+    {en:"[Example] This can be illustrated with a concrete example.", de:"Dies lässt sich an einem konkreten Beispiel verdeutlichen."},
+    {en:"[Example] An illustrative example of this is provided by the recent past.", de:"Ein anschauliches Beispiel hierfür liefert die jüngere Vergangenheit."},
+    {en:"[Consequence] From this, a series of consequences inevitably follows.", de:"Daraus ergibt sich zwangsläufig eine Reihe von Konsequenzen."},
+    {en:"[Consequence] This has the effect that the whole situation changes fundamentally.", de:"Dies hat zur Folge, dass sich die Ausgangslage grundlegend verändert."},
+    {en:"[Concession] Admittedly this objection cannot be dismissed, yet on closer inspection it falls short.", de:"Zwar ist dieser Einwand nicht von der Hand zu weisen, doch greift er bei näherer Betrachtung zu kurz."},
+    {en:"[Conclusion] Weighing both sides, in my view the arguments for my position predominate.", de:"Wägt man beide Seiten gegeneinander ab, so überwiegen meiner Ansicht nach die Argumente, die für meine Position sprechen."},
+    {en:"[Conclusion] In closing, there is no simple answer to this question — and that is precisely where its significance lies.", de:"Abschließend bleibt festzuhalten, dass sich eine einfache Antwort auf diese Frage nicht geben lässt — und gerade darin liegt ihre Bedeutung."}
+  ];
+
+  var card=document.getElementById('card'),
+      cueEl=document.getElementById('cue'),
+      ansEl=document.getElementById('answer'),
+      ringFill=document.getElementById('ringFill'),
+      ringNum=document.getElementById('ringNum'),
+      ringwrap=document.getElementById('ringwrap'),
+      countEl=document.getElementById('count'),
+      barEl=document.getElementById('bar'),
+      playBtn=document.getElementById('play'),
+      playIcon=document.getElementById('playIcon'),
+      restartBtn=document.getElementById('restart'),
+      loopBtn=document.getElementById('loop'),
+      minusBtn=document.getElementById('minus'),
+      plusBtn=document.getElementById('plus'),
+      pauseValEl=document.getElementById('pauseVal'),
+      statusEl=document.getElementById('status');
+
+  var playing=false, cur=0, pauseSec=8, loop=false, rate=0.92;
+  var R=54, C=2*Math.PI*R;
+  ringFill.style.strokeDasharray=C;
+  setRing(1);
+
+  var speechOK = (typeof window.speechSynthesis!=="undefined") && (typeof window.SpeechSynthesisUtterance!=="undefined");
+  var voices=[];
+  function loadVoices(){ if(speechOK){ try{voices=speechSynthesis.getVoices()||[];}catch(e){voices=[];} } }
+  if(speechOK){ loadVoices(); if(typeof speechSynthesis.onvoiceschanged!=="undefined"){ speechSynthesis.onvoiceschanged=loadVoices; } }
+  function pickVoice(lang){
+    if(!voices.length) loadVoices();
+    var lc=lang.toLowerCase(), pref=lc.slice(0,2);
+    var v=null;
+    for(var i=0;i<voices.length;i++){ if(voices[i].lang && voices[i].lang.toLowerCase()===lc){v=voices[i];break;} }
+    if(!v){ for(var j=0;j<voices.length;j++){ if(voices[j].lang && voices[j].lang.toLowerCase().indexOf(pref)===0){v=voices[j];break;} } }
+    return v;
+  }
+  if(!speechOK){ statusEl.textContent="Audio isn’t available in this view — the drill still runs visually."; }
+
+  function speakable(t){
+    return t.replace(/…/g,' ').replace(/\s+([,.;:!?])/g,'$1').replace(/\s{2,}/g,' ').trim();
+  }
+  function estimate(t){ var w=t.split(/\s+/).length; return Math.max(1400, w*340)+500; }
+
+  var watchdog=null, gapTimer=null, rafId=null;
+  function clearTimers(){
+    if(watchdog){clearTimeout(watchdog);watchdog=null;}
+    if(gapTimer){clearTimeout(gapTimer);gapTimer=null;}
+    if(rafId){cancelAnimationFrame(rafId);rafId=null;}
+    if(speechOK){ try{speechSynthesis.cancel();}catch(e){} }
+  }
+
+  function present(text, lang, done){
+    var advanced=false;
+    function go(){ if(advanced)return; advanced=true; if(watchdog){clearTimeout(watchdog);watchdog=null;} done(); }
+    var spoken=speakable(text);
+    if(speechOK){
+      try{
+        var v=pickVoice(lang);
+        var primer=new SpeechSynthesisUtterance('a a a');
+        primer.volume=0; primer.rate=1; primer.lang=lang; if(v)primer.voice=v;
+        speechSynthesis.speak(primer);
+        var u=new SpeechSynthesisUtterance(spoken);
+        u.lang=lang; u.rate=rate; if(v)u.voice=v;
+        u.onend=go; u.onerror=go;
+        var est=Math.max(1700, spoken.split(/\s+/).length*360)+2400;
+        watchdog=setTimeout(go, est);
+        speechSynthesis.speak(u);
+      }catch(e){ watchdog=setTimeout(go, estimate(spoken)); }
+    }else{
+      watchdog=setTimeout(go, estimate(spoken));
+    }
+  }
+
+  function countdown(sec, done){
+    var total=sec*1000, t0=performance.now();
+    ringwrap.classList.add('pulse');
+    function frame(now){
+      if(!playing)return;
+      var rem=Math.max(0, total-(now-t0));
+      setRing(rem/total);
+      ringNum.textContent=Math.ceil(rem/1000);
+      if(rem<=0){ ringwrap.classList.remove('pulse'); done(); return; }
+      rafId=requestAnimationFrame(frame);
+    }
+    rafId=requestAnimationFrame(frame);
+  }
+
+  function setRing(frac){ ringFill.style.strokeDashoffset = C*(1-frac); }
+  function setState(s){ card.setAttribute('data-state', s); }
+
+  function runItem(i){
+    if(!playing)return;
+    if(i>=items.length){
+      if(loop){ runItem(0); return; }
+      finish(); return;
+    }
+    cur=i;
+    countEl.textContent=(i+1)+" / "+items.length;
+    barEl.style.width=((i)/items.length*100)+"%";
+    cueEl.textContent=items[i].en;
+    ansEl.textContent="";
+    setState('cue');
+
+    present(items[i].en, 'en-US', function(){
+      if(!playing)return;
+      setState('gap');
+      ringNum.textContent=pauseSec;
+      setRing(1);
+      countdown(pauseSec, function(){
+        if(!playing)return;
+        ansEl.textContent=items[i].de;
+        setState('answer');
+        present(items[i].de, 'de-DE', function(){
+          if(!playing)return;
+          barEl.style.width=((i+1)/items.length*100)+"%";
+          gapTimer=setTimeout(function(){ if(playing) runItem(i+1); }, 1100);
+        });
+      });
+    });
+  }
+
+  function finish(){
+    playing=false; clearTimers();
+    cur=items.length;
+    setPlayIcon(false);
+    setState('done');
+    cueEl.textContent="";
+    ansEl.textContent="Done — "+items.length+" of "+items.length+". Tap start to run it again.";
+    countEl.textContent=items.length+" / "+items.length;
+    barEl.style.width="100%";
+  }
+
+  function start(){
+    if(playing)return;
+    if(cur>=items.length) cur=0;
+    playing=true;
+    clearTimers();
+    setPlayIcon(true);
+    statusEl.textContent="";
+    runItem(cur);
+  }
+
+  function pause(){
+    playing=false;
+    clearTimers();
+    ringwrap.classList.remove('pulse');
+    setPlayIcon(false);
+  }
+
+  function restart(){
+    var wasPlaying=playing;
+    playing=false; clearTimers();
+    cur=0;
+    barEl.style.width="0%";
+    countEl.textContent="1 / "+items.length;
+    if(wasPlaying){ start(); }
+    else { showIdle(); }
+  }
+
+  function showIdle(){
+    setState('idle');
+    setRing(1);
+    ringNum.textContent=pauseSec;
+    cueEl.textContent="I’ll say the English, give you "+pauseSec+" seconds of silence to answer out loud, then say the German. Tap start.";
+    ansEl.textContent="";
+    countEl.textContent=items.length+" items";
+  }
+
+  var PLAY='M8 5v14l11-7z', PAUSE='M7 5h4v14H7zM13 5h4v14h-4z';
+  function setPlayIcon(isPlaying){
+    playIcon.innerHTML='<path d="'+(isPlaying?PAUSE:PLAY)+'"></path>';
+    playBtn.setAttribute('aria-label', isPlaying?'Pause':'Start');
+  }
+
+  playBtn.addEventListener('click', function(){ if(playing) pause(); else start(); });
+  restartBtn.addEventListener('click', restart);
+
+  loopBtn.addEventListener('click', function(){
+    loop=!loop;
+    loopBtn.classList.toggle('on', loop);
+    loopBtn.setAttribute('aria-pressed', loop?'true':'false');
+  });
+
+  function changePause(d){
+    pauseSec=Math.min(12, Math.max(2, pauseSec+d));
+    pauseValEl.textContent=pauseSec;
+    if(!playing && card.getAttribute('data-state')==='idle'){ showIdle(); }
+  }
+  minusBtn.addEventListener('click', function(){changePause(-1);});
+  plusBtn.addEventListener('click', function(){changePause(1);});
+
+  document.addEventListener('keydown', function(e){
+    if(e.code==='Space' || e.key===' '){ e.preventDefault(); if(playing)pause(); else start(); }
+  });
+
+  showIdle();
+})();
+</script>
+</body>
+</html>
