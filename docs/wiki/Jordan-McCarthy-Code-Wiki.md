@@ -1,6 +1,6 @@
 # Jordan McCarthy Code Wiki
 
-_Last updated: 2026-07-11 Europe/Zurich_
+_Last updated: 2026-07-12 Europe/Zurich_
 
 Canonical private repository: `jorddyk/Jordan-McCarthy`
 
@@ -34,6 +34,7 @@ projects/
     README.md
     macros/
     groovy/
+    docs/legacy-code-backfill.md
   language-learning/
     README.md
     active-recall-apps/
@@ -83,49 +84,29 @@ docs/
 | `projects/jm105-intronsaurus/transformation-protocol-rnaseq/check-transformation-job.ps1` | Checks Euler job/log status. | PowerShell/SSH. | Console only. |
 | `projects/jm105-intronsaurus/intronsaurus-browser/intronsaurus-explore-restored-data-fix-v3i.sbatch` | Runs vNext3I Explore restoration. | Unrecovered Python builder and patch dependencies on Euler. | Generated HTML/archive; excluded by default. |
 | `projects/jm105-intronsaurus/intronsaurus-browser/upload-submit-intronsaurus-explore-restored-data-fix-v3i.ps1` | Uploads/submits vNext3I. | PowerShell/SSH. | Remote submission. |
-| `projects/jm105-intronsaurus/intronsaurus-browser/retrieve-intronsaurus-explore-restored-data-fix-v3i.ps1` | Retrieves vNext3I output. | PowerShell/SSH. | Local generated archive; do not commit. |
+| `projects/jm105-intronsaurus/intronsaurus-browser/retrieve-intronsaurus-explore-restored-data-fix-v3i.ps1` | Retrieves vNext3I output. | PowerShell/SSH. | Generated archive; do not commit. |
 | `projects/jm105-intronsaurus/intronsaurus-browser/check-intronsaurus-explore-restored-data-fix-v3i-status.sh` | Checks vNext3I status/logs. | Bash/Euler. | Console status. |
 | `projects/jm105-intronsaurus/intronsaurus-browser/run-integrate-sun-matched-rna-protein-gene-stories.sbatch` | Runs vNext3Y matched JM105 RNA/Sun protein Gene Stories. | Unrecovered Python builder, archive, workbook. | Generated site/tables/archive; excluded. |
 | `projects/jm105-intronsaurus/intronsaurus-browser/upload-submit-intronsaurus-matched-rna-protein-gene-stories.ps1` | Uploads/submits vNext3Y. | PowerShell/SSH. | Remote submission. |
-| `projects/jm105-intronsaurus/intronsaurus-browser/retrieve-intronsaurus-matched-rna-protein-gene-stories.ps1` | Retrieves vNext3Y outputs. | PowerShell/SSH. | Local generated outputs; excluded. |
+| `projects/jm105-intronsaurus/intronsaurus-browser/retrieve-intronsaurus-matched-rna-protein-gene-stories.ps1` | Retrieves vNext3Y outputs. | PowerShell/SSH. | Generated outputs; excluded. |
 | `projects/jm105-intronsaurus/intronsaurus-browser/check-intronsaurus-matched-rna-protein-gene-stories.sh` | Checks vNext3Y status/logs. | Bash/Euler. | Console status. |
 | `projects/jm105-intronsaurus/intronsaurus-browser/patches/vnext3ah-fix28-gene-story-sources-patch.html` | Deduplicates Gene Stories labels and adds source/provenance UI. | Existing Intronsaurus DOM/data. | UI patch only; no biological values generated. |
 
-### Scientific/context documents
-
-| Path | Purpose | Status |
-|---|---|---|
-| `projects/jm105-intronsaurus/docs/what-data-shows-summary.md` | Current JM105 interpretation guardrails. | Verified context; not runnable. |
-| `projects/jm105-intronsaurus/docs/legacy-code-backfill.md` | Exact-source recovery queue and clues. | Active documentation; not code. |
-
 ### Verified JM101 provenance clue
 
-`JM101_RNAseq_Protocol_and_Provenance.docx` in File Library verifies:
-
-- `Y:/Jordan/JM101` project root.
-- `C:/rna_seq/quasr_bam` historical QuasR-compatible BAM path.
-- `metadata_clean.csv`, `yeast_introns_sacCer3.rds`, `SGD_features.tab`.
-- QuasR intron/exon counting; DESeq2 exon-derived size factors.
-- `IRratio = (intron + 1)/(exon + 1)` and intron fraction outputs.
-- Rsubread/featureCounts gene-level counts, CPM, genotype×age model, and explicit ratio-of-ratios cross-check.
-- Output folders `ir_outputs/` and `expression_outputs/` with named CSV/XLSX/volcano/sanity outputs.
-
-This is provenance, not exact runnable source. No code was reconstructed from it.
+`JM101_RNAseq_Protocol_and_Provenance.docx` in File Library verifies the `Y:/Jordan/JM101` project root, historical QuasR BAM path, metadata and annotation files, intron/exon counting, DESeq2 exon-derived size factors, `IRratio = (intron + 1)/(exon + 1)`, Rsubread/featureCounts expression analysis, and named output folders. This is provenance, not exact runnable source; no code was reconstructed from it.
 
 ### Highest-priority exact-source queue
 
 1. `110_JM101_JM105_integrate_intronsaurus.py` → `analysis/jm101-jm105-integrate-intronsaurus.py`.
-2. `111_JM101_STAR_align_array.sbatch` / later load-stack variant → `alignment/jm101-star-align-array.sbatch`.
-3. `112_JM101_integrate_after_STAR.sbatch` / later load-stack variant → `analysis/jm101-integrate-after-star.sbatch`.
-4. Rsubread Step 2 hard-resume and throughput-turbo scripts.
+2. `111_JM101_STAR_align_array.sbatch` → `alignment/jm101-star-align-array.sbatch`.
+3. `112_JM101_integrate_after_STAR.sbatch` → `analysis/jm101-integrate-after-star.sbatch`.
+4. Rsubread Step 2 hard-resume/turbo scripts.
 5. Step 3 DESeq2 and IRFinder drafts.
 6. Full Intronsaurus vNext3/vNext3AE/vNext3I/vNext3Y builders/readers.
-7. `scripts/26_paired_gene_body_normalized_leakage_test.py`.
-8. `scripts/28_make_synopsis_aligned_all_intron_RNAseq_plots.py`.
-9. JM133 weak-5′SS source staged historically in PR #1 but not canonical on `main`.
-10. JM134 label-audit/rerender code and Figure 2 candidate-gate code.
+7. JM133/JM134 label-audit/rerender and Figure 2 candidate-gate code.
 
-Status for all unrecovered items: `exact full source not yet recovered in an accessible source` unless a complete body is explicitly present in GitHub.
+Status for unrecovered items: `exact full source not yet recovered in an accessible source`.
 
 ## Figure rendering
 
@@ -135,47 +116,36 @@ Status for all unrecovered items: `exact full source not yet recovered in an acc
 |---|---|---|
 | `projects/figure-rendering/panel-renderers/render-figure1ef-total-rrna-print.ps1` | Renders JM105 Figure 1E/F print panels through PowerShell + embedded Python. | Real total/rRNA-depleted JM105 inputs; SVG/PNG/TSV/JSON audit outputs. |
 
-### Reusable prompt/spec assets
-
-- `projects/figure-rendering/prompts/render-jm105-figure5-powershell-euler.md`
-- `projects/figure-rendering/prompts/redesign-jm105-manuscript-figure-sequence.md`
-- `projects/figure-rendering/prompts/figure-panel-generation-lane-audit-contract.md`
-- `projects/figure-rendering/prompts/figure-render-artifact-package-workflow.md`
-
-These are non-runnable workflow contracts.
-
-### Current renderer queue
-
-- `nature-aging-mockups/render-main-figure-layouts.py`
-- `nature-aging-mockups/score-figure-story-architecture.py`
-- `panel-renderers/render-no-data-placeholder.py`
-- `nature-aging-mockups/figure-5-layout-renderer.py`
-- `panel-renderers/avoid-label-overlap-audit.py`
-- JM133/JM134 label audit/rerender utilities
-
-Figure constraints: preserve panel aspect ratio and lane geometry; keep SVG text editable; fixed canvases remain fixed; use separate transparent and white-preview outputs; unsupported panels say `NO DATA`.
+Reusable prompt/spec assets live under `projects/figure-rendering/prompts/`. Current renderer queue includes main-figure layouts, story-architecture scoring, `NO DATA` placeholders, Figure 5, overlap audits, and JM133/JM134 rerender utilities. Preserve panel aspect ratio and lane geometry; unsupported panels say `NO DATA`.
 
 ## ImageJ / Fiji aging chips
 
-Status: exact full JM128/JM129 macro/Groovy source remains unrecovered.
+### Canonical runnable source
 
-Priority clues:
+No complete JM076/JM128/JM129 macro or Groovy source is currently canonical.
 
-- `Image001.nd2`
-- `Image001_Pos0_Hyperstack.tif`
-- `Y:/Laura/JM128 How do superoxide levels change during aging/seperate_positions`
-- `MitosoxRedInducibleFusionsRepeat.nd2`
-- `Continue001.nd2`, `Continue002.nd2`
-- `rollingBallRadius=100`
-- `C=2`, `Z=60`, `T=107/139/145`
-- `Nup60Gcn5MitoSoxRed_RLS_Pos0.tif`
-- `Nup60Gcn5MitoSoxRed_ROS_Pos{outPos}_merged.tif`
+### Recovery ledger
 
-Proposed canonical targets:
+`projects/imagej-fiji-aging-chips/docs/legacy-code-backfill.md` is the single source of truth for unrecovered microscopy scripts.
+
+Priority targets:
 
 - `macros/jm128-split-nd2-positions-bioformats.ijm`
 - `macros/jm128-extract-mitosox-c2-every6-zpositions.ijm`
+- `macros/jm128-stitch-image-and-image001-brightfield-rls.ijm`
+- `macros/jm128-merge-ros-bf-fl.ijm`
 - `groovy/jm129-mitosox-virtual-hyperstack-background-subtraction.groovy`
+- JM076 Step 1/2/3/4/6 macros named in the historical lab protocol
+
+Known clues include `Image001.nd2`, `Image001_Pos0_Hyperstack.tif`, `MitosoxRedInducibleFusionsRepeat.nd2`, `Continue001.nd2`, `Continue002.nd2`, `rollingBallRadius=100`, `C=2`, `Z=60`, `T=107/139/145`, and the RLS/ROS output filenames.
+
+### Quantitative constraints
+
+- No silent 8-bit conversion.
+- No silent auto-contrast.
+- Background subtraction must be explicit and documented.
+- Display-only contrast must be labeled as display-only.
+- Raw ND2/TIFF stacks and generated outputs stay out of GitHub.
 
 ## Language learning
 
@@ -188,43 +158,39 @@ Full-source gate: only import apps complete from `<!DOCTYPE html>` through `</ht
 
 ## Personal intelligence agency
 
-Canonical prompt/spec assets include:
-
-- `projects/personal-intelligence-agency/prompts/legacy-code-backfill-github-import.md`
-- `projects/personal-intelligence-agency/prompts/code-handoff.md`
-- `projects/personal-intelligence-agency/prompts/strategic-alert-triage.md`
-- `projects/personal-intelligence-agency/prompts/science-preemption-watch.md`
-- `projects/personal-intelligence-agency/prompts/swiss-leverage-radar.md`
-- `projects/personal-intelligence-agency/prompts/weekly-strategic-brief-redteam.md`
-
-Current target: exact 0-to-21 strategic-signal scoring rubric and reusable report/email templates, if complete source exists.
+Canonical prompt/spec assets include the legacy code backfill, daily code handoff, strategic alert triage, science preemption watch, Swiss leverage radar, and weekly strategic brief/red-team prompts.
 
 # Code-focused execution risks and containment
 
-- **Risk:** prior notes can say source was recovered in an ephemeral sandbox even though the body is no longer accessible.
-  - **Containment:** treat inaccessible ephemeral-source claims as clues only; require re-verification before canonical import.
-- **Risk:** script names and provenance summaries can be mistaken for source code.
-  - **Containment:** label them `exact full source not yet recovered` and never reconstruct runnable source from narrative.
+- **Risk:** inaccessible ephemeral-sandbox claims can be mistaken for recovered source.
+  - **Containment:** require a complete currently accessible source body before canonical import.
+- **Risk:** detailed microscopy metadata can tempt plausible reconstruction with wrong indexing, channel order, bit depth, Bio-Formats calls, or saving behavior.
+  - **Containment:** use the ImageJ backfill ledger as the single source of truth and import only verified complete source.
 - **Risk:** daily handoffs can replace project organization.
   - **Containment:** code and current status stay under `projects/`; handoffs remain audit-only.
 - **Risk:** JM105 figure logic can drift into poly-A/P-versus-T framing or confuse RNA abundance with protein abundance.
-  - **Containment:** project README/wiki are the source of truth for current scientific constraints.
+  - **Containment:** project README/wiki remain the source of truth for scientific constraints.
 
 # Last-known canonical decisions
 
-## 2026-07-11
+## 2026-07-12
 
 - Repository verified private and writable on `main` with admin/push permissions.
+- File Library searched for exact JM128/JM129 microscopy source using filenames, paths, dimensions, time ranges, rolling-ball setting, and output names.
+- No complete Fiji macro or Groovy source was recovered; no runnable microscopy code was imported or reconstructed.
+- Created `projects/imagej-fiji-aging-chips/docs/legacy-code-backfill.md` and updated the project README.
+- Containment action: the backfill ledger is now the single source of truth for microscopy recovery state.
+- No raw images, generated outputs, archives, logs, or temporary files were committed.
+
+## 2026-07-11
+
 - No complete new runnable source was recovered.
-- File Library searches for `110`, `111`, `112`, STAR, Rsubread hard-resume/turbo, Step 3 DESeq2, and IRFinder returned no exact source body.
-- `JM101_RNAseq_Protocol_and_Provenance.docx` was recorded as a verified recovery clue with paths, metrics, outputs, and troubleshooting.
-- Corrected recovery-state language: a prior ephemeral-sandbox report is not equivalent to currently accessible canonical source.
-- No biological data, raw sequencing/microscopy files, generated sites, archives, logs, or temporary outputs were committed.
+- Recorded `JM101_RNAseq_Protocol_and_Provenance.docx` as a verified recovery clue, not source code.
+- Corrected recovery-state language for prior ephemeral-sandbox notes.
 
 ## 2026-07-10
 
 - Imported `telc-c1-essay-skeleton-active-recall.html` from a complete HTML source.
-- Updated project-first documentation and handoff audit.
 
 ## 2026-07-09
 
