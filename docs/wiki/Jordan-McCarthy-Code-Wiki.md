@@ -55,6 +55,7 @@ Project-organized code vault. Canonical code lives under the project where a hum
 - Figure 4E Euler/retrieval wrappers.
 - `projects/figure-rendering/panel-renderers/jm105-rendering-harness/`
 - `projects/figure-rendering/panel-renderers/jm105-fig4bc-sequence-architecture/`
+- `projects/figure-rendering/panel-renderers/jm105-figure4-secondary-structure-accessibility/` — Figure 4G predicted splice-signal accessibility and RNAlib MFE-derived structure control using the locked Figure 4 selected/background data (selected n=49).
 - Partial Figure 3 Mud1/CR package: runner/README canonical; complete Python source still pending.
 
 Prompt/spec assets under `projects/figure-rendering/prompts/` define Figure 5, manuscript-sequence, lane/collision, and artifact-package contracts. They are not runnable substitutes.
@@ -117,6 +118,7 @@ Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategi
 - Repository verified private and writable on `main` with admin/push permissions.
 - Exact complete JM133 Python and sbatch sources verified on PR #1; source is uploaded to GitHub, while merge to `main` remains blocked by branch conflicts with newer main history.
 - Figure-rendering legacy search completed; no additional complete JM134, Figure 5, main-layout, scoring, or `NO DATA` renderer source recovered.
+- Figure 4G secondary-structure accessibility renderer registered under the canonical figure-rendering path; it uses the locked selected/background data and preserves the audited method caveats.
 - No biological data, generated renders, raw sequencing, microscopy stacks, or binary outputs were committed.
 
 ## 2026-07-12
