@@ -55,4 +55,4 @@ The `prompts/` directory contains exact rendering contracts for Figure 5, manusc
 
 `docs/legacy-code-backfill.md` is the single source of truth for missing historical figure code. Highest-priority targets are the JM134 label-audit/rerender workflow, JM133 weak-5′SS/Mud1 renderer, main-figure layout renderer, story-scoring model, Figure 5 renderer, and reusable `NO DATA` renderer.
 
-The 2026-07-13 File Library pass did not recover any complete runnable source for these targets, so no reconstructed script was committed.
+A 2026-07-13 evening File Library pass located exact uploaded files for the current Figure 5 C/D/E renderer and its Euler launcher, plus evidence that the corrected Figure 2 public-final renderer ran successfully after the `threshold_c` → `threshold_cr` fix. The complete Python files are present in File Library, but the current connector exposed only indexed excerpts rather than retrievable full file bytes, so they remain `PARTIAL / SOURCE LOCATED` and were not reconstructed or committed. The next import must use the exact uploaded `.py` files or the verified Euler paths, not snippet assembly.
