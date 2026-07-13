@@ -17,6 +17,7 @@ Project-organized code vault. Canonical code lives under the project where a hum
 5. Exclude FASTQ/BAM/SAM/CRAM/BAI/bigWig, ND2/TIFF stacks, archives, logs, caches, scratch folders, and temporary renders.
 6. Filenames, summaries, output lists, provenance documents, historical job success, prompts, and patch sequences are recovery clues—not recovered runnable source.
 7. Quantitative microscopy must not silently convert to 8-bit or apply auto-contrast.
+8. The Daily Code Handoff is an operational continuity service: it may search authorized sources, preserve exact complete code, update existing canonical files and this wiki, and commit safe changes to this private repository.
 
 # Project areas
 
@@ -36,10 +37,14 @@ Project-organized code vault. Canonical code lives under the project where a hum
 - `projects/jm105-intronsaurus/analysis/jm105-old-cell-leaky-intron-determinants.py`
 - Transformation-protocol sample resolver, manifest, Slurm runner, and PowerShell checker under `transformation-protocol-rnaseq/`.
 - Intronsaurus vNext3I/vNext3Y launch/retrieval/status helpers and the vNext3AH UI patch under `intronsaurus-browser/`.
+- Exact complete JM133 analysis and Euler launcher are preserved on open branch/PR `legacy-code-backfill-2026-07-08` / PR #1 at:
+  - `projects/jm105-intronsaurus/analysis/jm133-weak-5ss-need-mud1.py`
+  - `projects/jm105-intronsaurus/analysis/jm133-weak-5ss-need-mud1.sbatch`
+  Their source is uploaded to GitHub but not yet canonical on `main` because PR #1 currently requires conflict resolution against newer main history.
 
 ### Priority exact-source queue
 
-`110_JM101_JM105_integrate_intronsaurus.py`, `111_JM101_STAR_align_array.sbatch`, `112_JM101_integrate_after_STAR.sbatch`, Rsubread Step 2 hard-resume/turbo, Step 3 DESeq2, IRFinder drafts, complete vNext3/vNext3AE builders/readers, and JM133/JM134 analysis utilities. Status: exact full source not yet recovered unless already listed canonical.
+`110_JM101_JM105_integrate_intronsaurus.py`, `111_JM101_STAR_align_array.sbatch`, `112_JM101_integrate_after_STAR.sbatch`, Rsubread Step 2 hard-resume/turbo, Step 3 DESeq2, IRFinder drafts, complete vNext3/vNext3AE builders/readers, JM134 analysis utilities, `141_intronsaurus_matched_rna_protein_gene_stories_v3Y.py`, `26_paired_gene_body_normalized_leakage_test.py`, and `28_make_synopsis_aligned_all_intron_RNAseq_plots.py`. Status: exact full source not yet recovered unless already listed canonical or preserved on the named branch.
 
 ## Figure rendering
 
@@ -61,13 +66,13 @@ Prompt/spec assets under `projects/figure-rendering/prompts/` define Figure 5, m
 Highest-priority missing source:
 
 1. JM134 label-audit/rerender workflow; Euler jobs `3101802`, `3104275`, `3106256`, `3109225`.
-2. JM133 weak-5′SS/Mud1 LOESS + marginal-violin renderer.
-3. Nature Aging/Yves-compatible main-figure layout renderer.
-4. Figure-story scoring model.
-5. Figure 5 renderer and reusable `NO DATA` renderer.
-6. Figure 2F final renderer and synopsis-aligned RNA-seq renderer.
+2. Nature Aging/Yves-compatible main-figure layout renderer.
+3. Figure-story scoring model.
+4. Figure 5 renderer and reusable `NO DATA` renderer.
+5. Figure 2F final renderer and synopsis-aligned RNA-seq renderer.
+6. Exact Figure 3 v21 sources `Figure_3_render_all_v21.py` and `figure3_base_renderer.py`.
 
-The 2026-07-13 File Library search used exact filenames, job IDs, output concepts, LOESS/marginal-violin terms, Figure 5, Nature Aging, and `NO DATA`. No complete runnable source was recovered; no reconstruction was committed.
+The 2026-07-13 File Library search used exact filenames, job IDs, output concepts, LOESS/marginal-violin terms, Figure 5, Nature Aging, and `NO DATA`. No additional complete runnable source was recovered; no reconstruction was committed.
 
 Rendering constraints: preserve aspect ratio and lane geometry; do not shrink text to solve crowding; editable SVG text; no tight cropping on fixed canvases; transparent final outputs; unsupported panels say `NO DATA`.
 
@@ -88,7 +93,7 @@ Only import web apps complete from `<!DOCTYPE html>` through `</html>`.
 
 ## Personal intelligence agency
 
-Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategic alert triage, science preemption, Swiss leverage, and weekly strategic briefing/red-team tasks.
+Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategic alert triage, science preemption, Swiss leverage, and weekly strategic briefing/red-team tasks. Live task configuration, rather than historical README wording, determines current permissions.
 
 # Code-focused execution risks and containment
 
@@ -100,16 +105,19 @@ Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategi
   - **Containment:** canonicalize only complete final renderers and enforce the rendering operating standard.
 - **Risk:** real/simulated/`NO DATA` status drifts.
   - **Containment:** declare data status in project README, renderer outputs, and handoff.
+- **Risk:** code preservation is disabled during agency restructuring.
+  - **Containment:** Daily Code Handoff is explicitly exempt from campaign-count reductions and may be disabled only by a direct Jordan instruction.
 
 # Last-known canonical decisions
 
 ## 2026-07-13
 
+- Daily Code Handoff restored as an enabled daily, write-capable operational continuity service.
+- Network Evidence live permissions corrected to append only to the Master Interaction Record.
 - Repository verified private and writable on `main` with admin/push permissions.
-- Figure-rendering legacy search completed; no complete JM133/JM134, Figure 5, main-layout, scoring, or `NO DATA` renderer source recovered.
-- Updated the figure-rendering README and project-local backfill ledger.
-- No runnable code, biological data, generated renders, or binary outputs were committed.
-- Containment: figure-rendering recovery ledger is the single source of truth for missing renderer status.
+- Exact complete JM133 Python and sbatch sources verified on PR #1; source is uploaded to GitHub, while merge to `main` remains blocked by branch conflicts with newer main history.
+- Figure-rendering legacy search completed; no additional complete JM134, Figure 5, main-layout, scoring, or `NO DATA` renderer source recovered.
+- No biological data, generated renders, raw sequencing, microscopy stacks, or binary outputs were committed.
 
 ## 2026-07-12
 
