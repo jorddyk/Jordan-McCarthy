@@ -12,8 +12,6 @@ Do not treat this file as code. It is a recovery queue and import audit.
 
 ## Imported prompt/spec artifacts
 
-File Library returned several uploaded prompt/spec artifacts documenting the exact rendering invariants for Figure 5 / Nature Aging-style panel production: lane maps before code, collision inventory before patching, data-provenance manifests, fixed-dimension transparent SVG/PDF/PNG plus white-preview PNG, editable SVG text, and explicit `NO DATA — experiment pending` placeholders.
-
 | Canonical path | Source clue | Purpose | Status |
 |---|---|---|---|
 | `projects/figure-rendering/prompts/render-jm105-figure5-powershell-euler.md` | `Pasted text (3).txt`, 2026-07-07 JM105 Figure 5 render prompt | Reusable exact contract for rendering Figure 5 from PowerShell + Euler without fake data and with lane/collision/provenance audits | Imported as prompt/spec; not runnable code |
@@ -25,18 +23,25 @@ File Library returned several uploaded prompt/spec artifacts documenting the exa
 
 | Priority | Proposed canonical path | Historical/source clue | Purpose | Current status |
 |---|---|---|---|---|
-| 1 | `nature-aging-mockups/render-main-figure-layouts.py` | Recent Nature Aging / Yves-compatible figure mockup rendering conversations | Render drag-and-drop main-figure layout mockups for JM105/Intronsaurus while preserving existing panel aspect ratios and avoiding whitespace/text overlap | Exact full source not yet recovered |
-| 2 | `nature-aging-mockups/score-figure-story-architecture.py` | Requested scoring model for humanized/Yves-compatible/Nature Aging-likely figures | Score figure layouts across acceptance-likelihood, Yves compatibility, and human/non-AI design | Exact full source not yet recovered |
-| 3 | `panel-renderers/render-no-data-placeholder.py` | Figure 5 placeholder/NO DATA renderer | Render placeholders for experiments not yet done without fabricating data | Exact full source not yet recovered |
-| 4 | `nature-aging-mockups/figure-5-layout-renderer.py` | Figure 5 rendering from PowerShell/Euler using uploaded Fig5 docs/PPT | Render Figure 5 mockup from existing panels and NO DATA placeholders, matching style of other panels | Exact full source not yet recovered |
-| 5 | `panel-renderers/avoid-label-overlap-audit.py` | JM134/JM133 label-audit and rerender conversations | Audit plotted gene labels for completeness/overlap and preserve label counts | Exact full source not yet recovered |
-| 6 | `nature-aging-mockups/render-synopsis-aligned-rnaseq-plots.py` | Euler script `scripts/28_make_synopsis_aligned_all_intron_RNAseq_plots.py`; output `28_SYNOPSIS_ALIGNED_ALL_INTRON_RNASEQ_PLOTS` | Render normal all-intron/all-gene RNA-seq panels required by the synopsis; may live under JM105 figures rather than generic rendering. | Full current source visible in project chat but not imported in this pass; next target. |
-| 7 | `panel-renderers/render-figure2-panel-f-mud1-dependence.py` | Euler folders `PanelF_render_v7_TRANSPARENT_NO_BORDER_FOOTER_FIXED`, `PanelF_render_v8_FOOTER_SPACING_BEAUTIFUL`, and `PanelF_render_v9_TOP_DESCRIPTOR_SPACING_FIXED` under `Figure2_stage1B_STRICT_NUCLEAR_ORF_GATE` | Render Figure 2F set-level Mud1-dependence panel with computed NMD-hidden IR, data-driven y-limits, transparent outputs, dedicated descriptor/footer axes, and separated x-tick/genotype/right-stat lanes | Exact final complete source not recovered in this pass; only patch sequence and lane contract were recovered, so do not reconstruct as code yet |
+| 1 | `panel-renderers/jm134-starvation-switch-label-audit.py` | JM134 final layout and gene-labelled rerender workflow; Euler jobs `3101802`, `3104275`, `3106256`, `3109225` | Audit and rerender significant-in-both, JM105-only, and same-direction labels without overlap | Exact full source not yet recovered |
+| 2 | `panel-renderers/jm133-weak-5ss-mud1-scatter.py` | JM133 weak 5-prime splice-site/Mud1 scatter with LOESS, highlighted leaky set, eight ringed candidates, and marginal violin | Render the final JM133 relationship panel while preserving exact candidate and label logic | Exact full source not yet recovered |
+| 3 | `nature-aging-mockups/render-main-figure-layouts.py` | Recent Nature Aging / Yves-compatible figure mockup rendering conversations | Render drag-and-drop main-figure layout mockups for JM105/Intronsaurus while preserving existing panel aspect ratios and avoiding whitespace/text overlap | Exact full source not yet recovered |
+| 4 | `nature-aging-mockups/score-figure-story-architecture.py` | Requested scoring model for humanized/Yves-compatible/Nature Aging-likely figures | Score figure layouts across acceptance-likelihood, Yves compatibility, and human/non-AI design | Exact full source not yet recovered |
+| 5 | `panel-renderers/render-no-data-placeholder.py` | Figure 5 placeholder/NO DATA renderer | Render placeholders for experiments not yet done without fabricating data | Exact full source not yet recovered |
+| 6 | `nature-aging-mockups/figure-5-layout-renderer.py` | Figure 5 rendering from PowerShell/Euler using uploaded Fig5 docs/PPT | Render Figure 5 mockup from existing panels and NO DATA placeholders, matching style of other panels | Exact full source not yet recovered |
+| 7 | `nature-aging-mockups/render-synopsis-aligned-rnaseq-plots.py` | Euler script `scripts/28_make_synopsis_aligned_all_intron_RNAseq_plots.py`; output `28_SYNOPSIS_ALIGNED_ALL_INTRON_RNASEQ_PLOTS` | Render normal all-intron/all-gene RNA-seq panels required by the synopsis; may live under JM105 figures rather than generic rendering | Full current source was previously reported visible in project chat but is not currently accessible as a complete source body; exact full source not yet recovered |
+| 8 | `panel-renderers/render-figure2-panel-f-mud1-dependence.py` | Euler folders `PanelF_render_v7_TRANSPARENT_NO_BORDER_FOOTER_FIXED`, `PanelF_render_v8_FOOTER_SPACING_BEAUTIFUL`, and `PanelF_render_v9_TOP_DESCRIPTOR_SPACING_FIXED` | Render Figure 2F with computed NMD-hidden IR, data-driven y-limits, transparent outputs, dedicated descriptor/footer axes, and separated label lanes | Exact final complete source not yet recovered; patch sequence is not sufficient |
+
+## 2026-07-13 recovery pass
+
+File Library was searched with exact and combined clues for JM133, JM134, the four Euler job IDs, Figure 5, Nature Aging mockups, `NO DATA`, LOESS, marginal violin, and likely renderer filenames.
+
+No complete Python, R, Bash, or PowerShell source body was recovered. Returned files were unrelated language/scientific documents or non-code project material and were excluded. Existing prompt/spec files remain valid implementation contracts but are not runnable substitutes.
 
 ## Mockup/image-generation artifacts deliberately not committed as code
 
-- The generated Figure 2–5 Nature Aging-style mockup PNGs from the recent image-generation round were not committed as runnable source.
-- The prompts can be preserved later as prompt artifacts if needed, but generated PNGs are not canonical code and contain schematic/mock values rather than manuscript data.
+- Generated Nature Aging-style mockup PNGs are not runnable source.
+- Prompt assets may be canonical specifications, but schematic/mock values must never be represented as real manuscript data.
 
 ## Figure-rendering guardrails
 
@@ -54,19 +59,12 @@ File Library returned several uploaded prompt/spec artifacts documenting the exa
 
 ## Backfill method
 
-1. Search old ChatGPT/project context by exact project names and figure numbers.
-2. Search File Library and Drive for associated `.pptx`, `.docx`, `.py`, `.R`, `.ps1`, `.sh`, and generated-script artifacts.
+1. Search old ChatGPT/project context by exact project names, job IDs, filenames, and output folders.
+2. Search File Library and authorized sources for associated `.py`, `.R`, `.ps1`, `.sh`, `.sbatch`, and complete generated-script artifacts.
 3. Recover the latest complete code only.
 4. Commit recovered code under human-purpose names, not chat/date names.
-5. Keep obsolete or partial code out of the repo unless it is explicitly documented as deprecated reference material.
+5. Keep obsolete or partial code out of the repo unless explicitly documented as deprecated reference material.
 
-## Current continuation pass — 2026-07-08 figure-generation prompt/spec recovery
+## Containment action
 
-- Verified `jorddyk/Jordan-McCarthy` is private and writable with admin/push permissions.
-- Searched available project memory/current conversation for the Figure 2 Panel F repair sequence and Figure 4 artifact-package workflow.
-- Searched Google Drive for `Fig2 PanelF Mud1 dependence` and `Figure2 McCarthy`; no usable Drive source file was returned in this pass.
-- Imported two exact prompt/spec artifacts from the current project chat:
-  - `projects/figure-rendering/prompts/figure-panel-generation-lane-audit-contract.md`
-  - `projects/figure-rendering/prompts/figure-render-artifact-package-workflow.md`
-- Did not commit the Figure 2F v7/v8/v9 patch code as runnable source because the available recovered material in this pass was a patch sequence that depended on prior scripts; the exact complete final script remains a recovery target.
-- Updated `projects/figure-rendering/README.md`, this legacy backfill file, and the code wiki/addendum documentation.
+This ledger is the single source of truth for unrecovered figure-rendering code. Historical job success, remembered outputs, prompt specifications, and patch sequences do not qualify as canonical runnable source.
