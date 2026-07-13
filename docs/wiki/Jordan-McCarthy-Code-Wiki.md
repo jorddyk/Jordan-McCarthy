@@ -64,16 +64,18 @@ Prompt/spec assets under `projects/figure-rendering/prompts/` define Figure 5, m
 
 `projects/figure-rendering/docs/legacy-code-backfill.md`
 
-Highest-priority missing source:
+Highest-priority missing or source-located code:
 
-1. JM134 label-audit/rerender workflow; Euler jobs `3101802`, `3104275`, `3106256`, `3109225`.
-2. Nature Aging/Yves-compatible main-figure layout renderer.
-3. Figure-story scoring model.
-4. Figure 5 renderer and reusable `NO DATA` renderer.
-5. Figure 2F final renderer and synopsis-aligned RNA-seq renderer.
-6. Exact Figure 3 v21 sources `Figure_3_render_all_v21.py` and `figure3_base_renderer.py`.
+1. Figure 2 public-final renderer — exact complete Python is source-located in File Library and at `/cluster/home/jmccarthy/JM105_Figure2_public_final_20260713_171245/scripts/render_jm105_figure2_public_final.py`; the corrected run succeeded after `threshold_c` → `threshold_cr`. Status: `PARTIAL / SOURCE LOCATED`, not yet imported because full bytes were unavailable to this run.
+2. Figure 5 C/D/E public-clean renderer — exact uploaded `rerender_figure5_CDE_public_clean_labeled.py` and complete shell launcher were found in File Library. Status: `PARTIAL / SOURCE LOCATED`; no snippet reconstruction committed.
+3. JM134 label-audit/rerender workflow; Euler jobs `3101802`, `3104275`, `3106256`, `3109225`.
+4. Nature Aging/Yves-compatible main-figure layout renderer.
+5. Figure-story scoring model.
+6. Reusable `NO DATA` renderer.
+7. Figure 2F final renderer and synopsis-aligned RNA-seq renderer.
+8. Exact Figure 3 v21 sources `Figure_3_render_all_v21.py` and `figure3_base_renderer.py`.
 
-The 2026-07-13 File Library search used exact filenames, job IDs, output concepts, LOESS/marginal-violin terms, Figure 5, Nature Aging, and `NO DATA`. No additional complete runnable source was recovered; no reconstruction was committed.
+The 2026-07-13 evening File Library pass materially improved recovery state by locating exact Figure 2 and Figure 5 source files and verifying a successful corrected Figure 2 run. The current connector exposed indexed excerpts but not complete transferable Python file bodies, so these remain source-located rather than recovered. No biological code was reconstructed.
 
 Rendering constraints: preserve aspect ratio and lane geometry; do not shrink text to solve crowding; editable SVG text; no tight cropping on fixed canvases; transparent final outputs; unsupported panels say `NO DATA`.
 
@@ -117,8 +119,9 @@ Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategi
 - Network Evidence live permissions corrected to append only to the Master Interaction Record.
 - Repository verified private and writable on `main` with admin/push permissions.
 - Exact complete JM133 Python and sbatch sources verified on PR #1; source is uploaded to GitHub, while merge to `main` remains blocked by branch conflicts with newer main history.
-- Figure-rendering legacy search completed; no additional complete JM134, Figure 5, main-layout, scoring, or `NO DATA` renderer source recovered.
-- Figure 4G secondary-structure accessibility renderer registered under the canonical figure-rendering path; it uses the locked selected/background data and preserves the audited method caveats.
+- Exact Figure 2 public-final and Figure 5 C/D/E Python files were located in File Library/Euler evidence; they remain `PARTIAL / SOURCE LOCATED` because complete transferable bytes were unavailable in this run.
+- Figure 2 corrected rerun was verified successful after the precise `threshold_c` → `threshold_cr` fix; the source used strict total/rRNA-depleted JM105 inputs and did not justify importing outputs or reconstructing code from logs.
+- Figure 4G secondary-structure accessibility renderer remains registered under the canonical figure-rendering path; it uses the locked selected/background data and preserves the audited method caveats.
 - No biological data, generated renders, raw sequencing, microscopy stacks, or binary outputs were committed.
 
 ## 2026-07-12
