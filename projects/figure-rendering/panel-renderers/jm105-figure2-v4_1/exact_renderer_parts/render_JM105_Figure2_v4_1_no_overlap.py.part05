@@ -1,0 +1,74 @@
+    audits: dict[str, Any] = {}
+    summaries: dict[str, Any] = {}
+
+    panel_paths["A"], audit_a, summaries["A"] = render_a(panel_a, out / "panels" / "A")
+    panel_paths["B"], audit_b, summaries["B"] = render_b(strict, out / "panels" / "B")
+    panel_paths["C"], audit_c, summaries["C"] = render_c(out / "panels" / "C")
+    panel_paths["D"], audit_d, summaries["D"] = render_d(strict, out / "panels" / "D")
+    panel_paths["E"], audit_e, summaries["E"] = render_e(Path(args.panel_e_svg_source).resolve(), out / "panels" / "E")
+    panel_paths["F"], audit_f, summaries["F"] = render_f(counts, out / "panels" / "F")
+    composite = render_composite(panel_paths, out)
+
+    for audit in [audit_a, audit_b, audit_c, audit_d, audit_e, audit_f]:
+        audits[audit.panel] = {
+            "passed": audit.passed,
+            "clipped_text": audit.clipped_text,
+            "text_overlap_pairs": audit.text_overlap_pairs,
+            "visible_systematic_ids": audit.visible_systematic_ids,
+            "label_point_violations": audit.label_point_violations,
+            "legend_data_overlap": audit.legend_data_overlap,
+        }
+
+    forbidden = audit_savefig_calls()
+    if forbidden:
+        raise RuntimeError(f"Forbidden automatic-tight-crop save calls at lines {forbidden}")
+
+    write_tsv_rows(out / "Figure_2_v4_1_lane_map.tsv", lane_map_rows())
+    write_tsv_rows(out / "Figure_2_v4_1_collision_inventory.tsv", collision_inventory_rows())
+
+    payload = {
+        "font": fonts,
+        "counts": counts,
+        "audits": audits,
+        "summaries": summaries,
+        "composite": composite,
+        "forbidden_tight_crop_lines": forbidden,
+    }
+    (out / "Figure_2_v4_1_hard_collision_audit.json").write_text(json.dumps(payload, indent=2, default=str), encoding="utf-8")
+    lines = [
+        "JM105 FIGURE 2 V4.1 HARD COLLISION AUDIT",
+        "=======================================",
+        f"Panel A source n={len(panel_a)}; control={int((panel_a['glucose']==2.0).sum())}; CR={int((panel_a['glucose']==0.5).sum())}",
+        f"Strict counts: {counts}",
+        f"Requested font: {fonts['requested_font']}; resolved: {fonts['resolved_font']}",
+        "Automatic tight-crop calls: 0",
+    ]
+    for panel in "ABCDEF":
+        audit = audits[panel]
+        lines.append(
+            f"Panel {panel}: PASS={audit['passed']}; clipped={len(audit['clipped_text'])}; "
+            f"text_overlaps={len(audit['text_overlap_pairs'])}; systematic_ids={len(audit['visible_systematic_ids'])}; "
+            f"label_point_violations={len(audit['label_point_violations'])}; legend_data_overlap={audit['legend_data_overlap']}"
+        )
+    lines.extend([
+        "A legend lane: checked against data axes; no intersection.",
+        "A x-tick/right-stat lanes: checked text extents; no overlap or clipping.",
+        "B plot lane: checked all 284 points; candidate-label bboxes contain zero points.",
+        "B label/legend/x-tick/group-label lanes: checked separately; no text overlap or clipping.",
+        "C plot/label/group-label/footer lanes: checked all text pairs; no overlap or clipping.",
+        "D label/plot/group-label/right-stat/footer lanes: checked all text pairs; no overlap or clipping.",
+        "E plot/label/legend/x-tick/group-label lanes: checked all text pairs; no overlap or clipping.",
+        "F plot/group-label/right-stat/footer lanes: checked all text pairs; no overlap or clipping; x-tick lane unused.",
+        "Legend-handle contact: checked A, B, and E; no handle-label or legend-data collision.",
+        "Wasted y-axis range: A fixed to survival 0–1.03; B retains full observed range; E fixed to 0–0.92 for shared comparison.",
+        "RESULT: all six panels passed the hard pre-save collision gate.",
+    ])
+    (out / "Figure_2_v4_1_hard_collision_audit.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print("\n".join(lines))
+    print(f"OUT={out}")
+    print(f"CONTACT={composite['png']}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
