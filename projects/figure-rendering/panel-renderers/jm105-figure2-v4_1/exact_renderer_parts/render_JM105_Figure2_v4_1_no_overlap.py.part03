@@ -1,0 +1,180 @@
+    ax.text(0.50, 0.965, "CR suppression\n(old 2% > old 0.1% CR)", fontsize=6.1, fontweight="bold", ha="center", va="top", linespacing=1.0, color=C_TEXT)
+    ax.text(0.50, 0.145, "CR enhancement\n(old 2% < old 0.1% CR)", fontsize=6.1, fontweight="bold", ha="center", va="center", linespacing=1.0, color=C_TEXT)
+    ax.text(0.055, 0.52, "Age-decreased\nold 2% < young 2%", fontsize=5.5, fontweight="bold", ha="left", va="center", linespacing=1.05, color=C_TEXT)
+    ax.text(0.945, 0.52, "Age-increased\nold 2% > young 2%", fontsize=5.5, fontweight="bold", ha="right", va="center", linespacing=1.05, color=C_TEXT)
+
+    specs = [
+        (0.31, 0.70, "Age-decreased,\nCR-suppressed", "Retained introns decrease\nwith age and are further\nreduced by CR", C_BLUE),
+        (0.69, 0.70, "Age-increased,\nCR-suppressed", "Retained introns increase\nwith age and are reduced\nby CR", C_ORANGE),
+        (0.31, 0.34, "Age-decreased,\nCR-enhanced", "Retained introns decrease\nwith age but are increased\nby CR", C_BLUE),
+        (0.69, 0.34, "Age-increased,\nCR-enhanced", "Retained introns increase\nwith age and are further\nincreased by CR", C_PURPLE),
+    ]
+    for x, y, heading, body, color in specs:
+        ax.text(x, y + 0.045, heading, fontsize=5.4, fontweight="bold", color=color, ha="center", va="center", linespacing=0.98)
+        ax.text(x, y - 0.060, body, fontsize=4.05, fontweight="bold", color=C_TEXT, ha="center", va="center", linespacing=1.03)
+
+    ax.add_patch(Rectangle((0.13, 0.025), 0.74, 0.07, facecolor="white", edgecolor="#B8BABC", linewidth=0.65))
+    ax.text(0.50, 0.060, "Our focus: age-increased and CR-suppressed candidates", fontsize=5.7, fontweight="bold", ha="center", va="center", color=C_TEXT)
+
+    audit = hard_collision_audit(fig, "C")
+    if not audit.passed:
+        raise RuntimeError(f"Panel C collision audit failed: {audit}")
+    paths = save_panel(fig, out, "Figure_2C_quadrant_definition")
+    return paths, audit, {}
+
+
+def render_d(df: pd.DataFrame, out: Path) -> tuple[dict[str, str], CollisionAudit, dict[str, Any]]:
+    fig = plt.figure(figsize=mm_to_inches(PANEL_SIZES_MM["D"]))
+    fig.patch.set_alpha(0.0)
+    ax = fig.add_axes([0.03, 0.05, 0.94, 0.91])
+    ax.axis("off")
+
+    top = (
+        df.loc[df["candidate_passed_strict"] & df["gene_common"].notna()]
+        .sort_values(["candidate_score", "aging_effect", "CR_suppression"], ascending=False)
+        .drop_duplicates("gene_common")
+        .head(8)
+        .reset_index(drop=True)
+    )
+    max_age = float(top["aging_effect"].max())
+    max_cr = float(top["CR_suppression"].max())
+
+    ax.text(0.01, 0.945, "rank", fontsize=5.8, color=C_MUTED, ha="left")
+    ax.text(0.09, 0.945, "candidate intron", fontsize=5.8, color=C_MUTED, ha="left")
+    ax.text(0.38, 0.945, "aging\neffect", fontsize=5.8, color=C_ORANGE_DARK, ha="left", linespacing=0.95)
+    ax.text(0.64, 0.945, "CR\nsuppression", fontsize=5.8, color=C_ORANGE, ha="left", linespacing=0.95)
+    ax.text(0.925, 0.945, "score", fontsize=5.8, color=C_ORANGE_DARK, ha="left")
+
+    top_y = 0.855
+    step = 0.093
+    rows = []
+    for index, row in top.iterrows():
+        y = top_y - index * step
+        if index % 2 == 1:
+            ax.add_patch(Rectangle((0.0, y - 0.039), 1.0, 0.076, facecolor=C_ROW, edgecolor="none"))
+        ax.text(0.01, y, str(index + 1), fontsize=6.4, color=C_MUTED, ha="left", va="center")
+        ax.text(0.09, y, str(row["gene_common"]), fontsize=6.4, color=C_TEXT, ha="left", va="center")
+
+        age_x, age_w = 0.38, 0.135
+        cr_x, cr_w = 0.64, 0.135
+        ax.add_patch(Rectangle((age_x, y - 0.012), age_w, 0.020, facecolor=C_GRID, edgecolor="none"))
+        ax.add_patch(Rectangle((cr_x, y - 0.012), cr_w, 0.020, facecolor=C_GRID, edgecolor="none"))
+        ax.add_patch(Rectangle((age_x, y - 0.012), age_w * float(row["aging_effect"]) / max_age, 0.020, facecolor=C_ORANGE_DARK, edgecolor="none"))
+        ax.add_patch(Rectangle((cr_x, y - 0.012), cr_w * float(row["CR_suppression"]) / max_cr, 0.020, facecolor=C_ORANGE, edgecolor="none"))
+        ax.text(0.525, y, f"{float(row['aging_effect']):.2f}", fontsize=6.1, color=C_ORANGE_DARK, ha="left", va="center")
+        ax.text(0.785, y, f"{float(row['CR_suppression']):.2f}", fontsize=6.1, color=C_ORANGE, ha="left", va="center")
+        ax.text(0.925, y, f"{float(row['candidate_score']):.2f}", fontsize=6.1, color=C_ORANGE_DARK, ha="left", va="center")
+        rows.append({"rank": index + 1, "gene_common": row["gene_common"], "systematic_orf": row["systematic_orf"], "aging_effect": row["aging_effect"], "CR_suppression": row["CR_suppression"], "candidate_score": row["candidate_score"]})
+
+    ax.text(0.01, 0.035, "Conservative score = min(aging effect, CR suppression)", fontsize=5.8, color=C_MUTED, ha="left", va="center")
+    audit = hard_collision_audit(fig, "D")
+    if not audit.passed:
+        raise RuntimeError(f"Panel D collision audit failed: {audit}")
+    paths = save_panel(fig, out, "Figure_2D_ranked_candidates")
+    pd.DataFrame(rows).to_csv(out / "Figure_2D_ranked_candidates.tsv", sep="\t", index=False)
+    return paths, audit, {"rows": rows}
+
+
+def extract_panel_e_values(svg_path: Path) -> pd.DataFrame:
+    """Extract exact replicate values from the accepted PowerPoint vector panel.
+
+    The source SVG was generated by Matplotlib and contains three replicate
+    point coordinates per condition and NMD state. Values are recovered from
+    the explicit axis transform; no raster digitization or simulated values.
+    """
+    if not svg_path.is_file():
+        raise FileNotFoundError(f"Panel E source SVG missing: {svg_path}")
+    root = ET.parse(svg_path).getroot()
+    groups: dict[int, list[tuple[float, float]]] = {}
+    for group in root.iter():
+        gid = group.attrib.get("id", "")
+        if not gid.startswith("PathCollection_"):
+            continue
+        number = int(gid.split("_")[1])
+        uses: list[tuple[float, float]] = []
+        for element in group.iter():
+            if element.tag.rsplit("}", 1)[-1] == "use":
+                uses.append((float(element.attrib["x"]), float(element.attrib["y"])))
+        if uses:
+            groups[number] = uses
+
+    required_groups = set(range(1, 25))
+    if set(groups) != required_groups:
+        raise ValueError(f"Panel E SVG point groups differ from expected 1..24: {sorted(groups)}")
+
+    rows: list[dict[str, Any]] = []
+    genes = ["SRB2", "YSF3", "BET1", "RPL42B"]
+    conditions = ["young_2pct", "old_2pct", "old_CR"]
+    states = ["NMD_on_UPF1_plus", "NMD_off_upf1_delta"]
+    for gene_index, gene in enumerate(genes):
+        base = gene_index * 6 + 1
+        y_zero = 169.812 if gene_index < 2 else 326.268
+        y_at_0p8 = 75.296 if gene_index < 2 else 231.752
+
+        def convert_y(y_coord: float) -> float:
+            return (y_zero - y_coord) / (y_zero - y_at_0p8) * 0.8
+
+        for state_index, state in enumerate(states):
+            for condition_index, condition in enumerate(conditions):
+                group_number = base + state_index * 3 + condition_index
+                points = groups[group_number]
+                if len(points) != 3:
+                    raise ValueError(f"Panel E group {group_number} has {len(points)} points; expected 3")
+                for replicate, (_, y_coord) in enumerate(points, start=1):
+                    rows.append(
+                        {
+                            "gene_common": gene,
+                            "state": state,
+                            "condition": condition,
+                            "replicate": replicate,
+                            "raw_retained_intron_IR": convert_y(y_coord),
+                            "source_svg": str(svg_path),
+                            "source_pathcollection": group_number,
+                        }
+                    )
+    values = pd.DataFrame(rows)
+    if len(values) != 72:
+        raise ValueError(f"Panel E extracted {len(values)} values; expected 72")
+    return values
+
+
+def render_e(svg_source: Path, out: Path) -> tuple[dict[str, str], CollisionAudit, dict[str, Any]]:
+    values = extract_panel_e_values(svg_source)
+    fig = plt.figure(figsize=mm_to_inches(PANEL_SIZES_MM["E"]))
+    fig.patch.set_alpha(0.0)
+
+    legend_ax = fig.add_axes([0.17, 0.895, 0.78, 0.075])
+    legend_ax.axis("off")
+    handles = [
+        Line2D([0], [0], marker="o", color="#9AA1A8", markerfacecolor="#9AA1A8", linewidth=1.0, markersize=3.2, label="NMD on / UPF1+"),
+        Line2D([0], [0], marker="o", color=C_ORANGE, markerfacecolor=C_ORANGE, linewidth=1.0, markersize=3.2, label="NMD off / upf1Δ"),
+    ]
+    legend = legend_ax.legend(handles=handles, frameon=False, loc="center", ncol=2, fontsize=6.5, handlelength=1.8, columnspacing=2.0, handletextpad=0.45)
+
+    positions = {
+        "SRB2": [0.13, 0.57, 0.36, 0.27],
+        "YSF3": [0.59, 0.57, 0.36, 0.27],
+        "BET1": [0.13, 0.16, 0.36, 0.27],
+        "RPL42B": [0.59, 0.16, 0.36, 0.27],
+    }
+    condition_order = ["young_2pct", "old_2pct", "old_CR"]
+    display = ["young\n2%", "old\n2%", "old\nCR"]
+    jitter = np.array([-0.045, 0.0, 0.045])
+    axes: list[plt.Axes] = []
+
+    for panel_index, gene in enumerate(["SRB2", "YSF3", "BET1", "RPL42B"]):
+        ax = fig.add_axes(positions[gene])
+        axes.append(ax)
+        setup_axis(ax, tick_size=5.8)
+        ax.set_xlim(-0.18, 2.18)
+        ax.set_ylim(0.0, 0.92)
+        ax.set_yticks([0.0, 0.2, 0.4, 0.6, 0.8])
+        ax.set_title(gene, fontsize=7.2, color=C_TEXT, pad=2.0, loc="left")
+        x = np.arange(3, dtype=float)
+
+        for state, color in [("NMD_on_UPF1_plus", "#9AA1A8"), ("NMD_off_upf1_delta", C_ORANGE)]:
+            means = []
+            sems = []
+            for condition_index, condition in enumerate(condition_order):
+                subset = values.loc[(values["gene_common"] == gene) & (values["state"] == state) & (values["condition"] == condition), "raw_retained_intron_IR"].to_numpy(float)
+                means.append(float(np.mean(subset)))
