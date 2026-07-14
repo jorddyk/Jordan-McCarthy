@@ -41,9 +41,42 @@ Important existing paths:
 - `projects/figure-rendering/panel-renderers/jm105-rendering-harness/README.md`
 - `projects/figure-rendering/panel-renderers/jm105-rendering-harness/jm105_source_inventory.py`
 - `projects/figure-rendering/panel-renderers/jm105-rendering-harness/run-jm105-source-inventory-from-windows.ps1`
+- `projects/figure-rendering/panel-renderers/known-working-renderers.md`
 - `projects/figure-rendering/README.md`
 
 Before writing new code, search GitHub carefully for prior renderers, standards, and source-discovery logic. Do not assume the repo lacks useful code.
+
+## Known working renderer code already in GitHub
+
+There is already rendering code in the repo that actually worked to render figure outputs. The new chat must use it as a starting point for engineering structure, while replacing the biological metric/source logic for the target figure.
+
+Start here:
+
+```text
+projects/figure-rendering/panel-renderers/known-working-renderers.md
+```
+
+Key working/canonical examples:
+
+```text
+projects/figure-rendering/panel-renderers/jm132-cell-cycle-fig3h/run_jm132_fig3h_g_column_10min_y400.ps1
+projects/figure-rendering/panel-renderers/jm105-rendering-harness/README.md
+projects/figure-rendering/panel-renderers/jm105-rendering-harness/jm105_source_inventory.py
+projects/figure-rendering/panel-renderers/jm105-rendering-harness/run-jm105-source-inventory-from-windows.ps1
+projects/figure-rendering/README.md
+```
+
+How the working renderer helps other figures:
+
+- Use its paste-and-run PowerShell to Euler shape.
+- Use its fail-fast `$ErrorActionPreference = "Stop"` pattern.
+- Use its local script generation and remote run-directory pattern.
+- Use its explicit panel identity/source-status comments.
+- Use its source parsing and audit-output discipline.
+- Use its fixed-canvas constants and explicit output names.
+- Use the JM105 harness to inventory candidate source tables before plotting.
+
+Do **not** copy the biological metric blindly. For Figure 3, replace the JM132 cell-cycle metric with Mud1-dependent CR-suppression logic and Figure 3 source tables. Working code is an engineering scaffold, not a scientific shortcut.
 
 ## Figure order
 
@@ -161,8 +194,12 @@ The science is strong, but the figure is visually overpacked. It must distinguis
 Recommended Figure 3 first action:
 
 1. Update Google Sheet Action Log: starting Figure 3 acceptance lock; Figure 2 renderer failed due to typo and is pending rescue later.
-2. Search GitHub for Figure 3 / JM105 / Mud1 / `CR_suppression` / `mud1` renderers or source inventories.
-3. Create a Figure 3 acceptance matrix row-by-row:
+2. Read `projects/figure-rendering/panel-renderers/known-working-renderers.md`.
+3. Read `projects/figure-rendering/templates/chatgpt-jm105-rendering-operating-standard.md`.
+4. Search GitHub for Figure 3 / JM105 / Mud1 / `CR_suppression` / `mud1` renderers or source inventories.
+5. Use the JM105 rendering harness/source-inventory pattern to locate real Figure 3 source tables.
+6. Use the known-working JM132 PowerShell/Euler runner as an engineering scaffold, not as a biological template.
+7. Create a Figure 3 acceptance matrix row-by-row:
    - panel
    - exact claim
    - evidence shown
@@ -171,7 +208,7 @@ Recommended Figure 3 first action:
    - source path needed
    - visible labels required
    - drift risk
-4. Only after the panel claims are locked, write complete rendering code.
+8. Only after the panel claims are locked, write complete rendering code.
 
 ## Avoid repeated mistakes
 
