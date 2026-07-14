@@ -1,0 +1,180 @@
+
+
+def hard_collision_audit(
+    fig: plt.Figure,
+    panel: str,
+    *,
+    label_artists: list[Text] | None = None,
+    point_display_xy: np.ndarray | None = None,
+    legend: Any | None = None,
+    data_axes: plt.Axes | None = None,
+) -> CollisionAudit:
+    fig.canvas.draw()
+    renderer = fig.canvas.get_renderer()
+    figure_box = fig.bbox
+    items: list[tuple[str, Any, Text]] = []
+    clipped: list[str] = []
+    systematic: set[str] = set()
+
+    for artist in fig.findobj(match=Text):
+        if not artist.get_visible():
+            continue
+        text = artist.get_text().strip()
+        if not text:
+            continue
+        box = artist.get_window_extent(renderer=renderer)
+        items.append((text, box, artist))
+        if box.x0 < figure_box.x0 - 0.5 or box.y0 < figure_box.y0 - 0.5 or box.x1 > figure_box.x1 + 0.5 or box.y1 > figure_box.y1 + 0.5:
+            clipped.append(text)
+        systematic.update(match.group(0) for match in SYSTEMATIC_ORF_RE.finditer(text))
+
+    overlap_pairs: list[dict[str, Any]] = []
+    for i in range(len(items)):
+        text_a, box_a, artist_a = items[i]
+        for j in range(i + 1, len(items)):
+            text_b, box_b, artist_b = items[j]
+            # Tick labels from different axes can share strings; geometry still decides.
+            xo, yo = bbox_overlap(box_a, box_b, gap_px=0.8)
+            if xo > 0 and yo > 0:
+                overlap_pairs.append(
+                    {
+                        "object_a": text_a,
+                        "object_b": text_b,
+                        "x_overlap_px": round(float(xo), 2),
+                        "y_overlap_px": round(float(yo), 2),
+                    }
+                )
+
+    label_point_violations: list[dict[str, Any]] = []
+    if label_artists and point_display_xy is not None and len(point_display_xy):
+        for artist in label_artists:
+            box = artist.get_window_extent(renderer=renderer).expanded(1.05, 1.10)
+            inside = (
+                (point_display_xy[:, 0] >= box.x0)
+                & (point_display_xy[:, 0] <= box.x1)
+                & (point_display_xy[:, 1] >= box.y0)
+                & (point_display_xy[:, 1] <= box.y1)
+            )
+            if inside.any():
+                label_point_violations.append({"label": artist.get_text(), "points_inside_label_bbox": int(inside.sum())})
+
+    legend_data_overlap = False
+    if legend is not None and data_axes is not None:
+        legend_box = legend.get_window_extent(renderer=renderer)
+        axes_box = data_axes.get_window_extent(renderer=renderer)
+        xo, yo = bbox_overlap(legend_box, axes_box, gap_px=0.0)
+        legend_data_overlap = xo > 0 and yo > 0
+
+    return CollisionAudit(
+        panel=panel,
+        clipped_text=clipped,
+        text_overlap_pairs=overlap_pairs,
+        visible_systematic_ids=sorted(systematic),
+        label_point_violations=label_point_violations,
+        legend_data_overlap=legend_data_overlap,
+    )
+
+
+def save_panel(fig: plt.Figure, output_dir: Path, stem: str) -> dict[str, str]:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    paths = {
+        "svg": output_dir / f"{stem}.transparent.svg",
+        "pdf": output_dir / f"{stem}.transparent.pdf",
+        "png": output_dir / f"{stem}.transparent.png",
+        "preview": output_dir / f"{stem}.preview_white.png",
+    }
+    fig.patch.set_alpha(0.0)
+    fig.savefig(paths["svg"], transparent=True, facecolor="none")
+    fig.savefig(paths["pdf"], transparent=True, facecolor="none")
+    fig.savefig(paths["png"], transparent=True, facecolor="none", dpi=DPI)
+    fig.patch.set_facecolor("white")
+    fig.patch.set_alpha(1.0)
+    fig.savefig(paths["preview"], transparent=False, facecolor="white", dpi=DPI)
+    plt.close(fig)
+    return {key: str(value) for key, value in paths.items()}
+
+
+def km_curve(times: np.ndarray, events: np.ndarray) -> pd.DataFrame:
+    order = np.argsort(times)
+    times = times[order]
+    events = events[order]
+    unique_event_times = np.unique(times[events == 1])
+    at_risk = len(times)
+    survival = 1.0
+    greenwood = 0.0
+    rows = [{"time": 0.0, "survival": 1.0, "lower": 1.0, "upper": 1.0}]
+    z = 1.959963984540054
+    for time in unique_event_times:
+        deaths = int(np.sum((times == time) & (events == 1)))
+        censored_before = int(np.sum((times < time) & (events == 0)))
+        previous_time = rows[-1]["time"]
+        if previous_time == 0.0:
+            at_risk = int(np.sum(times >= time))
+        else:
+            at_risk = int(np.sum(times >= time))
+        if at_risk <= 0:
+            continue
+        survival *= 1.0 - deaths / at_risk
+        if at_risk - deaths > 0:
+            greenwood += deaths / (at_risk * (at_risk - deaths))
+        if survival <= 0 or survival >= 1:
+            lower = survival
+            upper = survival
+        else:
+            se_loglog = math.sqrt(greenwood) / abs(math.log(survival))
+            loglog = math.log(-math.log(survival))
+            lower = math.exp(-math.exp(loglog + z * se_loglog))
+            upper = math.exp(-math.exp(loglog - z * se_loglog))
+        rows.append({"time": float(time), "survival": survival, "lower": lower, "upper": upper})
+    final_time = float(np.max(times)) + 1.0
+    last = rows[-1]
+    rows.append({"time": final_time, "survival": last["survival"], "lower": last["lower"], "upper": last["upper"]})
+    return pd.DataFrame(rows)
+
+
+def logrank_test(group_a: pd.DataFrame, group_b: pd.DataFrame) -> tuple[float, float]:
+    ta = group_a["time"].to_numpy(float)
+    ea = group_a["event"].to_numpy(int)
+    tb = group_b["time"].to_numpy(float)
+    eb = group_b["event"].to_numpy(int)
+    event_times = sorted(set(ta[ea == 1].tolist() + tb[eb == 1].tolist()))
+    observed = expected = variance = 0.0
+    for time in event_times:
+        na = int(np.sum(ta >= time))
+        nb = int(np.sum(tb >= time))
+        da = int(np.sum((ta == time) & (ea == 1)))
+        db = int(np.sum((tb == time) & (eb == 1)))
+        nt = na + nb
+        dt = da + db
+        if nt <= 1 or dt == 0:
+            continue
+        observed += da
+        expected += dt * na / nt
+        variance += na * nb * dt * (nt - dt) / (nt * nt * (nt - 1))
+    chi = (observed - expected) ** 2 / variance
+    p = math.erfc(math.sqrt(chi / 2.0))
+    return float(chi), float(p)
+
+
+def load_panel_a(path: Path) -> pd.DataFrame:
+    df = read_table(path)
+    rename = {column: column.strip().lower() for column in df.columns}
+    df = df.rename(columns=rename)
+    aliases = {"% glucose": "glucose", "rls": "time"}
+    df = df.rename(columns={key: value for key, value in aliases.items() if key in df.columns})
+    expected = {"glucose", "time", "event"}
+    if not expected.issubset(df.columns):
+        raise ValueError(f"Panel A source missing {sorted(expected - set(df.columns))}; columns={list(df.columns)}")
+    df["glucose"] = pd.to_numeric(df["glucose"], errors="raise")
+    df["time"] = pd.to_numeric(df["time"], errors="raise")
+    df["event"] = pd.to_numeric(df["event"], errors="coerce").fillna(0).astype(int)
+    if len(df) != 150:
+        raise ValueError(f"Panel A source has {len(df)} rows; expected 150.")
+    return df
+
+
+def load_strict(path: Path) -> tuple[pd.DataFrame, dict[str, int]]:
+    df = read_table(path)
+    required = {
+        "aging_effect",
+        "CR_suppression",
