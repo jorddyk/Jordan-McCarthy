@@ -7,9 +7,10 @@ This is the first file every new AI chat must read before rendering a manuscript
 1. `AGENTS.md`
 2. `docs/figure-rendering-reliability-standard.md`
 3. `templates/figure-rendering-new-chat-checklist.md`
-4. `templates/chatgpt-jm105-rendering-operating-standard.md`
-5. the relevant accepted renderer README and panel/source lock;
-6. the Google Drive `JM105 Intronsaurus Figure Acceptance Matrix` tabs: Acceptance Matrix, Definitions Lock, Decision Rules, Action Log.
+4. `templates/nature-aging-figure-rendering-new-chat-prompt-v2.md`
+5. `templates/chatgpt-jm105-rendering-operating-standard.md`
+6. the relevant accepted renderer README and panel/source lock;
+7. the Google Drive `JM105 Intronsaurus Figure Acceptance Matrix` tabs: Acceptance Matrix, Definitions Lock, Decision Rules, Action Log.
 
 ## Non-negotiable summary
 
