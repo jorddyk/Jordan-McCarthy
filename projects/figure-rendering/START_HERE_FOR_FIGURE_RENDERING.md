@@ -12,6 +12,13 @@ This is the first file every new AI chat must read before rendering a manuscript
 6. the relevant accepted renderer README and panel/source lock;
 7. the Google Drive `JM105 Intronsaurus Figure Acceptance Matrix` tabs: Acceptance Matrix, Definitions Lock, Decision Rules, Action Log.
 
+For the next pipeline figure, Figure 3, also read:
+
+```text
+prompts/jm105-figure3-new-chat-starting-prompt.md
+docs/jm105-figure3-current-panel-crosswalk-and-design-brief.md
+```
+
 ## Non-negotiable summary
 
 - Lock panel identity from the current PowerPoint/composite before code.
