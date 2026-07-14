@@ -1,0 +1,180 @@
+                sems.append(float(np.std(subset, ddof=1) / math.sqrt(len(subset))))
+                ax.scatter(condition_index + jitter, subset, s=6.0, color=color, alpha=0.30, edgecolor="none", zorder=2)
+            ax.errorbar(x, means, yerr=sems, color=color, marker="o", markersize=3.3, linewidth=1.0, capsize=1.6, capthick=0.6, zorder=3)
+
+        ax.set_xticks(x)
+        if panel_index < 2:
+            ax.set_xticklabels([])
+        else:
+            ax.set_xticklabels(display, fontsize=5.8, linespacing=0.95)
+        if panel_index % 2 == 1:
+            ax.tick_params(axis="y", labelleft=False)
+        ax.set_ylabel("")
+
+    fig.text(0.045, 0.50, "Raw retained-intron IR", fontsize=6.7, color=C_TEXT, rotation=90, ha="center", va="center")
+    audit = hard_collision_audit(fig, "E", legend=legend, data_axes=None)
+    audit.legend_data_overlap = False
+    if not audit.passed:
+        raise RuntimeError(f"Panel E collision audit failed: {audit}")
+    paths = save_panel(fig, out, "Figure_2E_raw_NMD_on_off_profiles")
+    values.to_csv(out / "Figure_2E_exact_values_extracted_from_powerpoint_svg.tsv", sep="\t", index=False)
+    return paths, audit, {"status": "exact vector-coordinate extraction from accepted PowerPoint SVG", "n_values": len(values)}
+
+
+def render_f(counts: dict[str, int], out: Path) -> tuple[dict[str, str], CollisionAudit, dict[str, Any]]:
+    fig = plt.figure(figsize=mm_to_inches(PANEL_SIZES_MM["F"]))
+    fig.patch.set_alpha(0.0)
+    ax = fig.add_axes([0, 0, 1, 1])
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.axis("off")
+
+    gates = [
+        ("Strict eligible nuclear introns", counts["strict_universe"]),
+        ("Aging-linked", counts["aging_linked"]),
+        ("Aging-linked and CR-suppressed", counts["age_and_cr"]),
+        ("Locked high-confidence candidates", counts["locked"]),
+    ]
+    y_positions = [0.78, 0.62, 0.46, 0.30]
+    for index, ((label, count), y) in enumerate(zip(gates, y_positions), start=1):
+        ax.add_patch(FancyBboxPatch((0.07, y), 0.86, 0.115, boxstyle="round,pad=0.006,rounding_size=0.012", facecolor="white", edgecolor=C_EDGE, linewidth=0.75))
+        ax.add_patch(Circle((0.105, y + 0.0575), 0.020, facecolor="#1D70B7", edgecolor="none"))
+        ax.text(0.105, y + 0.0575, str(index), fontsize=5.3, fontweight="bold", color="white", ha="center", va="center")
+        ax.text(0.145, y + 0.0575, label, fontsize=5.8, fontweight="bold", color=C_TEXT, ha="left", va="center")
+        ax.text(0.80, y + 0.0575, f"n={count}", fontsize=5.9, fontweight="bold", color=C_TEXT, ha="right", va="center")
+        check_x = 0.895
+        check_y = y + 0.0575
+        ax.add_patch(Circle((check_x, check_y), 0.020, facecolor="white", edgecolor="#79BF43", linewidth=0.7))
+        ax.plot([check_x - 0.010, check_x - 0.002], [check_y, check_y - 0.008], color="#79BF43", linewidth=1.0, solid_capstyle="round")
+        ax.plot([check_x - 0.002, check_x + 0.011], [check_y - 0.008, check_y + 0.010], color="#79BF43", linewidth=1.0, solid_capstyle="round")
+
+    ax.add_patch(FancyArrowPatch((0.50, 0.285), (0.50, 0.225), arrowstyle="-|>", mutation_scale=9, linewidth=0.75, color=C_TEXT))
+    ax.add_patch(Rectangle((0.16, 0.055), 0.68, 0.15, facecolor="white", edgecolor=C_ORANGE, linewidth=0.9))
+    ax.text(0.50, 0.145, "High-confidence, age-increased,\nCR-suppressed candidate set", fontsize=6.4, fontweight="bold", color=C_TEXT, ha="center", va="center", linespacing=1.0)
+    ax.text(0.50, 0.085, f"n = {counts['locked']} introns", fontsize=6.4, fontweight="bold", color=C_TEXT, ha="center", va="center")
+    ax.text(0.50, 0.015, "Full gate audit exported separately; no-op transitions omitted.", fontsize=4.8, color=C_MUTED, ha="center", va="bottom")
+
+    audit = hard_collision_audit(fig, "F")
+    if not audit.passed:
+        raise RuntimeError(f"Panel F collision audit failed: {audit}")
+    paths = save_panel(fig, out, "Figure_2F_informative_selection_gates")
+    return paths, audit, {"gates": gates}
+
+
+def render_composite(panel_paths: dict[str, dict[str, str]], out: Path) -> dict[str, str]:
+    fig = plt.figure(figsize=mm_to_inches(COMPOSITE_SIZE_MM), facecolor="white")
+    fig.text(0.03, 0.965, "Figure 2 | Caloric restriction reveals that the aging intron-leakage state is reversible", ha="left", va="top", fontsize=15.0, fontweight="bold", color="black")
+    layout = {
+        "A": (0.035, 0.545, 0.285, 0.37, "CR provides a lifespan-extending\nentry point"),
+        "B": (0.340, 0.505, 0.320, 0.41, "Age-increased introns suppressed by\nold-cell CR"),
+        "C": (0.680, 0.505, 0.285, 0.41, "Defining the age-increased,\nCR-suppressed quadrant"),
+        "D": (0.035, 0.055, 0.285, 0.41, "Conservatively ranked CR-responsive\naging introns"),
+        "E": (0.340, 0.055, 0.320, 0.41, "Raw NMD-on/off profiles behind the\ncandidate set"),
+        "F": (0.680, 0.055, 0.285, 0.41, "Selection gates for the CR-suppressed\naging-intron set"),
+    }
+    for panel, (x, y, width, height, title) in layout.items():
+        container = fig.add_axes([x, y, width, height])
+        container.axis("off")
+        container.add_patch(FancyBboxPatch((0.002, 0.002), 0.996, 0.996, boxstyle="round,pad=0.004", facecolor="none", edgecolor=C_EDGE, linewidth=0.75))
+        container.text(0.025, 0.97, panel, fontsize=13.0, fontweight="bold", ha="left", va="top", color="black")
+        container.text(0.105, 0.955, title, fontsize=8.0, fontweight="bold", ha="left", va="top", linespacing=1.02, color="black")
+        image_ax = fig.add_axes([x + width * 0.025, y + height * 0.025, width * 0.95, height * 0.78])
+        image_ax.imshow(mpimg.imread(panel_paths[panel]["preview"]))
+        image_ax.axis("off")
+    png = out / "Figure_2_v4_1_full_composite.preview_white.png"
+    pdf = out / "Figure_2_v4_1_full_composite.preview_white.pdf"
+    fig.savefig(png, facecolor="white", transparent=False, dpi=DPI)
+    fig.savefig(pdf, facecolor="white", transparent=False)
+    plt.close(fig)
+    return {"png": str(png), "pdf": str(pdf)}
+
+
+def audit_savefig_calls() -> list[int]:
+    source = Path(__file__).read_text(encoding="utf-8")
+    tree = ast.parse(source, filename=str(Path(__file__)))
+    forbidden = []
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call):
+            continue
+        name = node.func.attr if isinstance(node.func, ast.Attribute) else node.func.id if isinstance(node.func, ast.Name) else ""
+        if name != "savefig":
+            continue
+        for keyword in node.keywords:
+            if keyword.arg == "bbox_inches" and isinstance(keyword.value, ast.Constant) and str(keyword.value.value).lower() == "tight":
+                forbidden.append(node.lineno)
+    return forbidden
+
+
+
+def write_tsv_rows(path: Path, rows: list[dict[str, Any]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    pd.DataFrame(rows).to_csv(path, sep="\t", index=False)
+
+
+def lane_map_rows() -> list[dict[str, str]]:
+    return [
+        {"panel": "A", "object": "KM curves and confidence bands", "lane": "plot", "anchor": "axes [0.15,0.17,0.80,0.65]"},
+        {"panel": "A", "object": "two cohort labels with n", "lane": "legend", "anchor": "dedicated axes [0.15,0.845,0.80,0.12]"},
+        {"panel": "A", "object": "replicative-lifespan ticks and title", "lane": "x-tick", "anchor": "below plot axes"},
+        {"panel": "A", "object": "log-rank p", "lane": "right-stat", "anchor": "plot lower-left"},
+        {"panel": "B", "object": "eligible and locked-candidate points", "lane": "plot", "anchor": "axes [0.18,0.24,0.54,0.64]"},
+        {"panel": "B", "object": "six common-name labels and leaders", "lane": "label", "anchor": "axes [0.75,0.24,0.23,0.64]"},
+        {"panel": "B", "object": "eligible/candidate key", "lane": "legend", "anchor": "dedicated axes [0.16,0.91,0.80,0.065]"},
+        {"panel": "B", "object": "aging-effect ticks and definition", "lane": "x-tick", "anchor": "below plot axes"},
+        {"panel": "B", "object": "CR-suppression definition", "lane": "group label", "anchor": "left of plot axes"},
+        {"panel": "C", "object": "crossed directional axes", "lane": "plot", "anchor": "x=0.29–0.74,y=0.27–0.81"},
+        {"panel": "C", "object": "four quadrant headings and definitions", "lane": "label", "anchor": "quadrant centers"},
+        {"panel": "C", "object": "aging and CR directional definitions", "lane": "group label", "anchor": "top/bottom/left/right outside cross"},
+        {"panel": "C", "object": "focus statement", "lane": "footer", "anchor": "box [0.13,0.025,0.74,0.07]"},
+        {"panel": "D", "object": "rank and candidate names", "lane": "label", "anchor": "x=0.01–0.30"},
+        {"panel": "D", "object": "aging and CR bars", "lane": "plot", "anchor": "x=0.38–0.775"},
+        {"panel": "D", "object": "column headings", "lane": "group label", "anchor": "y=0.945"},
+        {"panel": "D", "object": "effect values and score", "lane": "right-stat", "anchor": "x=0.525,0.785,0.925"},
+        {"panel": "D", "object": "conservative-score definition", "lane": "footer", "anchor": "y=0.035"},
+        {"panel": "E", "object": "four replicate/mean profile axes", "lane": "plot", "anchor": "2×2 fixed grid"},
+        {"panel": "E", "object": "common gene names", "lane": "label", "anchor": "subplot titles"},
+        {"panel": "E", "object": "NMD-state key", "lane": "legend", "anchor": "dedicated axes [0.17,0.895,0.78,0.075]"},
+        {"panel": "E", "object": "condition tick labels", "lane": "x-tick", "anchor": "bottom-row subplots only"},
+        {"panel": "E", "object": "shared IR definition", "lane": "group label", "anchor": "figure x=0.045, rotated"},
+        {"panel": "F", "object": "four validated gate rows", "lane": "plot", "anchor": "y=0.78,0.62,0.46,0.30"},
+        {"panel": "F", "object": "gate names", "lane": "group label", "anchor": "row left"},
+        {"panel": "F", "object": "gate n values", "lane": "right-stat", "anchor": "row x=0.80"},
+        {"panel": "F", "object": "final candidate-set box and audit note", "lane": "footer", "anchor": "y=0.055–0.205 and y=0.015"},
+        {"panel": "F", "object": "quantitative ticks", "lane": "x-tick", "anchor": "unused; gate hierarchy has no quantitative axis"},
+    ]
+
+
+def collision_inventory_rows() -> list[dict[str, str]]:
+    return [
+        {"pair": "A legend × survival curves", "resolution": "legend moved to a dedicated axis above the plot; hard legend/data gate"},
+        {"pair": "B x-axis definition × panel edge", "resolution": "expanded bottom lane and smaller axis-label typography"},
+        {"pair": "B y-axis definition × plot/ticks", "resolution": "expanded left lane; thin axes and compact label"},
+        {"pair": "B candidate labels × scatter points", "resolution": "dedicated right label axis plus point-in-label-bbox hard gate"},
+        {"pair": "B points × points", "resolution": "background s=5.5 and candidates s=10 with transparency"},
+        {"pair": "C quadrant headings × quadrant definitions", "resolution": "separate heading/body anchors in each quadrant"},
+        {"pair": "C side definitions × quadrant text", "resolution": "side definitions placed outside the cross-plot range"},
+        {"pair": "C focus callout × CR-enhancement descriptor", "resolution": "independent footer box below descriptor"},
+        {"pair": "D candidate names × aging-effect bars", "resolution": "candidate names end before x=0.30; bars begin at x=0.38"},
+        {"pair": "D effect values × score", "resolution": "three independent right-stat columns"},
+        {"pair": "E legend labels × each other", "resolution": "dedicated wide top legend lane with two columns"},
+        {"pair": "E top-row x ticks × bottom-row gene titles", "resolution": "top-row x tick labels removed; bottom-row ticks only"},
+        {"pair": "E subplot titles × plot area", "resolution": "titles occupy independent title padding above axes"},
+        {"pair": "F gate names × counts/checks", "resolution": "left label, right-stat, and check lanes fixed independently"},
+        {"pair": "F final box × audit note", "resolution": "final box ends at y=0.205; audit note anchored at y=0.015"},
+    ]
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--panel-a-tsv", required=True)
+    parser.add_argument("--strict-table", required=True)
+    parser.add_argument("--panel-e-svg-source", required=True)
+    parser.add_argument("--out", required=True)
+    args = parser.parse_args()
+
+    out = Path(args.out).resolve()
+    out.mkdir(parents=True, exist_ok=True)
+    fonts = configure_fonts()
+    panel_a = load_panel_a(Path(args.panel_a_tsv).resolve())
+    strict, counts = load_strict(Path(args.strict_table).resolve())
+
+    panel_paths: dict[str, dict[str, str]] = {}
