@@ -1,0 +1,179 @@
+        "candidate_passed_strict",
+        "pass_age_gate",
+        "pass_cr_gate",
+        "standard_gene_name",
+        "systematic_orf",
+    }
+    missing = sorted(required - set(df.columns))
+    if missing:
+        raise ValueError(f"Strict enriched source missing {missing}")
+    for column in ["candidate_passed_strict", "pass_age_gate", "pass_cr_gate"]:
+        df[column] = parse_bool(df[column])
+    df["aging_effect"] = pd.to_numeric(df["aging_effect"], errors="raise")
+    df["CR_suppression"] = pd.to_numeric(df["CR_suppression"], errors="raise")
+    df["candidate_score"] = df[["aging_effect", "CR_suppression"]].min(axis=1)
+    df["gene_common"] = df["standard_gene_name"].astype("string").str.strip()
+    invalid = df["gene_common"].isna() | df["gene_common"].eq("") | df["gene_common"].str.contains(SYSTEMATIC_ORF_RE, na=False)
+    df.loc[invalid, "gene_common"] = pd.NA
+    counts = {
+        "strict_universe": len(df),
+        "aging_linked": int(df["pass_age_gate"].sum()),
+        "age_and_cr": int((df["pass_age_gate"] & df["pass_cr_gate"]).sum()),
+        "locked": int(df["candidate_passed_strict"].sum()),
+    }
+    if counts != {"strict_universe": 284, "aging_linked": 64, "age_and_cr": 53, "locked": 49}:
+        raise ValueError(f"Unexpected strict counts: {counts}")
+    return df, counts
+
+
+def render_a(source: pd.DataFrame, out: Path) -> tuple[dict[str, str], CollisionAudit, dict[str, Any]]:
+    fig = plt.figure(figsize=mm_to_inches(PANEL_SIZES_MM["A"]))
+    fig.patch.set_alpha(0.0)
+    # Panel A legend occupies its own fixed two-row lane.  Manual artists are
+    # used instead of a Matplotlib legend so font-metric changes on Euler cannot
+    # force a horizontal row beyond the fixed canvas.
+    legend_ax = fig.add_axes([0.15, 0.815, 0.80, 0.17])
+    legend_ax.set_xlim(0.0, 1.0)
+    legend_ax.set_ylim(0.0, 1.0)
+    legend_ax.axis("off")
+    ax = fig.add_axes([0.15, 0.17, 0.80, 0.62])
+    setup_axis(ax, tick_size=6.2)
+
+    control = source.loc[source["glucose"] == 2.0]
+    cr = source.loc[source["glucose"] == 0.5]
+    entries = [("2% glucose control", control, C_CONTROL), ("0.5% glucose CR", cr, C_CR)]
+    handles = []
+    for label, group, color in entries:
+        curve = km_curve(group["time"].to_numpy(), group["event"].to_numpy())
+        ax.fill_between(curve["time"], curve["lower"], curve["upper"], step="post", color=color, alpha=0.14, linewidth=0)
+        ax.step(curve["time"], curve["survival"], where="post", color=color, linewidth=1.15)
+        handles.append(Line2D([0], [0], color=color, linewidth=1.5, label=f"{label} (n={len(group)})"))
+
+    # Dedicated legend lane: two rows, one cohort per row.  The longest label
+    # ends before x=0.95 under DejaVu Sans, Liberation Sans, and Arial metrics.
+    legend_rows = [
+        (0.68, C_CONTROL, f"2% glucose control (n={len(control)})"),
+        (0.25, C_CR, f"0.5% glucose CR (n={len(cr)})"),
+    ]
+    for y, color, text in legend_rows:
+        legend_ax.plot([0.02, 0.10], [y, y], color=color, linewidth=1.5, solid_capstyle="butt")
+        legend_ax.text(0.13, y, text, ha="left", va="center", fontsize=5.9, color=C_TEXT)
+    legend = None
+    chi, p = logrank_test(control, cr)
+    ax.set_xlim(-0.5, 39.0)
+    ax.set_ylim(0.0, 1.03)
+    ax.set_xticks([0, 10, 20, 30])
+    ax.set_yticks(np.arange(0.0, 1.01, 0.2))
+    ax.set_xlabel("Replicative lifespan (divisions)", fontsize=7.0, labelpad=3, color=C_TEXT)
+    ax.set_ylabel("Survival probability", fontsize=7.0, labelpad=4, color=C_TEXT)
+    ax.text(
+        0.025,
+        0.055,
+        f"log-rank p = {p:.2e}",
+        transform=ax.transAxes,
+        fontsize=6.2,
+        color=C_TEXT,
+        bbox=dict(boxstyle="round,pad=0.17", facecolor="white", edgecolor=C_EDGE, linewidth=0.6),
+    )
+
+    audit = hard_collision_audit(fig, "A", legend=None, data_axes=ax)
+    # The manual legend is in a dedicated axis outside the data axes.
+    audit.legend_data_overlap = False
+    if not audit.passed:
+        raise RuntimeError(f"Panel A collision audit failed: {audit}")
+    paths = save_panel(fig, out, "Figure_2A_lifespan_entry_point")
+    return paths, audit, {"chi_square": chi, "p_value": p, "n_control": len(control), "n_cr": len(cr)}
+
+
+def render_b(df: pd.DataFrame, out: Path) -> tuple[dict[str, str], CollisionAudit, dict[str, Any]]:
+    fig = plt.figure(figsize=mm_to_inches(PANEL_SIZES_MM["B"]))
+    fig.patch.set_alpha(0.0)
+    # Panel B legend occupies a fixed two-row lane so wider fallback fonts
+    # cannot clip a horizontal two-column Matplotlib legend.
+    legend_ax = fig.add_axes([0.16, 0.885, 0.80, 0.105])
+    legend_ax.set_xlim(0.0, 1.0)
+    legend_ax.set_ylim(0.0, 1.0)
+    legend_ax.axis("off")
+    ax = fig.add_axes([0.18, 0.24, 0.54, 0.62])
+    label_ax = fig.add_axes([0.75, 0.24, 0.23, 0.64])
+    label_ax.axis("off")
+    setup_axis(ax, tick_size=6.0)
+
+    candidates = df.loc[df["candidate_passed_strict"]].copy()
+    background = df.loc[~df["candidate_passed_strict"]].copy()
+    xlim = (-0.52, 0.34)
+    ylim = (-0.42, 0.44)
+    age_threshold = float(df.loc[df["pass_age_gate"], "aging_effect"].min())
+    cr_threshold = float(df.loc[df["pass_cr_gate"], "CR_suppression"].min())
+    ax.set_xlim(*xlim)
+    ax.set_ylim(*ylim)
+    ax.add_patch(Rectangle((age_threshold, cr_threshold), xlim[1] - age_threshold, ylim[1] - cr_threshold, facecolor=C_CR_LIGHT, edgecolor="none", alpha=0.55, zorder=0))
+    ax.axvline(age_threshold, color="#8A8A8A", linestyle="--", linewidth=0.55, zorder=1)
+    ax.axhline(cr_threshold, color="#8A8A8A", linestyle="--", linewidth=0.55, zorder=1)
+    ax.scatter(background["aging_effect"], background["CR_suppression"], s=5.5, color=C_BACKGROUND, edgecolor="none", alpha=0.72, zorder=2)
+    ax.scatter(candidates["aging_effect"], candidates["CR_suppression"], s=10.0, color=C_ORANGE, edgecolor="white", linewidth=0.28, alpha=0.94, zorder=3)
+    ax.set_xticks([-0.4, -0.2, 0.0, 0.2])
+    ax.set_yticks([-0.4, -0.2, 0.0, 0.2, 0.4])
+    ax.set_xlabel("Aging effect in 2% glucose\nNMD-hidden IR: old 2% − young 2%", fontsize=6.2, labelpad=4, linespacing=1.0, color=C_TEXT)
+    ax.set_ylabel("Old-cell CR suppression\nNMD-hidden IR: old 2% − old 0.1% CR", fontsize=6.2, labelpad=5, linespacing=1.0, color=C_TEXT)
+
+    legend_rows = [
+        (0.70, C_BACKGROUND, f"eligible background (n={len(background)})", "none"),
+        (0.25, C_ORANGE, f"locked candidates (n={len(candidates)})", "white"),
+    ]
+    for y, color, text, edge in legend_rows:
+        legend_ax.scatter([0.04], [y], s=12.0, color=color, edgecolor=edge, linewidth=0.3)
+        legend_ax.text(0.10, y, text, ha="left", va="center", fontsize=5.6, color=C_TEXT)
+    legend = None
+
+    label_df = (
+        candidates.loc[candidates["gene_common"].notna()]
+        .sort_values(["candidate_score", "aging_effect", "CR_suppression"], ascending=False)
+        .drop_duplicates("gene_common")
+        .head(6)
+        .sort_values("CR_suppression", ascending=False)
+        .reset_index(drop=True)
+    )
+    label_ax.set_xlim(0, 1)
+    label_ax.set_ylim(*ylim)
+    slots = np.linspace(0.36, 0.02, len(label_df))
+    label_artists: list[Text] = []
+    for slot, (_, row) in zip(slots, label_df.iterrows()):
+        connection = matplotlib.patches.ConnectionPatch(
+            xyA=(float(row["aging_effect"]), float(row["CR_suppression"])),
+            coordsA=ax.transData,
+            xyB=(0.02, slot),
+            coordsB=label_ax.transData,
+            axesA=ax,
+            axesB=label_ax,
+            arrowstyle="-",
+            linewidth=0.45,
+            color="#707070",
+            zorder=4,
+        )
+        fig.add_artist(connection)
+        artist = label_ax.text(0.10, slot, str(row["gene_common"]), fontsize=6.8, color=C_ORANGE_DARK, ha="left", va="center")
+        label_artists.append(artist)
+
+    point_xy = ax.transData.transform(df[["aging_effect", "CR_suppression"]].to_numpy(float))
+    audit = hard_collision_audit(fig, "B", label_artists=label_artists, point_display_xy=point_xy, legend=None, data_axes=ax)
+    audit.legend_data_overlap = False
+    if not audit.passed:
+        raise RuntimeError(f"Panel B collision audit failed: {audit}")
+    paths = save_panel(fig, out, "Figure_2B_age_increased_CR_suppressed")
+    return paths, audit, {"n_background": len(background), "n_candidates": len(candidates), "age_threshold": age_threshold, "cr_threshold": cr_threshold}
+
+
+def render_c(out: Path) -> tuple[dict[str, str], CollisionAudit, dict[str, Any]]:
+    fig = plt.figure(figsize=mm_to_inches(PANEL_SIZES_MM["C"]))
+    fig.patch.set_alpha(0.0)
+    ax = fig.add_axes([0, 0, 1, 1])
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.axis("off")
+
+    cx, cy = 0.50, 0.52
+    x_left, x_right = 0.29, 0.72
+    y_bottom, y_top = 0.27, 0.79
+    ax.add_patch(FancyArrowPatch((x_left, cy), (x_right + 0.02, cy), arrowstyle="-|>", mutation_scale=10, linewidth=0.85, color="black"))
+    ax.add_patch(FancyArrowPatch((cx, y_bottom), (cx, y_top + 0.02), arrowstyle="-|>", mutation_scale=10, linewidth=0.85, color="black"))
