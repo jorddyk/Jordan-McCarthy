@@ -18,6 +18,8 @@ projects/figure-rendering/
     Reusable prompt/spec artifacts for figure redesign and rendering.
   docs/legacy-code-backfill.md
     Source-of-truth recovery ledger for unrecovered historical renderers.
+  docs/jm105-figure2-euler-rendering-runbook.md
+    Figure 2 Euler workflow, failure postmortem, and anti-repeat guardrails.
 ```
 
 ## Guardrails
@@ -33,6 +35,7 @@ projects/figure-rendering/
 - Before patching a bad panel, name the exact colliding objects and reallocate lanes rather than locally nudging text.
 - Final transparent SVG/PDF/PNG outputs must remain transparent unless an opaque background is explicitly requested; white previews are separate review artifacts.
 - For JM105/Intronsaurus panel rendering, read `templates/chatgpt-jm105-rendering-operating-standard.md` before writing new code.
+- For JM105 Figure 2 Euler work, read `docs/jm105-figure2-euler-rendering-runbook.md` before launching or wrapping any renderer.
 
 ## Canonical code status
 
@@ -56,3 +59,5 @@ The `prompts/` directory contains exact rendering contracts for Figure 5, manusc
 `docs/legacy-code-backfill.md` is the single source of truth for missing historical figure code. Highest-priority targets are the JM134 label-audit/rerender workflow, JM133 weak-5′SS/Mud1 renderer, main-figure layout renderer, story-scoring model, Figure 5 renderer, and reusable `NO DATA` renderer.
 
 A 2026-07-13 evening File Library pass located exact uploaded files for the current Figure 5 C/D/E renderer and its Euler launcher, plus evidence that the corrected Figure 2 public-final renderer ran successfully after the `threshold_c` → `threshold_cr` fix. The complete Python files are present in File Library, but the current connector exposed only indexed excerpts rather than retrievable full file bytes, so they remain `PARTIAL / SOURCE LOCATED` and were not reconstructed or committed. The next import must use the exact uploaded `.py` files or the verified Euler paths, not snippet assembly.
+
+The 2026-07-14 Figure 2 runbook records the failed archive, PowerShell policy, raw-text audit, moved-script, nested-SSH, and missing-positional-argument workflows. Future chats must inspect each recovered renderer's CLI before execution and run one panel renderer at a time on Euler before building an all-panel launcher.
