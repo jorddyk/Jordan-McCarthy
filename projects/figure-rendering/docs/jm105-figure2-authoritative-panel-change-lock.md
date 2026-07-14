@@ -14,6 +14,8 @@ This file mirrors the current authoritative Figure 2 rows in the Google Drive sp
 - No visible internal `JM105` naming in publication-facing labels.
 - Fixed canvas, no automatic tight cropping, editable SVG text, transparent SVG/PDF/PNG plus white preview.
 - Lane map and exact collision inventory precede code.
+- Every response that causes or reports a successful Euler render must also provide the exact PowerShell retrieval command for that exact confirmed remote output directory. A render is not a complete deliverable until the user can download it.
+- The retrieval command must use a confirmed remote directory, create a deterministic local Downloads folder, use direct `scp -r`, verify the local folder and at least one preview PNG, then open the contact sheet or local output folder. Do not omit retrieval, defer it to a later response, or make the user infer the path.
 
 ## Panel A — CR intervention/context
 
@@ -108,3 +110,4 @@ Required change:
 - Do not treat a path variable as proof a file exists.
 - Do not use raw-text regex to infer Python semantics; use AST when auditing `savefig()`.
 - A renderer exit code 0 is not source acceptance. Verify gate columns, visible labels, resolved font, collisions, and exported provenance.
+- Never end a successful render response without the corresponding PowerShell download block. The exact confirmed remote output path must appear in that same response.
