@@ -4,6 +4,38 @@ Status: user-confirmed successful end-to-end execution on 2026-07-14.
 
 This folder records the accepted execution pattern that finally rendered and retrieved all six Figure 2 panels without clipping or overlap under the Euler font environment.
 
+## Exact renderer source is now in GitHub
+
+The exact accepted Python renderer bytes are stored under:
+
+```text
+exact_renderer_parts/render_JM105_Figure2_v4_1_no_overlap.py.part00
+...
+exact_renderer_parts/render_JM105_Figure2_v4_1_no_overlap.py.part05
+```
+
+Run:
+
+```bash
+python3 materialize_exact_renderer.py
+```
+
+This reconstructs:
+
+```text
+render_JM105_Figure2_v4_1_no_overlap.py
+```
+
+and refuses to continue unless its SHA256 is exactly:
+
+```text
+167ac8ffd306ce5e6fb234a4ed3c35eea5b8f2be7205b0df46c1b4f5b28ec593
+```
+
+The parts were created from the exact package that succeeded, and the materializer was independently tested to produce byte-identical output.
+
+The source inputs remain in the immutable accepted Drive package documented in `CANONICAL_PACKAGE_LOCATION.md`; this avoids duplicating biological source tables while preserving the exact runnable code and hashes in GitHub.
+
 ## Panel identities
 
 - A: JM104 replicative-lifespan curves.
@@ -23,6 +55,28 @@ This folder records the accepted execution pattern that finally rendered and ret
 6. Verify every panel's transparent SVG/PDF/PNG and white preview.
 7. Retrieve the complete output with direct `scp -r`.
 8. Verify the hard audit pass locally and open the white contact sheet.
+
+## How this helps later figures
+
+Use this renderer as an engineering scaffold, not as a biological or visual template to copy blindly.
+
+Reusable components:
+
+- fixed millimetre canvas constants;
+- separate panel and composite rendering;
+- transparent SVG/PDF/PNG plus white previews;
+- editable SVG text settings;
+- explicit font resolution and cross-font testing;
+- post-draw text clipping and pairwise overlap audit;
+- point-versus-direct-label collision testing;
+- legend-versus-data collision testing;
+- visible systematic-ORF rejection;
+- lane-map and collision-inventory exports;
+- fail-closed output verification;
+- PowerShell → Euler → direct `scp -r` delivery pattern;
+- local verification and preview opening before success.
+
+Do not reuse Figure 2 panel identities, source paths, axes, candidate selection, labels, dimensions, colors, or layout for another figure without deriving them from that figure's own PowerPoint, acceptance matrix, source data, and biological claim.
 
 ## Cross-font validation
 
