@@ -1,0 +1,180 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+JM105 Figure 2 v4.1 — cross-font no-overlap repair renderer.
+
+Figure 2 panel identities are locked to the current PowerPoint:
+A = JM104 replicative-lifespan curves.
+B = age-effect versus old-cell CR-suppression scatter.
+C = four-quadrant interpretation schematic.
+D = ranked named candidates.
+E = restored accepted PowerPoint raw-profile panel asset.
+F = selection-gate hierarchy in the accepted checklist visual language.
+
+RNA scope fence:
+Only total / rRNA-depleted JM105 sources are used for B/D/F.
+Poly-A, P-versus-T, mRNA-like, and P−T constructs are out of scope.
+
+Definitions:
+NMD_hidden = IR(upf1Δ) − IR(UPF1+)
+candidate_score = min(aging_effect, CR_suppression)
+Panel F contrast = computed (+MUD1 CR-suppression) vs (mud1Δ CR-suppression);
+Figure 2F remains the locked gate-hierarchy panel and does not display this contrast.
+
+Render contract:
+- fixed canvas sizes declared below;
+- automatic tight cropping is not used;
+- SVG text remains editable;
+- transparent SVG/PDF/PNG plus white preview;
+- hard collision gate runs before any panel is accepted.
+"""
+
+from __future__ import annotations
+
+import argparse
+import ast
+import json
+import math
+import re
+import shutil
+import sys
+import xml.etree.ElementTree as ET
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any, Iterable
+
+import numpy as np
+import pandas as pd
+from PIL import Image
+
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.image as mpimg
+import matplotlib.pyplot as plt
+from matplotlib import font_manager
+from matplotlib.lines import Line2D
+from matplotlib.patches import Circle, FancyArrowPatch, FancyBboxPatch, Rectangle
+from matplotlib.text import Text
+
+MM_PER_INCH = 25.4
+DPI = 300
+
+PANEL_SIZES_MM = {
+    "A": (74.0, 52.0),
+    "B": (74.0, 58.0),
+    "C": (74.0, 58.0),
+    "D": (74.0, 58.0),
+    "E": (74.0, 57.3),
+    "F": (74.0, 58.0),
+}
+COMPOSITE_SIZE_MM = (270.0, 154.0)
+
+C_TEXT = "#202124"
+C_MUTED = "#63686E"
+C_AXIS = "#4C5157"
+C_GRID = "#E4E7E9"
+C_BACKGROUND = "#C8CED3"
+C_CONTROL = "#177E78"
+C_CR = "#B54816"
+C_CR_LIGHT = "#F3E9E4"
+C_ORANGE = "#D96600"
+C_ORANGE_DARK = "#A63C00"
+C_BLUE = "#2D69B3"
+C_PURPLE = "#9653A6"
+C_GREEN = "#4C8061"
+C_GREEN_LIGHT = "#E5F0EA"
+C_EDGE = "#CDD1D4"
+C_ROW = "#F4F5F6"
+
+SYSTEMATIC_ORF_RE = re.compile(r"\bY[A-P][LR]\d{3}[WC](?:-[A-Z])?\b", re.IGNORECASE)
+
+
+def mm_to_inches(size_mm: tuple[float, float]) -> tuple[float, float]:
+    return size_mm[0] / MM_PER_INCH, size_mm[1] / MM_PER_INCH
+
+
+def configure_fonts() -> dict[str, str]:
+    requested = "Arial"
+    candidates = ["Arial", "Liberation Sans", "DejaVu Sans"]
+    available = {entry.name for entry in font_manager.fontManager.ttflist}
+    resolved = next((name for name in candidates if name in available), "DejaVu Sans")
+    resolved_path = font_manager.findfont(font_manager.FontProperties(family=resolved))
+    matplotlib.rcParams.update(
+        {
+            "font.family": resolved,
+            "font.sans-serif": candidates,
+            "svg.fonttype": "none",
+            "pdf.fonttype": 42,
+            "ps.fonttype": 42,
+            "axes.unicode_minus": True,
+            "figure.dpi": 180,
+            "savefig.dpi": DPI,
+        }
+    )
+    return {"requested_font": requested, "resolved_font": resolved, "resolved_font_path": resolved_path}
+
+
+def parse_bool(series: pd.Series) -> pd.Series:
+    if pd.api.types.is_bool_dtype(series):
+        return series.fillna(False).astype(bool)
+    numeric = pd.to_numeric(series, errors="coerce")
+    if numeric.notna().any():
+        return numeric.fillna(0).ne(0)
+    return series.astype("string").str.strip().str.lower().isin({"true", "1", "yes", "y", "pass", "passed"})
+
+
+def read_table(path: Path) -> pd.DataFrame:
+    with path.open("r", encoding="utf-8", errors="replace") as handle:
+        first = handle.readline()
+    sep = "\t" if first.count("\t") >= first.count(",") else ","
+    return pd.read_csv(path, sep=sep, low_memory=False)
+
+
+def finite_limits(values: Iterable[float], pad_fraction: float = 0.06, minimum_span: float = 0.1) -> tuple[float, float]:
+    array = np.asarray(list(values), dtype=float)
+    array = array[np.isfinite(array)]
+    if array.size == 0:
+        return -0.5, 0.5
+    low = float(np.min(array))
+    high = float(np.max(array))
+    if math.isclose(low, high):
+        low -= minimum_span / 2
+        high += minimum_span / 2
+    span = high - low
+    return low - span * pad_fraction, high + span * pad_fraction
+
+
+def setup_axis(ax: plt.Axes, tick_size: float = 6.4) -> None:
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    for name in ["left", "bottom"]:
+        ax.spines[name].set_linewidth(0.55)
+        ax.spines[name].set_color(C_AXIS)
+    ax.tick_params(axis="both", labelsize=tick_size, width=0.55, length=2.3, colors=C_TEXT, pad=2.0)
+    ax.grid(axis="y", color=C_GRID, linewidth=0.45, zorder=0)
+
+
+@dataclass
+class CollisionAudit:
+    panel: str
+    clipped_text: list[str]
+    text_overlap_pairs: list[dict[str, Any]]
+    visible_systematic_ids: list[str]
+    label_point_violations: list[dict[str, Any]]
+    legend_data_overlap: bool
+
+    @property
+    def passed(self) -> bool:
+        return not (
+            self.clipped_text
+            or self.text_overlap_pairs
+            or self.visible_systematic_ids
+            or self.label_point_violations
+            or self.legend_data_overlap
+        )
+
+
+def bbox_overlap(a: Any, b: Any, gap_px: float = 0.5) -> tuple[float, float]:
+    x_overlap = min(a.x1, b.x1) - max(a.x0, b.x0)
+    y_overlap = min(a.y1, b.y1) - max(a.y0, b.y0)
+    return x_overlap - gap_px, y_overlap - gap_px
