@@ -1,6 +1,6 @@
 # Jordan McCarthy Code Wiki
 
-_Last updated: 2026-07-13 Europe/Zurich_
+_Last updated: 2026-07-14 Europe/Zurich_
 
 Canonical private repository: `jorddyk/Jordan-McCarthy`
 
@@ -56,6 +56,7 @@ Project-organized code vault. Canonical code lives under the project where a hum
 - `projects/figure-rendering/panel-renderers/jm105-rendering-harness/`
 - `projects/figure-rendering/panel-renderers/jm105-fig4bc-sequence-architecture/`
 - `projects/figure-rendering/panel-renderers/jm105-figure4-secondary-structure-accessibility/` — Figure 4G predicted splice-signal accessibility and RNAlib MFE-derived structure control using the locked Figure 4 selected/background data (selected n=49).
+- `projects/figure-rendering/panel-renderers/jm105-figure2-v4_1/figure2f_seven_gate_counts.py` — `RECOVERED` exact complete standalone Figure 2F renderer. It reads the verified raw 402-row strict-gate table, derives all seven cumulative counts, hard-fails unless the final mask equals `candidate_passed_strict` with n=49, performs cross-font collision audits, exports transparent/editable figures and can refresh the Euler file inventory.
 - Partial Figure 3 Mud1/CR package: runner/README canonical; complete Python source still pending.
 
 Prompt/spec assets under `projects/figure-rendering/prompts/` define Figure 5, manuscript-sequence, lane/collision, and artifact-package contracts. They are not runnable substitutes.
@@ -72,10 +73,10 @@ Highest-priority missing or source-located code:
 4. Nature Aging/Yves-compatible main-figure layout renderer.
 5. Figure-story scoring model.
 6. Reusable `NO DATA` renderer.
-7. Figure 2F final renderer and synopsis-aligned RNA-seq renderer.
+7. Synopsis-aligned RNA-seq renderer.
 8. Exact Figure 3 v21 sources `Figure_3_render_all_v21.py` and `figure3_base_renderer.py`.
 
-The 2026-07-13 evening File Library pass materially improved recovery state by locating exact Figure 2 and Figure 5 source files and verifying a successful corrected Figure 2 run. The current connector exposed indexed excerpts but not complete transferable Python file bodies, so these remain source-located rather than recovered. No biological code was reconstructed.
+The 2026-07-14 pass verified that the exact complete Figure 2F seven-gate source is present in the canonical repository, so that item is now `RECOVERED` rather than source-located. The raw table and original generator remain on Euler under `Figure2_stage1_audit_20260630_145204/Figure2_stage1B_STRICT_NUCLEAR_ORF_GATE/`. No biological code or values were reconstructed.
 
 Rendering constraints: preserve aspect ratio and lane geometry; do not shrink text to solve crowding; editable SVG text; no tight cropping on fixed canvases; transparent final outputs; unsupported panels say `NO DATA`.
 
@@ -112,6 +113,13 @@ Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategi
   - **Containment:** Daily Code Handoff is explicitly exempt from campaign-count reductions and may be disabled only by a direct Jordan instruction.
 
 # Last-known canonical decisions
+
+## 2026-07-14
+
+- Repository verified private and writable on `main`.
+- Exact complete Figure 2F seven-gate renderer is `RECOVERED` at `projects/figure-rendering/panel-renderers/jm105-figure2-v4_1/figure2f_seven_gate_counts.py` (source commit `e4e64e91210cf0c353785c791cee36e2b8108403`).
+- The renderer uses the real strict 402-row total/rRNA-depleted JM105 gate table, preserves `NMD_hidden = IR(upf1Δ) - IR(UPF1+)`, and hard-fails on schema/count/final-mask disagreement.
+- No raw data, generated renders, logs, secrets, or reconstructed biological values were committed.
 
 ## 2026-07-13
 
