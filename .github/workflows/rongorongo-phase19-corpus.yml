@@ -1,0 +1,39 @@
+name: Rongorongo Phase19 Corpus Extract
+
+on:
+  push:
+    branches:
+      - rongorongo-phase19-temp
+
+permissions:
+  contents: read
+
+jobs:
+  extract-text-t:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download public corpus and isolate Text T
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, urllib.request
+          url = 'https://raw.githubusercontent.com/jgregoriods/rongopy/master/ga_lstm/tablets/tablets.json'
+          with urllib.request.urlopen(url, timeout=120) as r:
+              data = json.load(r)
+          if 'T' not in data:
+              raise SystemExit('Text T missing from corpus')
+          out = {'T': data['T']}
+          raw = json.dumps(out, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode('utf-8')
+          open('phase19_text_T.json', 'wb').write(raw)
+          open('phase19_text_T.sha256', 'w').write(hashlib.sha256(raw).hexdigest() + '  phase19_text_T.json\n')
+          print('Text T isolated without printing transcription')
+          PY
+      - name: Upload sealed corpus artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase19-text-t-corpus
+          path: |
+            phase19_text_T.json
+            phase19_text_T.sha256
+          retention-days: 1
