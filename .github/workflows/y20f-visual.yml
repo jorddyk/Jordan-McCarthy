@@ -17,6 +17,9 @@ jobs:
           curl --fail --silent --show-error --location https://upload.wikimedia.org/wikipedia/commons/3/3d/Fischer_Ya.png -o /tmp/yvisual/Fischer_Ya.png
           curl --fail --silent --show-error --location https://upload.wikimedia.org/wikipedia/commons/0/07/Fischer_Yb.png -o /tmp/yvisual/Fischer_Yb.png
           curl --fail --silent --show-error --location https://upload.wikimedia.org/wikipedia/commons/c/c5/Fischer_Yc-d.png -o /tmp/yvisual/Fischer_Yc-d.png
+          curl --fail --silent --show-error --location https://upload.wikimedia.org/wikipedia/commons/3/3d/Rongorongo_Y_top.jpg -o /tmp/yvisual/Rongorongo_Y_top.jpg
+          curl --fail --silent --show-error --location https://upload.wikimedia.org/wikipedia/commons/c/c8/Rongorongo_Y_bottom.jpg -o /tmp/yvisual/Rongorongo_Y_bottom.jpg
+          curl --fail --silent --show-error --location https://upload.wikimedia.org/wikipedia/commons/4/44/Rongorongo_Y_front.jpg -o /tmp/yvisual/Rongorongo_Y_front.jpg
           curl --fail --silent --show-error --location https://upload.wikimedia.org/wikipedia/commons/6/63/Rongorongo_Y_snuff_box.gif -o /tmp/yvisual/Rongorongo_Y_snuff_box.gif
           sha256sum /tmp/yvisual/* > /tmp/yvisual/SHA256SUMS.txt
       - uses: actions/upload-artifact@v4
