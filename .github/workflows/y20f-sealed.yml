@@ -1,0 +1,46 @@
+name: Y20F Sealed Rongorongo Prediction
+
+on:
+  push:
+    branches: [rongorongo-y20f-sealed]
+    paths: [.github/workflows/y20f-sealed.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  predict:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Restore frozen program
+        run: |
+          base64 -d sealed/y20f_sealed.py.gz.b64 | gunzip > /tmp/y20f_sealed.py
+          echo "program_sha256=$(sha256sum /tmp/y20f_sealed.py | cut -d' ' -f1)"
+      - name: Install analysis dependencies
+        run: python -m pip install --disable-pip-version-check numpy pandas scikit-learn openpyxl
+      - name: Retrieve public corpus inside sealed runner
+        run: |
+          sudo mkdir -p /mnt/data
+          sudo chown "$USER" /mnt/data
+          curl --fail --silent --show-error --location https://raw.githubusercontent.com/jgregoriods/rongopy/master/ga_lstm/tablets/tablets.json -o /mnt/data/tablets.json
+          curl --fail --silent --show-error --location https://raw.githubusercontent.com/jgregoriods/rongopy/master/horley_encoding.py -o /mnt/data/horley_encoding.py
+      - name: Generate predictions and sealed truth
+        run: python /tmp/y20f_sealed.py
+      - name: Upload sealed outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: y20f-sealed-outputs
+          if-no-files-found: error
+          retention-days: 7
+          path: |
+            /mnt/data/Y20F_predictions.csv
+            /mnt/data/Y20F_predictions.xlsx
+            /mnt/data/Y20F_truth.json
+            /mnt/data/Y20F_shuffle_controls.npz
+            /mnt/data/Y20F_manifest.json
+            /mnt/data/Y20F_training_summary.json
