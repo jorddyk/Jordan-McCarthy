@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - rongorongo-phase19-temp
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: read
