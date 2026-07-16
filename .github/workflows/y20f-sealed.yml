@@ -3,7 +3,8 @@ name: Y20F Sealed Rongorongo Prediction
 on:
   push:
     branches: [rongorongo-y20f-sealed]
-    paths: [.github/workflows/y20f-sealed.yml]
+  pull_request:
+    branches: [main]
 
 permissions:
   contents: read
