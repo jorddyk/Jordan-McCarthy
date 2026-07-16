@@ -23,7 +23,7 @@ jobs:
           base64 -d sealed/y20f_sealed.py.gz.b64 | gunzip > /tmp/y20f_sealed.py
           echo "program_sha256=$(sha256sum /tmp/y20f_sealed.py | cut -d' ' -f1)"
       - name: Install analysis dependencies
-        run: python -m pip install --disable-pip-version-check numpy pandas scikit-learn openpyxl
+        run: python -m pip install --quiet --disable-pip-version-check numpy pandas scikit-learn openpyxl
       - name: Retrieve public corpus inside sealed runner
         run: |
           sudo mkdir -p /mnt/data
@@ -31,8 +31,17 @@ jobs:
           curl --fail --silent --show-error --location https://raw.githubusercontent.com/jgregoriods/rongopy/master/ga_lstm/tablets/tablets.json -o /mnt/data/tablets.json
           curl --fail --silent --show-error --location https://raw.githubusercontent.com/jgregoriods/rongopy/master/horley_encoding.py -o /mnt/data/horley_encoding.py
       - name: Generate predictions and sealed truth
-        run: python /tmp/y20f_sealed.py
-      - name: Upload sealed outputs
+        id: generate
+        shell: bash
+        run: |
+          set +e
+          python /tmp/y20f_sealed.py > /mnt/data/Y20F_run.log 2>&1
+          code=$?
+          tail -80 /mnt/data/Y20F_run.log > /mnt/data/Y20F_diagnostic_tail.txt
+          echo "exit_code=$code" >> /mnt/data/Y20F_diagnostic_tail.txt
+          exit $code
+      - name: Upload sealed outputs or diagnostic
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: y20f-sealed-outputs
@@ -45,3 +54,4 @@ jobs:
             /mnt/data/Y20F_shuffle_controls.npz
             /mnt/data/Y20F_manifest.json
             /mnt/data/Y20F_training_summary.json
+            /mnt/data/Y20F_diagnostic_tail.txt
