@@ -24,12 +24,51 @@ jobs:
           echo "program_sha256=$(sha256sum /tmp/y20f_sealed.py | cut -d' ' -f1)"
       - name: Install analysis dependencies
         run: python -m pip install --quiet --disable-pip-version-check numpy pandas scikit-learn openpyxl
-      - name: Retrieve public corpus inside sealed runner
+      - name: Retrieve public corpus and canonical Text Y XML inside sealed runner
         run: |
           sudo mkdir -p /mnt/data
           sudo chown "$USER" /mnt/data
           curl --fail --silent --show-error --location https://raw.githubusercontent.com/jgregoriods/rongopy/master/ga_lstm/tablets/tablets.json -o /mnt/data/tablets.json
           curl --fail --silent --show-error --location https://raw.githubusercontent.com/jgregoriods/rongopy/master/horley_encoding.py -o /mnt/data/horley_encoding.py
+          (curl --fail --silent --show-error --location https://kohaumotu.org/Rongorongo/xml/Y.xml -o /mnt/data/Y.xml || curl --fail --silent --show-error --location http://kohaumotu.org/Rongorongo/xml/Y.xml -o /mnt/data/Y.xml)
+          python - <<'PY'
+          import json
+          import xml.etree.ElementTree as ET
+          from collections import defaultdict
+          from pathlib import Path
+          data_path=Path('/mnt/data/tablets.json')
+          root=ET.parse('/mnt/data/Y.xml').getroot()
+          tab=root.find('tablet')
+          lines={}
+          for side in tab.findall('side'):
+              side_code=(side.findtext('side-code') or '').strip()
+              for line in side.findall('line'):
+                  code=(line.findtext('line-code') or '').strip()
+                  parts=[]
+                  for glyph in line.findall('glyph'):
+                      ceipp=(glyph.findtext('code/ceipp') or '').strip()
+                      if not ceipp:
+                          continue
+                      link=(glyph.findtext('link') or '-').strip()
+                      if ceipp == '_':
+                          ceipp='?'
+                      parts.append(ceipp)
+                      if link in {'-', '.', ':'}:
+                          parts.append(link)
+                      else:
+                          parts.append('-')
+                  seq=''.join(parts).rstrip('-.:')
+                  if seq:
+                      try:
+                          line_num=str(int(code))
+                      except Exception:
+                          line_num=code
+                      lines[f'Y{side_code}{line_num}']=seq
+          data=json.loads(data_path.read_text(encoding='utf-8'))
+          data['Y']=lines
+          data_path.write_text(json.dumps(data, ensure_ascii=False, separators=(',',':')), encoding='utf-8')
+          print('canonical_y_xml_injected', len(lines))
+          PY
       - name: Generate predictions and sealed truth
         id: generate
         shell: bash
