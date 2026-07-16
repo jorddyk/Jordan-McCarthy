@@ -1,0 +1,26 @@
+name: Y20F Post-score Visual Audit Fetch
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  fetch-visuals:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Retrieve public Text Y panels after numerical score
+        run: |
+          mkdir -p /tmp/yvisual
+          curl --fail --silent --show-error --location https://upload.wikimedia.org/wikipedia/commons/3/3d/Fischer_Ya.png -o /tmp/yvisual/Fischer_Ya.png
+          curl --fail --silent --show-error --location https://upload.wikimedia.org/wikipedia/commons/0/07/Fischer_Yb.png -o /tmp/yvisual/Fischer_Yb.png
+          curl --fail --silent --show-error --location https://upload.wikimedia.org/wikipedia/commons/c/c5/Fischer_Yc-d.png -o /tmp/yvisual/Fischer_Yc-d.png
+          curl --fail --silent --show-error --location https://upload.wikimedia.org/wikipedia/commons/6/63/Rongorongo_Y_snuff_box.gif -o /tmp/yvisual/Rongorongo_Y_snuff_box.gif
+          sha256sum /tmp/yvisual/* > /tmp/yvisual/SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: y20f-postscore-visuals
+          retention-days: 7
+          path: /tmp/yvisual
