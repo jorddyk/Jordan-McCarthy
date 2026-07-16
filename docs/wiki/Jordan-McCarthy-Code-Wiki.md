@@ -1,6 +1,6 @@
 # Jordan McCarthy Code Wiki
 
-_Last updated: 2026-07-15 Europe/Zurich_
+_Last updated: 2026-07-16 Europe/Zurich_
 
 Canonical private repository: `jorddyk/Jordan-McCarthy`
 
@@ -57,7 +57,7 @@ Project-organized code vault. Canonical code lives under the project where a hum
 - `projects/figure-rendering/panel-renderers/jm105-fig4bc-sequence-architecture/`
 - `projects/figure-rendering/panel-renderers/jm105-figure4-secondary-structure-accessibility/` — Figure 4G predicted splice-signal accessibility and RNAlib MFE-derived structure control using the locked Figure 4 selected/background data (selected n=49).
 - `projects/figure-rendering/panel-renderers/jm105-figure2-v4_1/figure2f_seven_gate_counts.py` — `RECOVERED` exact complete standalone Figure 2F renderer. It reads the verified raw 402-row strict-gate table, derives all seven cumulative counts, hard-fails unless the final mask equals `candidate_passed_strict` with n=49, performs cross-font collision audits, exports transparent/editable figures and can refresh the Euler file inventory.
-- Partial Figure 3 Mud1/CR package: runner/README canonical. The historical v21 Python pair is source-located on Euler and in Jordan's retrieved bundles, but exact bytes are not yet canonical.
+- Partial Figure 3 Mud1/CR package: runner/README canonical. The historical v21 Python pair is source-located in the verified 2026-07-15 v6 run and Jordan's retrieved local v6 bundle, but exact bytes are not yet canonical.
 
 Prompt/spec assets under `projects/figure-rendering/prompts/` define Figure 5, manuscript-sequence, lane/collision, and artifact-package contracts. They are not runnable substitutes.
 
@@ -67,7 +67,7 @@ Prompt/spec assets under `projects/figure-rendering/prompts/` define Figure 5, m
 
 Highest-priority missing or source-located code:
 
-1. Exact Figure 3 v21 sources `figure3_base_renderer.py` and `Figure_3_render_all_v21.py` — terminal retrieval records from 2026-07-15 verify complete files of approximately 57 KB and 40 KB copied from the historical v21 Euler area into current Figure 3 build bundles. Status: `PARTIAL / SOURCE LOCATED`; the connector exposes only the transcript, not source bytes.
+1. Exact Figure 3 v21 sources `figure3_base_renderer.py` and `Figure_3_render_all_v21.py` — the latest verified source-bearing run is `/cluster/scratch/jmccarthy/JM105_RNAseq/Figure3_chat_build_20260715_163813/`; terminal retrieval records verify complete files of approximately 57 KB and 40 KB, matching `.pyc` companions, and the same files in Jordan's local `JM105_Figure3_Euler_Bundle_v6_EXTRACTED` results. Status: `PARTIAL / SOURCE LOCATED`; the connector exposes only the transcript, not source bytes.
 2. Figure 2 public-final renderer — exact complete Python is source-located in File Library and at `/cluster/home/jmccarthy/JM105_Figure2_public_final_20260713_171245/scripts/render_jm105_figure2_public_final.py`; the corrected run succeeded after `threshold_c` → `threshold_cr`. Status: `PARTIAL / SOURCE LOCATED`, not yet imported because full bytes were unavailable to this run.
 3. Figure 5 C/D/E public-clean renderer — exact uploaded `rerender_figure5_CDE_public_clean_labeled.py` and complete shell launcher were found in File Library. Status: `PARTIAL / SOURCE LOCATED`; no snippet reconstruction committed.
 4. JM134 label-audit/rerender workflow; Euler jobs `3101802`, `3104275`, `3106256`, `3109225`.
@@ -76,7 +76,9 @@ Highest-priority missing or source-located code:
 7. Reusable `NO DATA` renderer.
 8. Synopsis-aligned RNA-seq renderer.
 
-The 2026-07-15 pass verified that the historical Figure 3 v21 source pair exists as complete files and has been retrieved into current build bundles. Two observed execution failures were source/CLI invocation mismatches: a supplied candidate TSV lacked required `intron_id`, and another wrapper passed an unsupported positional path. Neither failure licenses editing or reconstructing the v21 source. The next recovery must copy the exact `.py` files directly from the verified Euler directories or Jordan's local `JM105_Figure3_Euler_Bundle_v5` extraction.
+The 2026-07-16 pass verified the latest Figure 3 v6 retrieval inventory. In addition to the v21 source pair, it contains the current `Figure_3_build_from_v21_and_JM100.py` (~33 KB). The run generated panel source tables and rendered assets before failing only at the composite hard cross-font audit: clipped headings and title/panel-letter overlaps were reported. This is a layout-QC blocker in the newer wrapper, not evidence of missing v21 logic or a biological-data failure. The next recovery must copy the exact `.py` bytes directly from the verified Euler run directory or Jordan's local v6 extraction.
+
+The 2026-07-15 pass verified that the historical Figure 3 v21 source pair exists as complete files and has been retrieved into current build bundles. Two earlier execution failures were source/CLI invocation mismatches: a supplied candidate TSV lacked required `intron_id`, and another wrapper passed an unsupported positional path. Neither failure licenses editing or reconstructing the v21 source.
 
 The 2026-07-14 pass verified that the exact complete Figure 2F seven-gate source is present in the canonical repository, so that item is now `RECOVERED` rather than source-located. The raw table and original generator remain on Euler under `Figure2_stage1_audit_20260630_145204/Figure2_stage1B_STRICT_NUCLEAR_ORF_GATE/`. No biological code or values were reconstructed.
 
@@ -115,6 +117,15 @@ Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategi
   - **Containment:** Daily Code Handoff is explicitly exempt from campaign-count reductions and may be disabled only by a direct Jordan instruction.
 
 # Last-known canonical decisions
+
+## 2026-07-16
+
+- Repository re-verified private and writable on `main`.
+- Latest verified Figure 3 source-bearing run: `/cluster/scratch/jmccarthy/JM105_RNAseq/Figure3_chat_build_20260715_163813/`.
+- Exact complete source files confirmed in the retrieval inventory and Jordan's local v6 extraction: `figure3_base_renderer.py` (~57 KB), `Figure_3_render_all_v21.py` (~40 KB), and current wrapper `Figure_3_build_from_v21_and_JM100.py` (~33 KB).
+- Source bodies remain `PARTIAL / SOURCE LOCATED` because the connector exposes only terminal transcripts, not the downloaded files.
+- The v6 run reached rendered panel/output generation and then failed the composite cross-font audit due to clipped headings and title/panel-letter overlaps; this is layout QC, not biological-source failure.
+- No source was reconstructed from logs; no raw data, generated renders, binaries, secrets, or invented biological values were committed.
 
 ## 2026-07-15
 
