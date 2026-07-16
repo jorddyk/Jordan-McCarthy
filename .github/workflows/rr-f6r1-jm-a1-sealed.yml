@@ -38,19 +38,19 @@ jobs:
           PYTHONHASHSEED: '0'
         run: python projects/rongorongo/sealed_f6r1_jm_a1/run.py
 
-      - name: Fetch original tracings only after predictions exist
-        run: |
-          test -s sealed_output/predictions/predictions.csv
-          test -s sealed_output/predictions/manifest.json
-          python projects/rongorongo/sealed_f6r1_jm_a1/fetch_tracings.py
-
-      - name: Upload prediction artifact
+      - name: Upload prediction artifact before any tracing access
         uses: actions/upload-artifact@v4
         with:
           name: rr-f6r1-jm-a1-predictions
           path: sealed_output/predictions/
           if-no-files-found: error
           retention-days: 30
+
+      - name: Fetch original tracings only after predictions exist
+        run: |
+          test -s sealed_output/predictions/predictions.csv
+          test -s sealed_output/predictions/manifest.json
+          python projects/rongorongo/sealed_f6r1_jm_a1/fetch_tracings.py
 
       - name: Upload sealed truth artifact
         uses: actions/upload-artifact@v4
