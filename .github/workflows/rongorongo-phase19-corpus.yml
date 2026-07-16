@@ -21,14 +21,18 @@ jobs:
           set -euo pipefail
           python - <<'PY'
           import requests
-          h={'User-Agent':'Mozilla/5.0 research audit'}
-          urls={
-            'Barthel_Ta.png':'https://upload.wikimedia.org/wikipedia/commons/a/a6/Barthel_Ta.png',
-            'display_tablet_svg.xsl':'http://kohaumotu.org/Rongorongo/xml/display_tablet_svg.xsl',
-          }
-          for fn,u in urls.items():
-              r=requests.get(u,headers=h,timeout=120);r.raise_for_status();open(fn,'wb').write(r.content)
-              print(fn, len(r.content), r.headers.get('content-type'))
+          h={'User-Agent':'RongorongoResearch/1.0 (audit; contact via GitHub)'}
+          sources=[
+            ('Barthel_Ta.png','https://en.wikipedia.org/wiki/Special:Redirect/file/Barthel_Ta.png?width=2000'),
+            ('display_tablet_svg.xsl','http://kohaumotu.org/Rongorongo/xml/display_tablet_svg.xsl'),
+          ]
+          ok=0
+          for fn,u in sources:
+              r=requests.get(u,headers=h,timeout=120,allow_redirects=True)
+              print(fn,r.status_code,len(r.content),r.headers.get('content-type'),r.url)
+              if r.status_code==200 and len(r.content)>500:
+                  open(fn,'wb').write(r.content);ok+=1
+          if ok<2: raise SystemExit(f'Only {ok} resources fetched')
           PY
       - name: Upload tracing resources
         uses: actions/upload-artifact@v4
