@@ -1,4 +1,4 @@
-name: Rongorongo Phase19 Corpus Extract
+name: Rongorongo Phase19 Tracing Fetch
 
 on:
   push:
@@ -12,30 +12,29 @@ permissions:
   contents: read
 
 jobs:
-  extract-text-t:
+  fetch-tracings:
     runs-on: ubuntu-latest
     steps:
-      - name: Fetch and seal Text T XML without printing transcription
+      - name: Fetch Text T tracing resources
         shell: bash
         run: |
           set -euo pipefail
           python - <<'PY'
-          import hashlib, requests
-          url='http://kohaumotu.org/Rongorongo/xml/T.xml'
-          r=requests.get(url,headers={'User-Agent':'Mozilla/5.0 research audit'},timeout=120)
-          r.raise_for_status()
-          raw=r.content
-          if raw.lower().count(b'<ceipp>') < 100:
-              raise SystemExit('Unexpectedly sparse Text T XML')
-          open('phase19_text_T.xml','wb').write(raw)
-          open('phase19_text_T.sha256','w').write(hashlib.sha256(raw).hexdigest()+'  phase19_text_T.xml\n')
-          print('Text T XML sealed; transcription not printed')
+          import requests
+          h={'User-Agent':'Mozilla/5.0 research audit'}
+          urls={
+            'Barthel_Ta.png':'https://upload.wikimedia.org/wikipedia/commons/a/a6/Barthel_Ta.png',
+            'display_tablet_svg.xsl':'http://kohaumotu.org/Rongorongo/xml/display_tablet_svg.xsl',
+          }
+          for fn,u in urls.items():
+              r=requests.get(u,headers=h,timeout=120);r.raise_for_status();open(fn,'wb').write(r.content)
+              print(fn, len(r.content), r.headers.get('content-type'))
           PY
-      - name: Upload sealed Text T artifact
+      - name: Upload tracing resources
         uses: actions/upload-artifact@v4
         with:
-          name: phase19-text-t-corpus
+          name: phase19-text-t-tracings
           path: |
-            phase19_text_T.xml
-            phase19_text_T.sha256
+            Barthel_Ta.png
+            display_tablet_svg.xsl
           retention-days: 1
