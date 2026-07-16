@@ -15,19 +15,20 @@ jobs:
   extract-text-t:
     runs-on: ubuntu-latest
     steps:
-      - name: Download public corpus and isolate Text T
+      - name: Download published data bundle and isolate Text T
         shell: bash
         run: |
           set -euo pipefail
+          python -m pip install --quiet gdown
+          gdown 1NGg7459yIo1Xky-rvDBwSMqZ0rYTFb_X -O hackingrongo_data.zip
           python - <<'PY'
-          import hashlib, json, urllib.request
-          url = 'https://raw.githubusercontent.com/jgregoriods/rongopy/master/ga_lstm/tablets/tablets.json'
-          with urllib.request.urlopen(url, timeout=120) as r:
-              data = json.load(r)
-          if 'T' not in data:
-              raise SystemExit('Text T missing from corpus')
-          out = {'T': data['T']}
-          raw = json.dumps(out, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode('utf-8')
+          import hashlib, json, zipfile
+          z = zipfile.ZipFile('hackingrongo_data.zip')
+          candidates = [n for n in z.namelist() if n.endswith('/corpus/T.json') or n == 'data/corpus/T.json']
+          if len(candidates) != 1:
+              raise SystemExit(f'Expected one Text T corpus file; found {len(candidates)}')
+          data = json.loads(z.read(candidates[0]))
+          raw = json.dumps(data, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode('utf-8')
           open('phase19_text_T.json', 'wb').write(raw)
           open('phase19_text_T.sha256', 'w').write(hashlib.sha256(raw).hexdigest() + '  phase19_text_T.json\n')
           print('Text T isolated without printing transcription')
