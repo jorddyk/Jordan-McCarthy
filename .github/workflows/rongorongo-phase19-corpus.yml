@@ -15,33 +15,27 @@ jobs:
   extract-text-t:
     runs-on: ubuntu-latest
     steps:
-      - name: Probe public Text T transcription sources without printing content
+      - name: Fetch and seal Text T XML without printing transcription
         shell: bash
         run: |
           set -euo pipefail
-          python -m pip install --quiet requests beautifulsoup4
           python - <<'PY'
-          import re, requests
-          from bs4 import BeautifulSoup
-          urls = [
-            'https://www.osterinsel.de/34-rongorongo-tafel-t.htm',
-            'https://web.archive.org/web/20071017022436id_/http://www.rongorongo.org/corpus/t.html',
-            'https://web.archive.org/web/20050227000000id_/http://www.rongorongo.org/corpus/t.html',
-            'https://web.archive.org/cdx/search/cdx?url=www.rongorongo.org/corpus/t.html&output=json&filter=statuscode:200&filter=mimetype:text/html&collapse=digest',
-            'http://kohaumotu.org/Rongorongo/xml/T.xml',
-            'https://kohaumotu.org/Rongorongo/xml/T.xml',
-          ]
-          headers={'User-Agent':'Mozilla/5.0 research audit'}
-          for i,u in enumerate(urls):
-              try:
-                  r=requests.get(u,headers=headers,timeout=60,allow_redirects=True)
-                  txt=r.text
-                  soup=BeautifulSoup(txt,'html.parser') if 'html' in r.headers.get('content-type','') else None
-                  title=(soup.title.get_text(' ',strip=True)[:120] if soup and soup.title else '')
-                  print(i, 'status',r.status_code,'bytes',len(r.content),'type',r.headers.get('content-type',''),'title',repr(title),
-                        'Ta-labels',len(re.findall(r'\bTa\d+\b',txt)),
-                        '3digit-tokens',len(re.findall(r'(?<!\d)\d{3}[a-zA-Z!?]*(?!\d)',txt)),
-                        'ceipp-tags',txt.lower().count('<ceipp>'))
-              except Exception as e:
-                  print(i,'ERROR',type(e).__name__,str(e)[:160])
+          import hashlib, requests
+          url='http://kohaumotu.org/Rongorongo/xml/T.xml'
+          r=requests.get(url,headers={'User-Agent':'Mozilla/5.0 research audit'},timeout=120)
+          r.raise_for_status()
+          raw=r.content
+          if raw.lower().count(b'<ceipp>') < 100:
+              raise SystemExit('Unexpectedly sparse Text T XML')
+          open('phase19_text_T.xml','wb').write(raw)
+          open('phase19_text_T.sha256','w').write(hashlib.sha256(raw).hexdigest()+'  phase19_text_T.xml\n')
+          print('Text T XML sealed; transcription not printed')
           PY
+      - name: Upload sealed Text T artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase19-text-t-corpus
+          path: |
+            phase19_text_T.xml
+            phase19_text_T.sha256
+          retention-days: 1
