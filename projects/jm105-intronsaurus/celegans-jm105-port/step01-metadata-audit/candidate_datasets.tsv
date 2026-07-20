@@ -1,0 +1,16 @@
+dataset_id	accession	priority	role	expected_design	why_included
+worm_dr_nmd_primary	SRP089617	1	Primary dietary-restriction by NMD test	WT and eat-2 with control, smg-2, and hrpu-1 perturbations	Closest public test of whether dietary restriction changes NMD-hidden intron retention
+worm_nmd_direct_targets	GSE100929	1	Direct SMG-2 substrate validation	N2, smg-1, smg-1;smg-2, SMG-2 RIP and controls	Separates direct SMG-2-associated intron-containing transcripts from secondary changes
+worm_iis_nmd_factorial	GSE94077	2	Independent longevity-pathway by NMD test	N2, smg-2, daf-2, smg-2;daf-2	Tests whether intervention-sensitive NMD-hidden IR extends beyond dietary restriction
+worm_rnp2_public	GSE113301	1	Public RNP-2 or U1A perturbation audit	rnp-2 mutants and wild type; published study emphasizes small RNA	Determines whether any junction-usable mRNA libraries exist for the worm Mud1 ortholog
+worm_cytoplasmic_reference	GSE118379	1	Cytoplasmic versus nuclear localization reference	Whole, nuclear-enriched, and cytoplasmic-enriched RNA-seq	Defines intron-containing transcripts with direct cytoplasmic detectability
+worm_dr_replication	GSE119485	2	Independent dietary-restriction RNA-seq	Dietary restriction and control	Tests reproducibility of DR-associated IR directions without NMD perturbation
+worm_aging_bridge_legacy	GSE124994	3	Replicated adult aging RNA-seq	Adult aging time course	Independent age-associated IR bridge
+worm_age_longevity_total_rna	GSE190068	1	Chronological and physiological aging comparison	Adult ages and longevity backgrounds, total paired-end RNA	Tests whether longevity state changes age-linked spliceosome allocation
+worm_dr_pathway_replication	GSE240821	3	Dietary-restriction pathway dependency	N2, eat-2, pha-4, daf-16, mxl-2 perturbations	Supports intervention-pathway interpretation; secondary for junction analysis
+worm_spliceosome_longevity	GSE292723	2	Spliceosome dependency across longevity interventions	WT, eat-2, raga-1, clk-1, age-1, repo-1 perturbation	Tests whether spliceosome allocation is required across intervention classes
+worm_modern_aging_longread	PRJNA1126730	1	High-resolution adult aging transcript isoforms	Adult day series with Illumina and Nanopore direct RNA sequencing	Best public definition of age-associated IR and isoform allocation
+worm_cr_aging_microarray	GSE77110	4	Descriptive CR aging trajectory	AL and calorie restriction across adult ages	Gene-level context only; expected to fail junction-read gate
+worm_nmd_longread_1	DRX184564	2	Full-length NMD-sensitive isoforms	smg-2 long-read poly(A) RNA	Full-length validation of retained-intron transcript structures
+worm_nmd_longread_2	DRX184565	2	Full-length NMD-sensitive isoforms	smg-2 long-read poly(A) RNA	Replicate or matched long-read validation
+worm_nmd_modern	PRJNA1010807	1	Modern short- and long-read NMD mechanism dataset	smg-2, smg-5, smg-6, smg-7 and matched controls	High-quality independent NMD-hidden isoform and cleavage validation
