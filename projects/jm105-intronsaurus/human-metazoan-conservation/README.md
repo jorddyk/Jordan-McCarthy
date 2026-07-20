@@ -11,19 +11,25 @@ HGPS is not used as evidence that caloric restriction works in humans, and it is
 
 ## Primary metric
 
-For each representative protein-coding intron:
+For each representative protein-coding intron, the primary metric is calculated exactly as in the canonical JM105 yeast work:
 
 ```text
-PEI = log2((EI + IE + 0.5) / (2 × S + 0.5))
+JM105_IR = (EI + IE) / ((EI + IE) + 2 × EE_total)
 ```
 
 - `EI`: unique read names spanning the upstream exon–intron boundary without a splice.
 - `IE`: unique read names spanning the intron–downstream exon boundary without a splice.
-- `S`: unique read names carrying the annotated exon–exon splice junction.
+- `EE_total`: unique read names carrying the annotated exon–exon splice junction.
 
-Interior intronic read density is retained as a secondary validation measure.
+The pipeline also retains the secondary sensitivity metric:
 
-This is called **pre-mRNA exposure** or **intron-containing RNA exposure**. Whole-cell RNA-seq does not prove export, translation or NMD degradation.
+```text
+PEI = log2((EI + IE + 0.5) / (2 × EE_total + 0.5))
+```
+
+PEI is approximately the log2 odds of `JM105_IR`; it is not the primary cross-species effect scale. Interior intronic read density is retained as an additional validation measure.
+
+These are measures of **pre-mRNA exposure** or **intron-containing RNA exposure**. Whole-cell RNA-seq does not prove export, translation or NMD degradation.
 
 ## Prespecified datasets
 
@@ -32,8 +38,6 @@ This is called **pre-mRNA exposure** or **intron-containing RNA exposure**. Whol
 - `GSE222163` / `PRJNA918398`: control versus caloric restriction in mouse brown adipose tissue and skeletal muscle; exercise-containing groups are excluded.
 
 The script resolves GEO and SRA metadata at runtime and fails before downloading if the expected groups cannot be recovered.
-
-The Euler launcher executes `run_hgps_metazoan_conservation_manifest_hotfix.py`, a narrow evidence-backed wrapper that records the GSE118633 replicate count, resolves GSE222163 through `PRJNA918398`, and accepts the public replicate-suffixed control titles before entering the canonical analysis.
 
 ## Outputs
 
@@ -63,9 +67,11 @@ Run the companion PowerShell uploader from the extracted bundle. It uploads the 
 
 A main Figure 5 human/metazoan arm is supported only when:
 
-1. the HGPS-associated direction replicates;
-2. at least one HGPS intervention moves PEI toward control; and
-3. at least one bona fide metazoan CR tissue reduces PEI.
+1. the HGPS-associated direction replicates in `JM105_IR`;
+2. at least one HGPS intervention moves `JM105_IR` toward control; and
+3. at least one bona fide metazoan CR tissue reduces `JM105_IR`.
+
+PEI remains a secondary sensitivity analysis and is not the primary cross-species claim scale.
 
 Until those gates pass, this package produces tables and a written report only. It does not render a manuscript figure or insert `NO DATA` panels.
 
@@ -80,10 +86,10 @@ Panel F contrast = computed (+MUD1 CR-suppression) versus
 
 These definitions are not recalculated in this public human/mouse workflow.
 
-## Runtime manifest corrections
+## Runtime manifest correction
 
-GSE222163 control sample titles are replicate-suffixed (`BAT control1` through
-`BAT control3` and `SkM control1` through `SkM control4`). The classifier
-explicitly accepts `controlN` and `ctrlN`; a terminal word boundary after
-`control` is not used because it would exclude all public control titles.
-GSE222163 SRA metadata is resolved through BioProject `PRJNA918398`.
+GSE222163 control sample titles are replicate-suffixed (`BAT control1` and
+`SkM control1` through their final replicates). The classifier explicitly
+accepts `controlN` and `ctrlN`; a terminal word boundary after `control` is not
+used because it would exclude all public control titles. GSE222163 SRA metadata
+is resolved through BioProject `PRJNA918398`.
