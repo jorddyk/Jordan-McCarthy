@@ -22,6 +22,8 @@ projects/jm105-intronsaurus/
     JM-133 weak 5′SS/U1-complementarity vs Mud1-dependence analysis.
   figure2-candidate-gate/
     Total/rRNA-depleted Figure 2 candidate-gate analysis.
+  celegans-jm105-port/
+    Cross-species worm analysis using JM105 IR, NMD-hidden, CR-suppression, and RNP-2-dependence logic.
   intronsaurus-browser/
     Intronsaurus browser/export code and Windows/Euler helpers.
   metadata/
@@ -40,6 +42,7 @@ projects/jm105-intronsaurus/
 - Distinguish raw NMD-off/upf1Δ retained signal from NMD-hidden off-minus-on signal.
 - Distinguish RNA/host transcript abundance from protein abundance.
 - Avoid claiming caloric restriction is starvation.
+- Do not frame aging as damage, abnormality, failure, collapse, or generic loss of fidelity; use spliceosome allocation and RNA-fate language.
 
 ## Canonical code imported
 
@@ -50,6 +53,10 @@ projects/jm105-intronsaurus/
 | `transformation-protocol-rnaseq/transformation-protocol-samples.tsv` | canonical | Sample manifest for JM62-JM73 transformation-protocol subset. | Real sample metadata; no raw reads. |
 | `transformation-protocol-rnaseq/run-transformation-expression.sbatch` | canonical | Slurm wrapper for transformation-protocol expression workflow. | Real workflow; no fake biological data. |
 | `transformation-protocol-rnaseq/check-transformation-job.ps1` | canonical | Windows helper to inspect Euler Slurm status and logs. | Administrative helper; no biological data modified. |
+| `celegans-jm105-port/analysis-plan.md` | active canonical plan | Defines the worm Figure 5 logic, JM105-compatible contrasts, cytoplasmic-leakage gate, and RNP-2 dependency test. | Documentation and analysis specification only. |
+| `celegans-jm105-port/step01-metadata-audit/step01_audit_public_datasets.py` | active canonical code | Resolves public worm RNA-seq accessions, grades junction-read usability, and reports which JM105 contrasts are estimable within each study. | Metadata only; no FASTQ or biological counts committed. |
+| `celegans-jm105-port/step01-metadata-audit/run_step01_metadata_audit.sbatch` | active canonical helper | Runs the Step 1 public-dataset audit reproducibly on Euler and records provenance and checksums. | Administrative and metadata workflow only. |
+| `celegans-jm105-port/step01-metadata-audit/submit_step01_from_windows.ps1` | active canonical helper | Updates the dedicated Euler checkout from GitHub and submits the newest Step 1 job. | Administrative helper; no biological data modified. |
 | `intronsaurus-browser/run-integrate-sun-matched-rna-protein-gene-stories.sbatch` | canonical helper | Slurm wrapper for Intronsaurus vNext3Y single-entry Gene Stories with matched JM105 RNA and Sun protein-abundance groups. | Real JM105/Sun workflow; no raw data committed. |
 | `intronsaurus-browser/upload-submit-intronsaurus-matched-rna-protein-gene-stories.ps1` | canonical helper | Uploads and submits the vNext3Y build to Euler. | Administrative helper; no raw data committed. |
 | `intronsaurus-browser/retrieve-intronsaurus-matched-rna-protein-gene-stories.ps1` | canonical helper | Retrieves vNext3Y generated outputs. | Generated HTML/archive remain excluded by default. |
