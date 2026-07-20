@@ -96,7 +96,7 @@ fi
 
 echo "Starting full public-data analysis"
 "$MICROMAMBA" run -n "$ENV_NAME" \
-    python "$CODE_DIR/scripts/run_hgps_metazoan_conservation.py" \
+    python "$CODE_DIR/scripts/run_hgps_metazoan_conservation_manifest_hotfix.py" \
     --root "$WORK_ROOT" \
     --threads "${SLURM_CPUS_PER_TASK:-24}"
 
