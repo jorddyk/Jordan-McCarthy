@@ -27,11 +27,13 @@ This is called **pre-mRNA exposure** or **intron-containing RNA exposure**. Whol
 
 ## Prespecified datasets
 
-- `GSE118633`: HGPS versus control, total/rRNA-depleted discovery/validation.
+- `GSE118633`: 2 control versus 3 HGPS RNA-seq samples, total/rRNA-depleted discovery/validation.
 - `GSE137083`: normal control, HGPS control, pan-PML knockdown, PML2 knockdown, and lonafarnib plus zoledronate.
-- `GSE222163`: control versus caloric restriction in mouse brown adipose tissue and skeletal muscle; exercise-containing groups are excluded.
+- `GSE222163` / `PRJNA918398`: control versus caloric restriction in mouse brown adipose tissue and skeletal muscle; exercise-containing groups are excluded.
 
 The script resolves GEO and SRA metadata at runtime and fails before downloading if the expected groups cannot be recovered.
+
+The Euler launcher executes `run_hgps_metazoan_conservation_manifest_hotfix.py`, a narrow wrapper that records the evidence-backed GSE118633 replicate count and resolves GSE222163 through `PRJNA918398` before entering the unchanged canonical analysis.
 
 ## Outputs
 
