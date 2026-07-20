@@ -1,0 +1,87 @@
+{
+  "version": "v22",
+  "status": "LOCAL_PREFLIGHT_PASS_RAW_EULER_PENDING",
+  "python_compile": "PASS",
+  "bash_syntax": "PASS",
+  "local_preflight_mode": "recovered exact v21 plot-source tables",
+  "local_preflight_run": "PASS",
+  "independent_pdf_render": {
+    "A": "PASS",
+    "D": "PASS",
+    "G": "PASS"
+  },
+  "fixed_canvas_mm": {
+    "A": [150.0, 84.375],
+    "D": [186.69, 152.908],
+    "G": [101.6, 105.0925]
+  },
+  "source_hashes": {
+    "render_figure3_ADG_v22.py": "a4a8a76d1c33501de734ff9fbeec3a2e7cdf3b3f236270673434a0611176b03c",
+    "render_figure3_ADG_v22.sbatch": "5643a4e590c592928b7b40323c2e60ca8aea25241ba1936672fb2aa11c59baac",
+    "Figure_3_render_all_v21.py": "2595f23d89c0b040d861f95d3b26139c1856eb00103625c05e4498d21d4de8a4",
+    "figure3_base_renderer.py": "9a8e87fdccd5509eb33328a6177350e442078c78be3025721975f504d97ddce1",
+    "JM100.xlsx": "05c8fe38aa52ff2d2d81709e85a2057e103e0527db9abe56cb1a9d124d276c1a",
+    "preflight_Figure_3B_plot_source.tsv": "83a1c2108bf99ba8fe202d59f73287145e34f0c71aee73859856b9e859a04b66",
+    "preflight_Figure_3E_plot_source.tsv": "8d4afd98996e901ae2861752e9cb58a83c341426ce58666ae37ded7471f58be6"
+  },
+  "exact_recovered_v21_files_unchanged": true,
+  "scope": "total / rRNA-depleted JM105 only for RNA panels D/G",
+  "panel_D_marker_rule": "open = old 2% glucose; filled = old 0.1% glucose CR",
+  "panel_A_cox_statistics": [
+    {
+      "row": "WT: CR versus 2%",
+      "hazard_ratio": 0.7109889891044338,
+      "ci_low": 0.5378631892966114,
+      "ci_high": 0.9398400052043299,
+      "p_value": 0.016584419603536075
+    },
+    {
+      "row": "mud1Δ: CR versus 2%",
+      "hazard_ratio": 1.4077229241245337,
+      "ci_low": 1.0645648953070366,
+      "ci_high": 1.861496504197783,
+      "p_value": 0.016444753773663078
+    },
+    {
+      "row": "CR × mud1Δ interaction",
+      "hazard_ratio": 1.9760493743815428,
+      "ci_low": 1.3317683331033277,
+      "ci_high": 2.9320198062486353,
+      "p_value": 0.0007166515417116215
+    }
+  ],
+  "panel_G_range_audit": {
+    "n_total_rows": 402,
+    "n_finite_pairs": 402,
+    "x_min": -3.90631396991032,
+    "x_max": 2.4575920553841426,
+    "y_min": -2.0919261565682885,
+    "y_max": 2.783009099516715,
+    "old_robust_limit": 1.6576477520171593,
+    "n_points_outside_old_limit": 22,
+    "new_shared_symmetric_limit": 4.218819087503146,
+    "points_clipped_in_v22": 0
+  },
+  "text_audits": {
+    "A": {
+      "passed": true,
+      "tested_fonts": ["Liberation Sans", "DejaVu Sans"],
+      "clipped_text": [],
+      "text_overlap_pairs": []
+    },
+    "D": {
+      "passed": true,
+      "tested_fonts": ["Liberation Sans", "DejaVu Sans"],
+      "clipped_text": [],
+      "text_overlap_pairs": []
+    },
+    "G": {
+      "passed": true,
+      "tested_fonts": ["Liberation Sans", "DejaVu Sans"],
+      "clipped_text": [],
+      "text_overlap_pairs": []
+    }
+  },
+  "bbox_inches_tight": false,
+  "raw_euler_validation_required": true
+}
