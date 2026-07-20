@@ -23,17 +23,55 @@ LOG_DIR="$PROJECT_ROOT/logs"
 ENV_ROOT="$PROJECT_ROOT/software"
 MAMBA_ROOT_PREFIX="$ENV_ROOT/micromamba-root"
 MICROMAMBA="$ENV_ROOT/bin/micromamba"
+MICROMAMBA_VERSION="2.6.2-1"
+MICROMAMBA_URL="https://github.com/mamba-org/micromamba-releases/releases/download/${MICROMAMBA_VERSION}/micromamba-linux-64"
 ENV_NAME="jm105-hgps-conservation"
 
 mkdir -p "$CODE_DIR" "$WORK_ROOT" "$LOG_DIR" "$ENV_ROOT/bin" "$MAMBA_ROOT_PREFIX"
 
-if [[ ! -x "$MICROMAMBA" ]]; then
-    echo "Installing pinned micromamba bootstrap under $ENV_ROOT"
-    TMP_DIR="$(mktemp -d)"
-    trap 'rm -rf "$TMP_DIR"' EXIT
-    curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest \
-        | tar -xj -C "$TMP_DIR" bin/micromamba
-    install -m 0755 "$TMP_DIR/bin/micromamba" "$MICROMAMBA"
+install_micromamba() {
+    local tmp_dir
+    local tmp_binary
+    local attempt
+    local byte_count
+
+    echo "Installing pinned micromamba ${MICROMAMBA_VERSION} under $ENV_ROOT"
+    tmp_dir="$(mktemp -d)"
+    tmp_binary="$tmp_dir/micromamba"
+
+    for attempt in 1 2 3 4 5 6; do
+        echo "Micromamba download attempt ${attempt}/6"
+        rm -f "$tmp_binary"
+        if curl \
+            --fail \
+            --location \
+            --connect-timeout 30 \
+            --max-time 900 \
+            --output "$tmp_binary" \
+            "$MICROMAMBA_URL"; then
+            byte_count="$(stat -c '%s' "$tmp_binary")"
+            if [[ "$byte_count" -ge 1000000 ]]; then
+                chmod 0755 "$tmp_binary"
+                if "$tmp_binary" --version; then
+                    install -m 0755 "$tmp_binary" "$MICROMAMBA"
+                    "$MICROMAMBA" --version
+                    rm -rf "$tmp_dir"
+                    return 0
+                fi
+            fi
+        fi
+        echo "Micromamba attempt ${attempt} failed or produced an invalid binary." >&2
+        sleep $((attempt * 10))
+    done
+
+    rm -rf "$tmp_dir"
+    echo "ERROR: Could not install a valid micromamba binary after 6 attempts." >&2
+    return 1
+}
+
+if [[ ! -x "$MICROMAMBA" ]] || ! "$MICROMAMBA" --version >/dev/null 2>&1; then
+    rm -f "$MICROMAMBA"
+    install_micromamba
 fi
 
 export MAMBA_ROOT_PREFIX
