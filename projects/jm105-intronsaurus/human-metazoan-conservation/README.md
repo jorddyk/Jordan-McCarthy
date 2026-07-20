@@ -33,7 +33,7 @@ This is called **pre-mRNA exposure** or **intron-containing RNA exposure**. Whol
 
 The script resolves GEO and SRA metadata at runtime and fails before downloading if the expected groups cannot be recovered.
 
-The Euler launcher executes `run_hgps_metazoan_conservation_manifest_hotfix.py`, a narrow wrapper that records the evidence-backed GSE118633 replicate count and resolves GSE222163 through `PRJNA918398` before entering the unchanged canonical analysis.
+The Euler launcher executes `run_hgps_metazoan_conservation_manifest_hotfix.py`, a narrow evidence-backed wrapper that records the GSE118633 replicate count, resolves GSE222163 through `PRJNA918398`, and accepts the public replicate-suffixed control titles before entering the canonical analysis.
 
 ## Outputs
 
@@ -79,3 +79,11 @@ Panel F contrast = computed (+MUD1 CR-suppression) versus
 ```
 
 These definitions are not recalculated in this public human/mouse workflow.
+
+## Runtime manifest corrections
+
+GSE222163 control sample titles are replicate-suffixed (`BAT control1` through
+`BAT control3` and `SkM control1` through `SkM control4`). The classifier
+explicitly accepts `controlN` and `ctrlN`; a terminal word boundary after
+`control` is not used because it would exclude all public control titles.
+GSE222163 SRA metadata is resolved through BioProject `PRJNA918398`.
