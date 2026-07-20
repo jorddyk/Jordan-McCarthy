@@ -42,7 +42,7 @@ OUTPUT_DIR="${RUN_DIR}/outputs"
 LOG_DIR="${RUN_DIR}/logs"
 PROVENANCE_DIR="${RUN_DIR}/provenance"
 
-mkdir -p "${OUTPUT_DIR}" "${LOG_DIR}" "${PROVENANCE_DIR}"
+mkdir -p "${RUN_DIR}" "${LOG_DIR}" "${PROVENANCE_DIR}"
 
 cp -- "${CANDIDATE_TABLE}" "${PROVENANCE_DIR}/candidate_datasets.tsv"
 cp -- "${AUDIT_SCRIPT}" "${PROVENANCE_DIR}/step01_audit_public_datasets.py"
