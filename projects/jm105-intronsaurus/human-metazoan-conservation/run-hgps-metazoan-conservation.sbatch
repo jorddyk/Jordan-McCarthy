@@ -9,7 +9,7 @@
 # Tight bounding-box export is not used because this analysis-only job renders no figures.
 #SBATCH --job-name=JM105_HGPS_CR
 #SBATCH --cpus-per-task=24
-#SBATCH --mem=160G
+#SBATCH --mem-per-cpu=7G
 #SBATCH --time=120:00:00
 #SBATCH --output=/cluster/scratch/jmccarthy/JM105_HGPS_Metazoan_Conservation/logs/JM105_HGPS_CR_%j.out
 #SBATCH --error=/cluster/scratch/jmccarthy/JM105_HGPS_Metazoan_Conservation/logs/JM105_HGPS_CR_%j.err
