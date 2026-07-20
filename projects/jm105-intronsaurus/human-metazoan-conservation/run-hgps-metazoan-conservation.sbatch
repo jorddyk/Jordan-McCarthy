@@ -2,7 +2,7 @@
 # Purpose: One-job Euler launcher for the JM105 HGPS + metazoan CR conservation analysis.
 # Expected inputs: public GEO/SRA access; code bundle uploaded by the companion PowerShell helper.
 # Expected outputs: panel-ready metadata, QC, PEI, per-intron contrast tables, and GATE_REPORT.md.
-# Known assumptions: Euler Slurm, outbound HTTPS, x86_64 Linux, and at least 1.5 TB scratch quota.
+# Known assumptions: Euler Slurm, outbound HTTPS through the ETH proxy, x86_64 Linux, and at least 1.5 TB scratch quota.
 # Data status: public real RNA-seq only; no simulated biological data.
 #
 # Figure 2 scope fence: this job does not touch JM105 Figure 2 data.
@@ -15,6 +15,10 @@
 #SBATCH --error=/cluster/scratch/jmccarthy/JM105_HGPS_Metazoan_Conservation/logs/JM105_HGPS_CR_%j.err
 
 set -euo pipefail
+
+# Euler compute nodes cannot access external services by default. Keep the ETH
+# proxy active for conda channels, GEO, GENCODE and SRA downloads.
+module load eth_proxy
 
 PROJECT_ROOT="${PROJECT_ROOT:-/cluster/scratch/jmccarthy/JM105_HGPS_Metazoan_Conservation}"
 CODE_DIR="$PROJECT_ROOT/code"
