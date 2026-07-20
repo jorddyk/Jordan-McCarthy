@@ -11,9 +11,11 @@ Figure_3_render_all_v21.py  2595f23d89c0b040d861f95d3b26139c1856eb00103625c05e44
 figure3_base_renderer.py     9a8e87fdccd5509eb33328a6177350e442078c78be3025721975f504d97ddce1
 ```
 
+The exact pair is present in Jordan’s recovered execution archive and in the distributed v22 Euler bundle. It is **not yet committed as standalone canonical files on this branch**, because the current connector could verify the archive, filenames and hashes but could not transfer those two large source bodies into GitHub. Until that byte-for-byte import is complete, the repository package remains `PARTIAL / EXECUTION BUNDLE COMPLETE` rather than fully self-contained.
+
 The earlier `Figure3_improved` run successfully assembled source-locked PowerPoint assets into a composite, but it did not rerender panel internals and is not the publication renderer.
 
-The targeted `render_figure3_ADG_v22.py` renderer now uses the exact recovered v21 computation functions and changes only Panels A, D and G:
+The targeted `render_figure3_ADG_v22.py` renderer and its complete helper modules are now preserved on this draft branch. They use the recovered v21 computation API and change only Panels A, D and G:
 
 - A: graphical Cox proportional-hazards display from `JM100.xlsx`;
 - D: correct quantitative-axis semantics and explicit condition-marker legend;
@@ -108,6 +110,8 @@ Canvas dimensions are fixed. `bbox_inches="tight"` is not used. No information i
 
 ## Run
 
+The complete v22 execution bundle must contain the two recovered v21 dependencies beside the tracked v22 modules before submission.
+
 ```bash
 JOB_ID="$(sbatch --parsable render_figure3_ADG_v22.sbatch)"
 echo "JOB_ID=${JOB_ID}"
@@ -123,4 +127,4 @@ OUTPUT_DIR=/cluster/scratch/jmccarthy/JM105_RNAseq/Figure3_ADG_v22_<timestamp>
 
 ## Publication-code rule
 
-Only complete code that regenerates panel internals from the declared workbook/raw/source tables is publication-canonical. Composite-only scripts and failed intermediate patches remain provenance, not accepted paper code.
+Only complete code that regenerates panel internals from the declared workbook/raw/source tables is publication-canonical. Composite-only scripts and failed intermediate patches remain provenance, not accepted paper code. The draft PR must remain open until the exact v21 dependency pair is committed byte-for-byte and a raw Euler v22 run is recorded.
