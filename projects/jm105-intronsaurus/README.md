@@ -22,10 +22,12 @@ projects/jm105-intronsaurus/
     JM-133 weak 5′SS/U1-complementarity vs Mud1-dependence analysis.
   figure2-candidate-gate/
     Total/rRNA-depleted Figure 2 candidate-gate analysis.
+  human-metazoan-conservation/
+    HGPS nuclear-architecture and metazoan caloric-restriction conservation analysis.
   intronsaurus-browser/
     Intronsaurus browser/export code and Windows/Euler helpers.
   metadata/
-    Small, human-readable sample maps or schema documents only. No raw sequencing files.
+    Small, human-readable sample maps or schema documents only. No raw reads.
   docs/
     Recovery notes, scientific interpretation guardrails, and legacy-source audit trails.
   README.md
@@ -40,12 +42,17 @@ projects/jm105-intronsaurus/
 - Distinguish raw NMD-off/upf1Δ retained signal from NMD-hidden off-minus-on signal.
 - Distinguish RNA/host transcript abundance from protein abundance.
 - Avoid claiming caloric restriction is starvation.
+- Do not equate physiological aging with damage, abnormality, HGPS, or disease.
+- Whole-cell human or mouse RNA-seq may establish pre-mRNA exposure, not nuclear export or NMD degradation.
 
 ## Canonical code imported
 
 | Path | Status | Purpose | Data status |
 |---|---|---|---|
 | `analysis/jm105-old-cell-leaky-intron-determinants.py` | canonical | Classifies old-selective NMD-revealed introns and compares gene module / splice-site / branchpoint / 3′SS / PPT features against nonleaker comparison introns. | Uses real JM105 tables on Euler; no simulated biological data. |
+| `human-metazoan-conservation/scripts/run_hgps_metazoan_conservation.py` | canonical | Resolves public HGPS and metazoan CR RNA-seq, aligns to pinned GENCODE references, computes boundary-to-spliced-junction pre-mRNA exposure, tests prespecified contrasts, and emits a main-figure gate report. | Public real RNA-seq only; raw reads/BAMs remain on Euler and are excluded from GitHub. |
+| `human-metazoan-conservation/run-hgps-metazoan-conservation.sbatch` | canonical helper | Bootstraps the pinned Euler environment and runs the HGPS/metazoan conservation pipeline as one Slurm job. | Administrative/analysis launcher; no biological values generated without real public reads. |
+| `human-metazoan-conservation/upload-submit-hgps-metazoan-conservation.ps1` | canonical helper | Uploads the conservation bundle from Windows and submits it on Euler. | Administrative helper only. |
 | `transformation-protocol-rnaseq/resolve-fastq-files.py` | canonical | Resolves FASTQ files for the 12 transformation-protocol samples from sample IDs and aliases. | Real workflow metadata; no fake biological data. |
 | `transformation-protocol-rnaseq/transformation-protocol-samples.tsv` | canonical | Sample manifest for JM62-JM73 transformation-protocol subset. | Real sample metadata; no raw reads. |
 | `transformation-protocol-rnaseq/run-transformation-expression.sbatch` | canonical | Slurm wrapper for transformation-protocol expression workflow. | Real workflow; no fake biological data. |
@@ -54,7 +61,7 @@ projects/jm105-intronsaurus/
 | `intronsaurus-browser/upload-submit-intronsaurus-matched-rna-protein-gene-stories.ps1` | canonical helper | Uploads and submits the vNext3Y build to Euler. | Administrative helper; no raw data committed. |
 | `intronsaurus-browser/retrieve-intronsaurus-matched-rna-protein-gene-stories.ps1` | canonical helper | Retrieves vNext3Y generated outputs. | Generated HTML/archive remain excluded by default. |
 | `intronsaurus-browser/check-intronsaurus-matched-rna-protein-gene-stories.sh` | canonical helper | Safe Euler status checker. | Administrative helper. |
-| `intronsaurus-browser/intronsaurus-explore-restored-data-fix-v3i.sbatch` | canonical helper | Runs the vNext3I Explore-tab restoration workflow. | Depends on unrecovered builder/patch-chain source. |
+| `intronsaurus-browser/intronsaurus-explore-restored-data-fix-v3i.sbatch` | canonical helper | Runs the Intronsaurus vNext3I Explore-tab restoration workflow. | Depends on unrecovered builder/patch-chain source. |
 | `intronsaurus-browser/upload-submit-intronsaurus-explore-restored-data-fix-v3i.ps1` | canonical helper | Uploads and submits vNext3I. | Administrative helper. |
 | `intronsaurus-browser/retrieve-intronsaurus-explore-restored-data-fix-v3i.ps1` | canonical helper | Retrieves vNext3I outputs. | Generated outputs excluded. |
 | `intronsaurus-browser/check-intronsaurus-explore-restored-data-fix-v3i-status.sh` | canonical helper | Checks vNext3I status/logs. | Administrative helper. |
