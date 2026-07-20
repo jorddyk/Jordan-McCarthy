@@ -16,6 +16,7 @@ $Required = @(
     (Join-Path $BundleDir "README.md"),
     (Join-Path $BundleDir "run-hgps-metazoan-conservation.sbatch"),
     (Join-Path $BundleDir "scripts\run_hgps_metazoan_conservation.py"),
+    (Join-Path $BundleDir "scripts\run_hgps_metazoan_conservation_manifest_hotfix.py"),
     (Join-Path $BundleDir "config\datasets.tsv")
 )
 
@@ -30,6 +31,7 @@ ssh $Remote "mkdir -p '$RemoteCode/scripts' '$RemoteCode/config' '$RemoteLogs'"
 scp (Join-Path $BundleDir "README.md") "${Remote}:${RemoteCode}/README.md"
 scp (Join-Path $BundleDir "run-hgps-metazoan-conservation.sbatch") "${Remote}:${RemoteCode}/run-hgps-metazoan-conservation.sbatch"
 scp (Join-Path $BundleDir "scripts\run_hgps_metazoan_conservation.py") "${Remote}:${RemoteCode}/scripts/run_hgps_metazoan_conservation.py"
+scp (Join-Path $BundleDir "scripts\run_hgps_metazoan_conservation_manifest_hotfix.py") "${Remote}:${RemoteCode}/scripts/run_hgps_metazoan_conservation_manifest_hotfix.py"
 scp (Join-Path $BundleDir "config\datasets.tsv") "${Remote}:${RemoteCode}/config/datasets.tsv"
 
 $SubmitLines = @(& ssh $Remote "sbatch '$RemoteCode/run-hgps-metazoan-conservation.sbatch'" 2>&1)
