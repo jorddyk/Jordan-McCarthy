@@ -22,6 +22,11 @@ OUTPUT_DIR="/cluster/scratch/jmccarthy/JM105_RNAseq/Figure3_ADG_v22_${STAMP}"
 
 for required in \
     render_figure3_ADG_v22.py \
+    figure3_adg_v22_common.py \
+    figure3_adg_v22_manifest.py \
+    figure3_adg_v22_panel_a.py \
+    figure3_adg_v22_panel_d.py \
+    figure3_adg_v22_panel_g.py \
     Figure_3_render_all_v21.py \
     figure3_base_renderer.py \
     JM100.xlsx
