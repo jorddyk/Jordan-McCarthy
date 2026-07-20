@@ -32,14 +32,21 @@ scp (Join-Path $BundleDir "run-hgps-metazoan-conservation.sbatch") "${Remote}:${
 scp (Join-Path $BundleDir "scripts\run_hgps_metazoan_conservation.py") "${Remote}:${RemoteCode}/scripts/run_hgps_metazoan_conservation.py"
 scp (Join-Path $BundleDir "config\datasets.tsv") "${Remote}:${RemoteCode}/config/datasets.tsv"
 
-$Submit = ssh $Remote "sbatch '$RemoteCode/run-hgps-metazoan-conservation.sbatch'"
-Write-Host $Submit
+$SubmitLines = @(& ssh $Remote "sbatch '$RemoteCode/run-hgps-metazoan-conservation.sbatch'" 2>&1)
+$SubmitExitCode = $LASTEXITCODE
+$SubmitText = ($SubmitLines | Out-String).Trim()
+Write-Host $SubmitText
 
-if ($Submit -notmatch "Submitted batch job\s+(\d+)") {
-    throw "Could not parse Slurm job ID from: $Submit"
+if ($SubmitExitCode -ne 0) {
+    throw "Euler sbatch failed with exit code $SubmitExitCode`n$SubmitText"
 }
 
-$JobID = $Matches[1]
+$SubmitMatch = [regex]::Match($SubmitText, "Submitted batch job\s+(\d+)")
+if (-not $SubmitMatch.Success) {
+    throw "Euler returned success but no Slurm job ID could be parsed:`n$SubmitText"
+}
+
+$JobID = $SubmitMatch.Groups[1].Value
 ssh $Remote "printf '%s' '$JobID' > '$RemoteLogs/latest_jobid.txt'"
 Write-Host "Submitted JOBID=$JobID"
 Write-Host "Euler report will be: $Project/work/results/GATE_REPORT.md"
