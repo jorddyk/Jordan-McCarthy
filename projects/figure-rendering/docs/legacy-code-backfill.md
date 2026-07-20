@@ -9,6 +9,7 @@ Do not treat this file as code. It is a recovery queue and import audit.
 | Canonical path | Source clue | Purpose | Status |
 |---|---|---|---|
 | `projects/figure-rendering/panel-renderers/render-figure1ef-total-rrna-print.ps1` | Recovered from the 2026-06-30 JM105 Figure 1E/F panel-rendering chat; latest useful V9 PRINT PowerShell/Python workflow after the layout/text-size repair sequence | Windows PowerShell orchestration that writes and runs a Python renderer for JM105 Figure 1E/F content-only print panels. Produces transparent SVG/PNG/3x PNG, white-preview PNG, TSV panel data, and JSON audit/provenance. | Imported runnable source. Uses real local JM105 total/rRNA-depleted tables if present. No fake data. No poly-A. Panel E uses raw +MUD1 NMD-off/upf1D retained-intron IR. Panel F is explicitly a raw NMD-off candidate/category set, not off-minus-on NMD-hidden IR. |
+| `projects/figure-rendering/panel-renderers/jm105-figure3-mud1-cr-panels/render_figure3_ADG_v22.py` plus `figure3_adg_v22_common.py`, `figure3_adg_v22_manifest.py`, `figure3_adg_v22_panel_a.py`, `figure3_adg_v22_panel_d.py`, `figure3_adg_v22_panel_g.py`, and `render_figure3_ADG_v22.sbatch` | Exact complete v22 bundle recovered from the current conversation and preserved on draft PR #7 | Targeted raw/source-table rerender of Figure 3 Panels A, D and G. A uses `JM100.xlsx`; D/G call the recovered v21 computation API; exports transparent SVG/PDF/PNG, white previews, plot-source/audit files, lane map, collision inventory and provenance. | `RECOVERED / DRAFT PR`: complete v22 source and launcher are committed on the draft branch. Raw Euler validation remains pending. The two exact v21 dependency files are present in Jordan’s execution archive and bundle, but are not yet committed standalone, so the repository package is not yet fully self-contained. |
 
 ## Imported prompt/spec artifacts
 
@@ -23,7 +24,7 @@ Do not treat this file as code. It is a recovery queue and import audit.
 
 | Priority | Proposed canonical path | Historical/source clue | Purpose | Current status |
 |---|---|---|---|---|
-| 1 | `panel-renderers/jm105-figure3-v21/figure3_base_renderer.py` and `panel-renderers/jm105-figure3-v21/Figure_3_render_all_v21.py` | Exact historical v21 sources were found in `/cluster/scratch/jmccarthy/JM105_RNAseq/Figure3_render_v21_20260702_161316` and copied into 2026-07-15 Figure 3 chat-build bundles; the latest verified retrieval is `/cluster/scratch/jmccarthy/JM105_RNAseq/Figure3_chat_build_20260715_163813/`, also downloaded into Jordan's local `JM105_Figure3_Euler_Bundle_v6_EXTRACTED` results; terminal records show complete files of about 57 KB and 40 KB, plus matching `.pyc` files | Preserve the last known complete Figure 3 v21 renderer and its shared base module before adapting any parser or panel logic | `PARTIAL / SOURCE LOCATED`: exact complete bytes exist on Euler and in Jordan's retrieved local v6 bundle, but this automation can access only the terminal transcript, not the `.py` file bodies; do not reconstruct from logs |
+| 1 | `panel-renderers/jm105-figure3-mud1-cr-panels/Figure_3_render_all_v21.py` and `figure3_base_renderer.py` | Exact historical v21 sources were recovered from `/cluster/scratch/jmccarthy/JM105_RNAseq/Figure3_render_v21_20260702_161316` into `JM105_Figure3_v21_RECOVERY_20260720_154634.tar.gz` and the distributed v22 bundle | Commit the exact proven v21 loader/computation dependency pair byte-for-byte so the canonical Figure 3 v22 repository package becomes self-contained | `PARTIAL / EXACT ARCHIVE RECOVERED`: hashes verified as `2595f23d...de8a4` and `9a8e87fd...ddce1`; exact files are in Jordan’s recovered archive and execution bundle, but the current connector could not transfer the two large source bodies into GitHub. Do not reconstruct them from snippets. |
 | 2 | `panel-renderers/jm105-figure2-public-final/render_jm105_figure2_public_final.py` | Exact uploaded Python was copied to `/cluster/home/jmccarthy/JM105_Figure2_public_final_20260713_171245/scripts/render_jm105_figure2_public_final.py`; successful rerun recorded after replacing `threshold_c` with `threshold_cr` | Render Figure 2 public-final panels and provenance/audit exports from the strict total/rRNA-depleted source table | `PARTIAL / SOURCE LOCATED`: exact complete source exists in File Library/Euler, but full bytes were not retrievable in this automation run; do not reconstruct from terminal excerpts |
 | 3 | `panel-renderers/jm105-figure5-public-clean/rerender_figure5_CDE_public_clean_labeled.py` | Exact File Library upload `rerender_figure5_CDE_public_clean_labeled.py`, created 2026-07-13 15:57 CEST, with matching exact shell launcher | Render public-facing Figure 5 C/D/E assets, audits, matched tables and contact sheet while leaving 5A/5B unrendered without secure provenance and 5F untouched | `PARTIAL / SOURCE LOCATED`: indexed excerpts and complete launcher verified; full Python bytes were not exposed by the current connector, so no snippet-based reconstruction was committed |
 | 4 | `panel-renderers/jm134-starvation-switch-label-audit.py` | JM134 final layout and gene-labelled rerender workflow; Euler jobs `3101802`, `3104275`, `3106256`, `3109225` | Audit and rerender significant-in-both, JM105-only, and same-direction labels without overlap | Exact full source not yet recovered |
@@ -35,34 +36,28 @@ Do not treat this file as code. It is a recovery queue and import audit.
 | 10 | `nature-aging-mockups/render-synopsis-aligned-rnaseq-plots.py` | Euler script `scripts/28_make_synopsis_aligned_all_intron_RNAseq_plots.py`; output `28_SYNOPSIS_ALIGNED_ALL_INTRON_RNASEQ_PLOTS` | Render normal all-intron/all-gene RNA-seq panels required by the synopsis; may live under JM105 figures rather than generic rendering | Full current source was previously reported visible in project chat but is not currently accessible as a complete source body; exact full source not yet recovered |
 | 11 | `panel-renderers/render-figure2-panel-f-mud1-dependence.py` | Euler folders `PanelF_render_v7_TRANSPARENT_NO_BORDER_FOOTER_FIXED`, `PanelF_render_v8_FOOTER_SPACING_BEAUTIFUL`, and `PanelF_render_v9_TOP_DESCRIPTOR_SPACING_FIXED` | Render Figure 2F with computed NMD-hidden IR, data-driven y-limits, transparent outputs, dedicated descriptor/footer axes, and separated label lanes | Exact final complete source not yet recovered; patch sequence is not sufficient |
 
+## 2026-07-20 recovery and handoff pass
+
+Jordan recovered `JM105_Figure3_v21_RECOVERY_20260720_154634.tar.gz` directly from Euler. The archive contains the exact historical `Figure_3_render_all_v21.py` and `figure3_base_renderer.py`, panel source tables, audits, source inventories and SHA-256 records. The exact v21 source hashes were verified, not reconstructed.
+
+The same-day v22 bundle provided complete targeted Figure 3 A/D/G code and launcher. Those complete v22 files were committed to draft PR #7 under `projects/figure-rendering/panel-renderers/jm105-figure3-mud1-cr-panels/`.
+
+Scientific corrections preserved:
+
+- Panel A rerenders from `JM100.xlsx` and reports graphical Cox hazard estimates.
+- Panel D uses quantitative NMD-hidden IR; the exact recovered marker rule is open = old 2% glucose and filled = old 0.1% glucose CR.
+- Panel G shows all 402 finite host-abundance pairs; 22 were outside the old robust display limit and zero are clipped in v22.
+- RNA panels remain total/rRNA-depleted JM105 only.
+- `NMD_hidden = IR(upf1Δ) − IR(UPF1+)` remains explicit.
+- Host RNA abundance remains distinct from protein abundance.
+
+Remaining blocker: the exact v21 pair must still be committed as standalone files byte-for-byte, and the v22 raw Euler run must pass before PR #7 is ready to merge.
+
 ## 2026-07-16 recovery pass
 
 A new File Library pass verified the latest Figure 3 recovery/build location: `/cluster/scratch/jmccarthy/JM105_RNAseq/Figure3_chat_build_20260715_163813/`. Its retrieved output inventory contains the exact historical `figure3_base_renderer.py` (~57 KB) and `Figure_3_render_all_v21.py` (~40 KB), their compiled companions, and the current `Figure_3_build_from_v21_and_JM100.py` (~33 KB). The same complete output set was downloaded into Jordan's local `JM105_Figure3_Euler_Bundle_v6_EXTRACTED` results.
 
-The v6 build progressed far enough to generate panel sources and rendered assets, then failed only at the composite hard cross-font audit. Reported failures included clipped headings (`Host RNA abundance does not explain the intron effect`, `mud1Δ does not cause gross cell-cycle slowing`) and title/panel-letter overlap pairs. This is a layout-QC failure in the newer wrapper, not evidence of missing v21 source or biological-data failure.
-
-The exact source bodies remain inaccessible to this automation because File Library exposes the terminal transcript rather than the downloaded `.py` files. Status therefore remains `PARTIAL / SOURCE LOCATED`. The next recovery action is direct byte transfer from the verified `Figure3_chat_build_20260715_163813` run directory or Jordan's local v6 extraction; commit the v21 pair unchanged before considering the newer wrapper.
-
-## 2026-07-15 recovery pass
-
-The File Library pass found new exact-source evidence for the Figure 3 v21 renderer. Terminal transcripts from the 2026-07-15 recovery/build workflow show that both `figure3_base_renderer.py` and `Figure_3_render_all_v21.py` were retrieved as complete files from the historical v21 area and copied into multiple Figure 3 chat-build run directories. The records show approximately 57 KB and 40 KB source files, matching compiled `.pyc` companions.
-
-The same transcripts also show a concrete execution blocker: one attempted v21 run was supplied a Figure 2 plot-source TSV lacking the required `intron_id` field, and a later wrapper passed an extra positional path that the v21 CLI did not accept. Those are invocation/source-schema failures, not evidence that the recovered v21 source is incomplete.
-
-The current connector exposes only the terminal transcript, not the exact `.py` bytes. Therefore the two files remain `PARTIAL / SOURCE LOCATED`, not `RECOVERED`. The next handoff must transfer the exact source files directly from the verified Euler historical/run directories or Jordan's local `JM105_Figure3_Euler_Bundle_v5` extraction and then commit them without modification before any adaptation.
-
-## 2026-07-13 recovery passes
-
-The first File Library pass searched exact and combined clues for JM133, JM134, the four Euler job IDs, Figure 5, Nature Aging mockups, `NO DATA`, LOESS, marginal violin, and likely renderer filenames. It did not expose complete runnable bodies for the priority targets.
-
-The evening pass found materially better evidence:
-
-- exact uploaded `rerender_figure5_CDE_public_clean_labeled.py` and complete `run_rerender_figure5_CDE_public_clean_labeled.sh`;
-- terminal proof that `render_jm105_figure2_public_final.py` was a 48 KB exact file uploaded to Euler;
-- a successful Figure 2 rerun after the precise `threshold_c` → `threshold_cr` correction;
-- the exact Euler run directory and expected canonical destination.
-
-The connector returned searchable excerpts but failed to open or transfer the full uploaded Python files. Therefore these are classified `PARTIAL / SOURCE LOCATED`, not `RECOVERED`. No biological code was reconstructed from excerpts. The next handoff should retrieve the exact files from File Library or copy them directly from the verified Euler paths.
+The v6 build progressed far enough to generate panel sources and rendered assets, then failed only at the composite hard cross-font audit. Reported failures included clipped headings and title/panel-letter overlap pairs. This is a layout-QC failure in the newer wrapper, not evidence of missing v21 source or biological-data failure.
 
 ## Mockup/image-generation artifacts deliberately not committed as code
 
