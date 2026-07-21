@@ -42,9 +42,9 @@ projects/jm105-intronsaurus/
 | Path | Status | Purpose | Data status |
 |---|---|---|---|
 | `analysis/jm105-old-cell-leaky-intron-determinants.py` | canonical | Old-selective NMD-revealed intron determinants. | Real JM105 tables on Euler. |
-| `human-metazoan-conservation/scripts/run_hgps_metazoan_conservation.py` | canonical lineage; exact v2 byte import pending | GEO/SRA metadata, GENCODE references, representative transcripts, and aggregate contrasts. | Real public RNA-seq. |
+| `human-metazoan-conservation/scripts/run_hgps_metazoan_conservation.py` | canonical exact v2 source | GEO/SRA metadata, GENCODE references, representative transcripts, and aggregate contrasts. | Real public RNA-seq. |
 | `human-metazoan-conservation/scripts/run_hgps_metazoan_conservation_manifest_hotfix.py` | canonical metadata layer | Evidence-backed replicate counts, BioProject fallback, and replicate-suffixed control classification. | Real public metadata. |
-| `human-metazoan-conservation/scripts/jm105_metazoan_distributed.py` | exact source verified locally; GitHub byte import pending | Multi-node stages and one-pass fragment-level EI/IE/EE_total quantification. | Real public RNA-seq. |
+| `human-metazoan-conservation/scripts/jm105_metazoan_distributed.py` | canonical exact distributed implementation | Multi-node stages and one-pass fragment-level EI/IE/EE_total quantification. | Real public RNA-seq. |
 | `human-metazoan-conservation/slurm/*.sbatch` | canonical Euler launchers | Parallel references, 34-task sample array, and dependent aggregation. | Administrative/analysis code. |
 | `human-metazoan-conservation/submit-distributed.sh` | canonical orchestrator | Freezes the manifest and submits the dependency graph. | Administrative helper. |
 | `human-metazoan-conservation/upload-submit-distributed.ps1` | canonical Windows helper | Uploads and submits the full distributed source. | Administrative helper. |
@@ -83,4 +83,4 @@ exact complete source.
 
 ## Exact-source import status — 2026-07-21
 
-The complete v2 source bundle was syntax-validated locally and its SHA-256 manifest is preserved. All methods, provenance, manifests, repair code and small execution helpers are present on draft PR #6. The two large Python files remain explicitly `PARTIAL / EXACT SOURCE VERIFIED LOCALLY` until connector-safe byte-for-byte import is completed; this status must not be upgraded based on descriptions or snippets.
+The complete v2 source bundle is canonical on draft PR #6. Both large Python files were reconstructed from gzip/base64 source chunks, verified against their prespecified SHA-256 values, compiled successfully, and committed. The one-use importer and temporary source chunks were removed in the same commit.

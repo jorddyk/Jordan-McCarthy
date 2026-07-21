@@ -16,7 +16,7 @@ The exact complete distributed workflow was verified from the extracted source b
 projects/jm105-intronsaurus/human-metazoan-conservation/
 ```
 
-The methods, manifest, runtime provenance, repair workflow, and all small launchers/helpers are canonicalized in draft PR #6. The two large Python sources (`scripts/run_hgps_metazoan_conservation.py` and `scripts/jm105_metazoan_distributed.py`) are verified locally with recorded SHA-256 values, but byte-for-byte connector import remains pending; the branch retains the prior canonical core lineage until the exact v2 bytes are imported. No claim of complete GitHub canonicalization is made before that import.
+The complete exact distributed workflow is canonicalized in draft PR #6. The two large Python sources were reconstructed from checksum-gated source chunks, verified against their recorded SHA-256 values, compiled successfully, and committed; the temporary importer removed itself in the same commit.
 
 ## Failure and repair provenance
 

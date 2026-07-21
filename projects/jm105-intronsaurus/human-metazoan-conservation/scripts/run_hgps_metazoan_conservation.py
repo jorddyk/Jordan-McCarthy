@@ -33,9 +33,16 @@ Panel F contrast = computed (+MUD1 CR-suppression) vs
                    (mud1Δ CR-suppression), with y-limits derived from computed
                    values rather than hardcoded.
 
-Those definitions are documentation only here: this public human/mouse pipeline
-does not contain matched UPF1 perturbations and must not call PEI "NMD-hidden
-leakage."
+The primary cross-species intron-retention metric is calculated exactly as in
+the canonical JM105 yeast work:
+
+JM105_IR = (EI + IE) / ((EI + IE) + 2 * EE_total)
+
+where EI and IE are unique unspliced boundary-spanning read names and EE_total
+is the unique annotated exon-exon splice-junction read count. PEI is retained
+only as a secondary log-odds sensitivity measure. This public human/mouse
+pipeline does not contain matched UPF1 perturbations and must not call either
+metric "NMD-hidden leakage."
 
 Data policy
 -----------
@@ -68,7 +75,7 @@ import pysam
 from scipy import stats
 
 
-PIPELINE_VERSION = "2026-07-20.1"
+PIPELINE_VERSION = "2026-07-20.4"
 PSEUDOCOUNT = 0.5
 MIN_TOTAL_SPLICED = 10
 MIN_SAMPLE_SPLICED = 3
@@ -107,7 +114,7 @@ DATASETS: Dict[str, DatasetSpec] = {
         accession="GSE118633",
         species="human",
         role="HGPS discovery / independent total-RNA validation",
-        expected_groups={"control": 3, "hgps": 3},
+        expected_groups={"control": 2, "hgps": 3},
         include_groups=("control", "hgps"),
     ),
     "GSE137083": DatasetSpec(
@@ -347,9 +354,15 @@ def classify_group(accession: str, sample: dict) -> Optional[str]:
         if re.search(r"exercise|treadmill|combined|\bce\d*\b", blob):
             return None
         is_cr = bool(re.search(r"calori(?:c|e) restriction|\bcr\d*\b", blob))
+        # Public GSE222163 titles are replicate-suffixed (for example,
+        # "BAT control1" and "SkM control4"); therefore a terminal word
+        # boundary after "control" would incorrectly exclude every control.
         is_control = bool(
-            re.search(r"\bcontrol\b|ad libitum|\bal\d*\b", blob)
-            or re.search(r"\bbat[_ -]?c\d+\b|\bskm[_ -]?c\d+\b", title)
+            re.search(r"\b(?:control|ctrl)\d*\b|ad libitum|\bal\d*\b", blob)
+            or re.search(
+                r"\b(?:bat|skm)[_ -]?(?:c|ctrl|control)\d+\b",
+                blob,
+            )
         )
         if not (is_cr or is_control):
             return None
@@ -408,6 +421,7 @@ def build_manifest(root: Path) -> pd.DataFrame:
             known_studies = {
                 "GSE118633": "SRP155495",
                 "GSE137083": "SRP221023",
+                "GSE222163": "PRJNA918398",
             }
             study = known_studies.get(accession, accession)
         info = runinfo(study, cache_dir)
@@ -814,13 +828,56 @@ def count_one_intron(
     return len(left_names), len(right_names), len(splice_names), len(interior_names)
 
 
+def add_jm105_metrics(df: pd.DataFrame) -> pd.DataFrame:
+    """Add the canonical JM105 IR fraction and secondary PEI from raw junction counts."""
+    required = {
+        "left_boundary_reads",
+        "right_boundary_reads",
+        "spliced_junction_reads",
+    }
+    missing = required.difference(df.columns)
+    if missing:
+        raise RuntimeError(
+            "Cannot calculate JM105 intron retention; missing columns: "
+            + ", ".join(sorted(missing))
+        )
+
+    boundary_total = (
+        pd.to_numeric(df["left_boundary_reads"], errors="coerce").fillna(0)
+        + pd.to_numeric(df["right_boundary_reads"], errors="coerce").fillna(0)
+    )
+    spliced = pd.to_numeric(
+        df["spliced_junction_reads"], errors="coerce"
+    ).fillna(0)
+    denominator = boundary_total + 2.0 * spliced
+
+    # Canonical JM105 definition:
+    # IR = (EI + IE) / ((EI + IE) + 2 * EE_total)
+    df["JM105_IR"] = np.where(
+        denominator > 0,
+        boundary_total / denominator,
+        np.nan,
+    )
+
+    # Secondary sensitivity metric: approximate log2 odds of JM105_IR.
+    df["PEI"] = np.log2(
+        (boundary_total + PSEUDOCOUNT)
+        / (2.0 * spliced + PSEUDOCOUNT)
+    )
+    return df
+
+
 def quantify_bam(
     bam_path: Path,
     introns: pd.DataFrame,
     output_path: Path,
 ) -> pd.DataFrame:
     if output_path.exists():
-        return pd.read_csv(output_path, sep="\t")
+        existing = pd.read_csv(output_path, sep="\t")
+        if "JM105_IR" not in existing.columns:
+            existing = add_jm105_metrics(existing)
+            existing.to_csv(output_path, sep="\t", index=False)
+        return existing
 
     rows: List[dict] = []
     with pysam.AlignmentFile(bam_path, "rb") as bam:
@@ -835,8 +892,10 @@ def quantify_bam(
                 int(record.end0),
             )
             boundary_mean = 0.5 * (left + right)
-            pei = math.log2((left + right + PSEUDOCOUNT) / (2 * spliced + PSEUDOCOUNT))
-            interior_density = interior / max(1.0, (int(record.intron_length) - 2 * INTERIOR_TRIM) / 1000.0)
+            interior_density = interior / max(
+                1.0,
+                (int(record.intron_length) - 2 * INTERIOR_TRIM) / 1000.0,
+            )
             rows.append(
                 {
                     **record._asdict(),
@@ -845,12 +904,11 @@ def quantify_bam(
                     "spliced_junction_reads": spliced,
                     "interior_overlap_reads": interior,
                     "boundary_mean": boundary_mean,
-                    "PEI": pei,
                     "interior_reads_per_kb": interior_density,
                 }
             )
 
-    df = pd.DataFrame(rows)
+    df = add_jm105_metrics(pd.DataFrame(rows))
     output_path.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(output_path, sep="\t", index=False)
     return df
@@ -925,8 +983,17 @@ def analyse(root: Path, manifest: pd.DataFrame) -> None:
                 "group": row.group,
                 "species": row.species,
                 "n_introns_detectable": len(detectable),
-                "median_PEI": detectable["PEI"].median() if len(detectable) else np.nan,
-                "median_interior_reads_per_kb": detectable["interior_reads_per_kb"].median() if len(detectable) else np.nan,
+                "median_JM105_IR": detectable["JM105_IR"].median()
+                if len(detectable)
+                else np.nan,
+                "median_PEI": detectable["PEI"].median()
+                if len(detectable)
+                else np.nan,
+                "median_interior_reads_per_kb": detectable[
+                    "interior_reads_per_kb"
+                ].median()
+                if len(detectable)
+                else np.nan,
             }
         )
         bam = root / "alignment" / row.dataset / row.run / "Aligned.sortedByCoord.out.bam"
@@ -967,11 +1034,11 @@ def analyse(root: Path, manifest: pd.DataFrame) -> None:
 
         sample_a = sample_df.loc[
             (sample_df["dataset"] == dataset) & (sample_df["group"] == group_a),
-            "median_PEI",
+            "median_JM105_IR",
         ].dropna().to_numpy()
         sample_b = sample_df.loc[
             (sample_df["dataset"] == dataset) & (sample_df["group"] == group_b),
-            "median_PEI",
+            "median_JM105_IR",
         ].dropna().to_numpy()
 
         if len(sample_a) >= 2 and len(sample_b) >= 2:
@@ -987,7 +1054,7 @@ def analyse(root: Path, manifest: pd.DataFrame) -> None:
             else sample_delta < 0
         )
 
-        pivot_pei = subset.pivot_table(
+        pivot_ir = subset.pivot_table(
             index=[
                 "intron_id",
                 "gene_id",
@@ -998,6 +1065,12 @@ def analyse(root: Path, manifest: pd.DataFrame) -> None:
                 "strand",
                 "intron_length",
             ],
+            columns="run",
+            values="JM105_IR",
+            aggfunc="first",
+        )
+        pivot_pei = subset.pivot_table(
+            index="intron_id",
             columns="run",
             values="PEI",
             aggfunc="first",
@@ -1010,7 +1083,7 @@ def analyse(root: Path, manifest: pd.DataFrame) -> None:
         ).fillna(0)
 
         rows: List[dict] = []
-        for idx, values in pivot_pei.iterrows():
+        for idx, values in pivot_ir.iterrows():
             va = values.reindex(a_runs).dropna().to_numpy(dtype=float)
             vb = values.reindex(b_runs).dropna().to_numpy(dtype=float)
             if len(va) < 2 or len(vb) < 2:
@@ -1023,6 +1096,9 @@ def analyse(root: Path, manifest: pd.DataFrame) -> None:
             if total_junction < MIN_TOTAL_SPLICED:
                 continue
             t, p = stats.ttest_ind(vb, va, equal_var=False)
+            pei_values = pivot_pei.loc[intron_id] if intron_id in pivot_pei.index else pd.Series(dtype=float)
+            pei_a = pei_values.reindex(a_runs).dropna().to_numpy(dtype=float)
+            pei_b = pei_values.reindex(b_runs).dropna().to_numpy(dtype=float)
             rows.append(
                 {
                     "contrast": contrast["name"],
@@ -1035,10 +1111,17 @@ def analyse(root: Path, manifest: pd.DataFrame) -> None:
                     "end0": idx[5],
                     "strand": idx[6],
                     "intron_length": idx[7],
-                    "mean_group_a": float(np.mean(va)),
-                    "mean_group_b": float(np.mean(vb)),
-                    "delta_PEI_b_minus_a": float(np.mean(vb) - np.mean(va)),
-                    "hedges_g": hedges_g(va, vb),
+                    "mean_JM105_IR_group_a": float(np.mean(va)),
+                    "mean_JM105_IR_group_b": float(np.mean(vb)),
+                    "delta_JM105_IR_b_minus_a": float(np.mean(vb) - np.mean(va)),
+                    "mean_PEI_group_a": float(np.mean(pei_a)) if len(pei_a) else np.nan,
+                    "mean_PEI_group_b": float(np.mean(pei_b)) if len(pei_b) else np.nan,
+                    "delta_PEI_b_minus_a": (
+                        float(np.mean(pei_b) - np.mean(pei_a))
+                        if len(pei_a) and len(pei_b)
+                        else np.nan
+                    ),
+                    "hedges_g_JM105_IR": hedges_g(va, vb),
                     "welch_t": float(t),
                     "p_value": float(p),
                     "total_spliced_junction_reads": total_junction,
@@ -1049,7 +1132,7 @@ def analyse(root: Path, manifest: pd.DataFrame) -> None:
         if not event_df.empty:
             event_df["fdr_bh"] = bh_fdr(event_df["p_value"].to_numpy())
             event_df = event_df.sort_values(
-                ["fdr_bh", "delta_PEI_b_minus_a"],
+                ["fdr_bh", "delta_JM105_IR_b_minus_a"],
                 ascending=[True, contrast["expected_direction"] != "positive"],
             )
             event_path = results_dir / "contrasts" / f"{contrast['name']}.per_intron.tsv"
@@ -1061,14 +1144,19 @@ def analyse(root: Path, manifest: pd.DataFrame) -> None:
                 **contrast,
                 "n_group_a": len(sample_a),
                 "n_group_b": len(sample_b),
-                "mean_sample_score_group_a": np.mean(sample_a) if len(sample_a) else np.nan,
-                "mean_sample_score_group_b": np.mean(sample_b) if len(sample_b) else np.nan,
-                "delta_sample_score_b_minus_a": sample_delta,
+                "primary_metric": "median_JM105_IR",
+                "mean_sample_JM105_IR_group_a": np.mean(sample_a)
+                if len(sample_a)
+                else np.nan,
+                "mean_sample_JM105_IR_group_b": np.mean(sample_b)
+                if len(sample_b)
+                else np.nan,
+                "delta_sample_JM105_IR_b_minus_a": sample_delta,
                 "welch_t_sample_score": t_stat,
                 "welch_p_sample_score": sample_p,
                 "mannwhitney_u_sample_score": mw_stat,
                 "mannwhitney_p_sample_score": sample_mw_p,
-                "hedges_g_sample_score": hedges_g(sample_a, sample_b),
+                "hedges_g_sample_JM105_IR": hedges_g(sample_a, sample_b),
                 "direction_gate_pass": bool(direction_pass),
                 "n_tested_introns": len(event_df),
                 "n_fdr_lt_0_05": int((event_df["fdr_bh"] < 0.05).sum()) if not event_df.empty else 0,
@@ -1087,15 +1175,17 @@ def write_gate_report(
 ) -> None:
     results_dir = root / "results"
     lines: List[str] = []
-    lines.append("# HGPS + metazoan CR pre-mRNA exposure gate report")
+    lines.append("# HGPS + metazoan CR JM105-compatible intron-retention gate report")
     lines.append("")
     lines.append(f"Pipeline version: `{PIPELINE_VERSION}`")
     lines.append("")
     lines.append("## Claim boundary")
     lines.append("")
     lines.append(
-        "This analysis tests intron-containing / incompletely processed RNA exposure. "
-        "It does not prove nuclear export, translation, or NMD degradation in human or mouse samples."
+        "The primary metric is the exact JM105 junction-aware intron-retention fraction: "
+        "IR = (EI + IE) / ((EI + IE) + 2 × EE_total). PEI is retained only as a "
+        "secondary log-odds sensitivity measure. Neither metric proves nuclear export, "
+        "translation, or NMD degradation in human or mouse samples."
     )
     lines.append("")
     lines.append(
@@ -1115,9 +1205,9 @@ def write_gate_report(
     report_columns = [
         "name",
         "interpretation",
-        "delta_sample_score_b_minus_a",
+        "delta_sample_JM105_IR_b_minus_a",
         "welch_p_sample_score",
-        "hedges_g_sample_score",
+        "hedges_g_sample_JM105_IR",
         "direction_gate_pass",
         "n_tested_introns",
         "n_fdr_lt_0_05",
@@ -1143,7 +1233,7 @@ def write_gate_report(
     lines.append(
         "Main Figure 5 is justified only if the HGPS direction replicates, at least one "
         "HGPS intervention moves the score toward control, and at least one bona fide "
-        "metazoan CR tissue reduces the prespecified score."
+        "metazoan CR tissue reduces the prespecified JM105_IR score."
     )
     lines.append("")
     lines.append("## Render status")
@@ -1204,7 +1294,7 @@ def execute(root: Path, threads: int, audit_only: bool) -> None:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Run public HGPS and metazoan CR pre-mRNA exposure analysis."
+        description="Run public HGPS and metazoan CR JM105-compatible intron-retention analysis."
     )
     parser.add_argument(
         "--root",
