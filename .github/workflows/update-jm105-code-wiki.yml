@@ -1,0 +1,57 @@
+name: Update JM105 code wiki
+
+on:
+  push:
+    branches:
+      - agent/add-hgps-metazoan-conservation-pipeline
+    paths:
+      - .github/workflows/update-jm105-code-wiki.yml
+
+permissions:
+  contents: write
+
+jobs:
+  update-wiki:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Update existing code wiki in place
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('docs/wiki/Jordan-McCarthy-Code-Wiki.md')
+          text = path.read_text(encoding='utf-8')
+          text = text.replace(
+              '_Last updated: 2026-07-16 Europe/Zurich_',
+              '_Last updated: 2026-07-21 Europe/Zurich_',
+          )
+
+          marker = '- `projects/jm105-intronsaurus/analysis/jm105-old-cell-leaky-intron-determinants.py`\n'
+          addition = '''- `projects/jm105-intronsaurus/human-metazoan-conservation/` — exact complete distributed public HGPS/metazoan CR workflow, panel-by-panel Materials and Methods, parallel reference jobs, 34-task array, one-pass EI/IE/EE_total quantification, selective lock repair, source checksums and runtime provenance. Primary metric: `JM105_IR = (EI + IE) / ((EI + IE) + 2 * EE_total)` with no primary pseudocount; mammalian data are not labelled NMD-hidden leakage.\n'''
+          if addition not in text:
+              text = text.replace(marker, marker + addition)
+
+          decision_marker = '# Last-known canonical decisions\n\n'
+          decision = '''## 2026-07-21\n\n- Exact complete JM105 HGPS/metazoan distributed source is canonical on draft PR #6 under `projects/jm105-intronsaurus/human-metazoan-conservation/`.\n- The living paper methods register is stored in Google Drive at `JM105 - Intronsaurus & Nature Aging/04 Manuscript/Materials and Methods`; GitHub mirrors the current Figure 5 methods in `MATERIALS_AND_METHODS.md`.\n- Array `7873466` completed 31/34 tasks; tasks 1, 5 and 33 failed before biological work because concurrent `micromamba run` calls contended for `~/.cache/mamba/proc`. The selective repair invokes the environment Python directly and preserves the 31 completed outputs.\n- Exact large-source imports were SHA-256 verified and Python-compiled before canonicalization. No raw sequencing data, BAM/BAI files, STAR indices, logs, caches, archives or unreviewed biological outputs were committed.\n\n'''
+          if decision not in text:
+              text = text.replace(decision_marker, decision_marker + decision)
+
+          path.write_text(text, encoding='utf-8')
+          PY
+          rm -f .github/workflows/update-jm105-code-wiki.yml
+
+      - name: Commit wiki update
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Update JM105 code wiki for distributed workflow'
+          git push
