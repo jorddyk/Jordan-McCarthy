@@ -47,6 +47,31 @@ PR #1 historically contains complete JM133 weak-5′SS/Mud1 Python and sbatch so
 | 13 | `jm133-weak-5ss-mud1/jm133-weak-5ss-need-mud1.py` | PR #1 / `scripts/71_JM133_weak_5SS_need_Mud1.py`. | Exact source reportedly staged in PR #1; not yet canonical on `main`. |
 | 14 | `jm134-starvation-switch/` analysis and label-audit scripts | JM134 Euler jobs `3101802`, `3104275`, `3106256`, `3109225`. | Exact full source not yet recovered. |
 | 15 | `figure2-candidate-gate/` scripts | Total/rRNA-depleted JM105 Figure 2 candidate-gate workflow. | Exact full source not yet recovered. |
+| 16 | `analysis/hgps-metazoan-conservation/` | Euler root `/cluster/scratch/jmccarthy/JM105_HGPS_Metazoan_Conservation`; human-reference job `7873443`, mouse-reference job `7873444`, distributed sample array `7873466`, cancelled aggregate `7873467`; manifest `work/metadata/run_manifest.distributed.tsv`. | **PARTIAL / SOURCE LOCATED.** A 2026-07-21 terminal transcript verifies 31/34 sample outputs at the checkpoint and diagnostic shell/Python fragments, but not the complete exact script tree. Recover byte-for-byte source, launchers, environment, hashes, reference builders, array code, aggregate code and final successful rerun proof. |
+
+## 2026-07-21 HGPS/metazoan distributed-analysis recovery pass
+
+File Library exposed a current terminal transcript for the Euler project:
+
+```text
+/cluster/scratch/jmccarthy/JM105_HGPS_Metazoan_Conservation
+```
+
+Verified facts:
+
+- human reference job: `7873443`;
+- mouse reference job: `7873444`;
+- sample array: `7873466`;
+- aggregate job: `7873467`;
+- 31 of 34 sample outputs were complete at the captured checkpoint;
+- the aggregate was cancelled;
+- manifest: `work/metadata/run_manifest.distributed.tsv`;
+- completion markers: `work/status/sample_complete/`;
+- distributed logs: `logs/distributed/`.
+
+The transcript includes a useful diagnostic fragment that sorts the manifest by `species`, `dataset`, `group`, and `run`, then tests possible completion-marker names. It is not the complete runnable analysis package and therefore was not canonicalized as code.
+
+Exact next retrieval target: the complete text source under the Euler project root, including all `.py`, `.R`, `.sh`, `.sbatch`, `.yml`/`.yaml`, `.toml`, `.json`, small `.tsv` manifests, reference-builder scripts, sample-array launcher, aggregation launcher, source-hash ledger and the final successful job/output record. Exclude FASTQ/BAM/count binaries, generated figures, scratch intermediates and logs from GitHub.
 
 ## Verified File Library clues
 
