@@ -79,6 +79,35 @@ File Library contains `JM101_RNAseq_Protocol_and_Provenance.docx`. It verifies t
 
 This document is a provenance source, not the exact R/Python/Bash source. No script was reconstructed from it.
 
+## HGPS/metazoan conservation recovery status — 2026-07-21
+
+A new File Library terminal transcript verifies an active distributed Euler analysis rooted at:
+
+```text
+/cluster/scratch/jmccarthy/JM105_HGPS_Metazoan_Conservation
+```
+
+Verified run identifiers and state:
+
+```text
+human reference job: 7873443
+mouse reference job: 7873444
+sample array job:    7873466
+aggregate job:       7873467
+sample outputs:      31/34 complete at the captured checkpoint
+aggregate state:     CANCELLED
+```
+
+Verified small provenance/control paths:
+
+```text
+work/metadata/run_manifest.distributed.tsv
+work/status/sample_complete/
+logs/distributed/
+```
+
+Status: `PARTIAL / SOURCE LOCATED`. The transcript contains diagnostic shell/Python fragments and job evidence, but not the exact complete analysis package. No code was reconstructed or committed from the transcript. The next exact-source target is the complete script and launcher tree under the Euler project root, together with environment files, source hashes, reference-builder scripts, array launcher, aggregate launcher, and the final successful rerun proof.
+
 ## Canonical code still targeted for recovery
 
 See `docs/legacy-code-backfill.md` for exact historical filenames and source clues. Highest-priority unrecovered targets remain:
@@ -89,5 +118,6 @@ See `docs/legacy-code-backfill.md` for exact historical filenames and source clu
 4. Rsubread Step 2 hard-resume/turbo scripts, Step 3 DESeq2, and IRFinder drafts.
 5. Full Intronsaurus vNext3/vNext3AE/vNext3I/vNext3Y builders/readers.
 6. JM133/JM134 and Figure 2 candidate-gate source.
+7. Complete `JM105_HGPS_Metazoan_Conservation` code package and successful aggregate rerun provenance.
 
 `Exact full source not yet recovered` means exactly that. Historical claims that a source existed in a prior ephemeral sandbox are not sufficient for canonical import unless the source body is accessible and reverified in the current run.
