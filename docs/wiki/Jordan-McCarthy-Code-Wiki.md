@@ -1,6 +1,6 @@
 # Jordan McCarthy Code Wiki
 
-_Last updated: 2026-07-16 Europe/Zurich_
+_Last updated: 2026-07-21 Europe/Zurich_
 
 Canonical private repository: `jorddyk/Jordan-McCarthy`
 
@@ -35,6 +35,7 @@ Project-organized code vault. Canonical code lives under the project where a hum
 ### Canonical code
 
 - `projects/jm105-intronsaurus/analysis/jm105-old-cell-leaky-intron-determinants.py`
+- `projects/jm105-intronsaurus/human-metazoan-conservation/` — exact complete distributed public HGPS/metazoan CR workflow, panel-by-panel Materials and Methods, parallel reference jobs, 34-task array, one-pass EI/IE/EE_total quantification, selective lock repair, source checksums and runtime provenance. Primary metric: `JM105_IR = (EI + IE) / ((EI + IE) + 2 * EE_total)` with no primary pseudocount; mammalian data are not labelled NMD-hidden leakage.
 - Transformation-protocol sample resolver, manifest, Slurm runner, and PowerShell checker under `transformation-protocol-rnaseq/`.
 - Intronsaurus vNext3I/vNext3Y launch/retrieval/status helpers and the vNext3AH UI patch under `intronsaurus-browser/`.
 - Exact complete JM133 analysis and Euler launcher are preserved on open branch/PR `legacy-code-backfill-2026-07-08` / PR #1 at:
@@ -117,6 +118,13 @@ Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategi
   - **Containment:** Daily Code Handoff is explicitly exempt from campaign-count reductions and may be disabled only by a direct Jordan instruction.
 
 # Last-known canonical decisions
+
+## 2026-07-21
+
+- Exact complete JM105 HGPS/metazoan distributed source is canonical on draft PR #6 under `projects/jm105-intronsaurus/human-metazoan-conservation/`.
+- The living paper methods register is stored in Google Drive at `JM105 - Intronsaurus & Nature Aging/04 Manuscript/Materials and Methods`; GitHub mirrors the current Figure 5 methods in `MATERIALS_AND_METHODS.md`.
+- Array `7873466` completed 31/34 tasks; tasks 1, 5 and 33 failed before biological work because concurrent `micromamba run` calls contended for `~/.cache/mamba/proc`. The selective repair invokes the environment Python directly and preserves the 31 completed outputs.
+- Exact large-source imports were SHA-256 verified and Python-compiled before canonicalization. No raw sequencing data, BAM/BAI files, STAR indices, logs, caches, archives or unreviewed biological outputs were committed.
 
 ## 2026-07-16
 
