@@ -1,20 +1,15 @@
 #!/usr/bin/env python3
 """
-Evidence-backed manifest corrections for the JM105 HGPS + metazoan CR pipeline.
+Evidence-backed metadata corrections for the JM105 HGPS + metazoan CR workflow.
 
-This wrapper preserves the full analysis implementation while applying only
-metadata corrections confirmed from the public GEO records:
+Corrections confirmed from public GEO/SRA metadata:
+- GSE118633 contains 2 control and 3 HGPS RNA-seq runs.
+- GSE222163 resolves through BioProject PRJNA918398.
+- GSE222163 control titles are replicate-suffixed (control1, control2, ...).
 
-- GSE118633 contains 2 control RNA-seq samples and 3 HGPS RNA-seq samples.
-- GSE222163 raw runs resolve through BioProject PRJNA918398.
-- GSE222163 control titles are replicate-suffixed (for example,
-  "BAT control1" and "SkM control4"), so the classifier must accept
-  controlN/ctrlN rather than requiring a terminal word boundary after control.
-
-No biological inclusion criteria, contrasts, PEI definitions, reference builds,
-or Figure 2 scope rules are changed.
+The module is intentionally importable: importing it applies the metadata
+corrections to the canonical core module without executing the monolithic run.
 """
-
 from __future__ import annotations
 
 import re
@@ -22,8 +17,6 @@ from typing import Optional
 
 import run_hgps_metazoan_conservation as core
 
-
-# Evidence-backed public design: 2 control RNA-seq and 3 HGPS RNA-seq samples.
 core.DATASETS["GSE118633"] = core.DatasetSpec(
     accession="GSE118633",
     species="human",
@@ -32,8 +25,6 @@ core.DATASETS["GSE118633"] = core.DatasetSpec(
     include_groups=("control", "hgps"),
 )
 
-
-# GSE222163 exposes BioProject PRJNA918398 rather than an SRP relation in GEO.
 _original_runinfo = core.runinfo
 
 
@@ -42,13 +33,6 @@ def _runinfo_with_bioproject_fallback(study_or_geo, cache_dir):
     return _original_runinfo(resolved, cache_dir)
 
 
-core.runinfo = _runinfo_with_bioproject_fallback
-
-
-# Public titles use BAT control1-control3 and SkM control1-control4. Python's
-# \bcontrol\b does not match control1 because the following digit is a word
-# character. Reproduce the prespecified GSE222163 classifier with that one
-# evidence-backed naming correction.
 _original_classify_group = core.classify_group
 
 
@@ -60,8 +44,6 @@ def _classify_group_with_replica_controls(
         return _original_classify_group(accession, sample)
 
     blob = core.normalize_blob(sample)
-
-    # Exercise and combined CR+exercise groups remain explicitly out of scope.
     if re.search(r"exercise|treadmill|combined|\bce\d*\b", blob):
         return None
 
@@ -73,7 +55,6 @@ def _classify_group_with_replica_controls(
             blob,
         )
     )
-
     if not (is_cr or is_control):
         return None
     if re.search(r"brown adipose|\bbat\b", blob):
@@ -83,9 +64,9 @@ def _classify_group_with_replica_controls(
     return None
 
 
+core.runinfo = _runinfo_with_bioproject_fallback
 core.classify_group = _classify_group_with_replica_controls
-core.PIPELINE_VERSION = "2026-07-20.3"
-
+core.PIPELINE_VERSION = "2026-07-20.5-distributed"
 
 if __name__ == "__main__":
     core.main()
