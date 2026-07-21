@@ -1,35 +1,26 @@
 # JM105 / Intronsaurus Analysis
 
-Human goal: preserve canonical code supporting Jordan's JM105 RNA-seq, intron retention, NMD-hidden leakage, Mud1/CR, aging, and manuscript figure workflows.
+Human goal: preserve canonical code supporting Jordan's JM105 RNA-seq, intron
+retention, NMD-hidden leakage, Mud1/CR, aging, and manuscript figure workflows.
 
-This project is for analysis code and reusable figure-generation/browser code, not raw sequencing data.
+This project is for complete analysis code, reusable figure-generation/browser
+code, methods, and provenance—not raw sequencing data.
 
 ## Intended structure
 
 ```text
 projects/jm105-intronsaurus/
   analysis/
-    RNA-seq and intron-retention analysis scripts.
   alignment/
-    STAR and other alignment launchers.
   figures/
-    Scripts that generate manuscript figure panels from real inputs.
   transformation-protocol-rnaseq/
-    12-sample transformation-protocol RNA-seq abundance workflow.
   jm134-starvation-switch/
-    JM-134 comparison with Parenteau/gkaf525 stationary-phase starvation.
   jm133-weak-5ss-mud1/
-    JM-133 weak 5′SS/U1-complementarity vs Mud1-dependence analysis.
   figure2-candidate-gate/
-    Total/rRNA-depleted Figure 2 candidate-gate analysis.
   human-metazoan-conservation/
-    HGPS nuclear-architecture and metazoan caloric-restriction conservation analysis.
   intronsaurus-browser/
-    Intronsaurus browser/export code and Windows/Euler helpers.
   metadata/
-    Small, human-readable sample maps or schema documents only. No raw reads.
   docs/
-    Recovery notes, scientific interpretation guardrails, and legacy-source audit trails.
   README.md
 ```
 
@@ -37,64 +28,59 @@ projects/jm105-intronsaurus/
 
 - Never generate fake biological data.
 - Use `NO DATA` for experiments or panels that have not been performed.
-- Figure 2 should use total/rRNA-depleted data only unless Jordan explicitly changes this.
-- Do not show poly-A data in Figure 2 unless Jordan explicitly restores it.
+- Figure 2 uses total/rRNA-depleted JM105 only unless Jordan explicitly changes it.
+- Poly-A, P-versus-T, mRNA-like and P−T constructs remain outside Figure 2.
 - Distinguish raw NMD-off/upf1Δ retained signal from NMD-hidden off-minus-on signal.
-- Distinguish RNA/host transcript abundance from protein abundance.
-- Avoid claiming caloric restriction is starvation.
+- Distinguish RNA/host-transcript abundance from protein abundance.
+- Caloric restriction is not automatically starvation.
 - Do not equate physiological aging with damage, abnormality, HGPS, or disease.
-- Whole-cell human or mouse RNA-seq may establish pre-mRNA exposure, not nuclear export or NMD degradation.
+- Whole-cell human or mouse RNA-seq may establish intron-containing RNA exposure,
+  not nuclear export, translation, or NMD degradation.
 
 ## Canonical code imported
 
 | Path | Status | Purpose | Data status |
 |---|---|---|---|
-| `analysis/jm105-old-cell-leaky-intron-determinants.py` | canonical | Classifies old-selective NMD-revealed introns and compares gene module / splice-site / branchpoint / 3′SS / PPT features against nonleaker comparison introns. | Uses real JM105 tables on Euler; no simulated biological data. |
-| `human-metazoan-conservation/scripts/run_hgps_metazoan_conservation.py` | canonical | Resolves public HGPS and metazoan CR RNA-seq, aligns to pinned GENCODE references, computes boundary-to-spliced-junction pre-mRNA exposure, tests prespecified contrasts, and emits a main-figure gate report. | Public real RNA-seq only; raw reads/BAMs remain on Euler and are excluded from GitHub. |
-| `human-metazoan-conservation/run-hgps-metazoan-conservation.sbatch` | canonical helper | Bootstraps the pinned Euler environment and runs the HGPS/metazoan conservation pipeline as one Slurm job. | Administrative/analysis launcher; no biological values generated without real public reads. |
-| `human-metazoan-conservation/upload-submit-hgps-metazoan-conservation.ps1` | canonical helper | Uploads the conservation bundle from Windows and submits it on Euler. | Administrative helper only. |
-| `transformation-protocol-rnaseq/resolve-fastq-files.py` | canonical | Resolves FASTQ files for the 12 transformation-protocol samples from sample IDs and aliases. | Real workflow metadata; no fake biological data. |
-| `transformation-protocol-rnaseq/transformation-protocol-samples.tsv` | canonical | Sample manifest for JM62-JM73 transformation-protocol subset. | Real sample metadata; no raw reads. |
-| `transformation-protocol-rnaseq/run-transformation-expression.sbatch` | canonical | Slurm wrapper for transformation-protocol expression workflow. | Real workflow; no fake biological data. |
-| `transformation-protocol-rnaseq/check-transformation-job.ps1` | canonical | Windows helper to inspect Euler Slurm status and logs. | Administrative helper; no biological data modified. |
-| `intronsaurus-browser/run-integrate-sun-matched-rna-protein-gene-stories.sbatch` | canonical helper | Slurm wrapper for Intronsaurus vNext3Y single-entry Gene Stories with matched JM105 RNA and Sun protein-abundance groups. | Real JM105/Sun workflow; no raw data committed. |
-| `intronsaurus-browser/upload-submit-intronsaurus-matched-rna-protein-gene-stories.ps1` | canonical helper | Uploads and submits the vNext3Y build to Euler. | Administrative helper; no raw data committed. |
-| `intronsaurus-browser/retrieve-intronsaurus-matched-rna-protein-gene-stories.ps1` | canonical helper | Retrieves vNext3Y generated outputs. | Generated HTML/archive remain excluded by default. |
-| `intronsaurus-browser/check-intronsaurus-matched-rna-protein-gene-stories.sh` | canonical helper | Safe Euler status checker. | Administrative helper. |
-| `intronsaurus-browser/intronsaurus-explore-restored-data-fix-v3i.sbatch` | canonical helper | Runs the Intronsaurus vNext3I Explore-tab restoration workflow. | Depends on unrecovered builder/patch-chain source. |
-| `intronsaurus-browser/upload-submit-intronsaurus-explore-restored-data-fix-v3i.ps1` | canonical helper | Uploads and submits vNext3I. | Administrative helper. |
-| `intronsaurus-browser/retrieve-intronsaurus-explore-restored-data-fix-v3i.ps1` | canonical helper | Retrieves vNext3I outputs. | Generated outputs excluded. |
-| `intronsaurus-browser/check-intronsaurus-explore-restored-data-fix-v3i-status.sh` | canonical helper | Checks vNext3I status/logs. | Administrative helper. |
-| `intronsaurus-browser/patches/vnext3ah-fix28-gene-story-sources-patch.html` | canonical patch | Deduplicates Gene Stories evidence labels and adds source/provenance notes. | UI/provenance only; no biological values generated. |
+| `analysis/jm105-old-cell-leaky-intron-determinants.py` | canonical | Old-selective NMD-revealed intron determinants. | Real JM105 tables on Euler. |
+| `human-metazoan-conservation/scripts/run_hgps_metazoan_conservation.py` | canonical lineage; exact v2 byte import pending | GEO/SRA metadata, GENCODE references, representative transcripts, and aggregate contrasts. | Real public RNA-seq. |
+| `human-metazoan-conservation/scripts/run_hgps_metazoan_conservation_manifest_hotfix.py` | canonical metadata layer | Evidence-backed replicate counts, BioProject fallback, and replicate-suffixed control classification. | Real public metadata. |
+| `human-metazoan-conservation/scripts/jm105_metazoan_distributed.py` | exact source verified locally; GitHub byte import pending | Multi-node stages and one-pass fragment-level EI/IE/EE_total quantification. | Real public RNA-seq. |
+| `human-metazoan-conservation/slurm/*.sbatch` | canonical Euler launchers | Parallel references, 34-task sample array, and dependent aggregation. | Administrative/analysis code. |
+| `human-metazoan-conservation/submit-distributed.sh` | canonical orchestrator | Freezes the manifest and submits the dependency graph. | Administrative helper. |
+| `human-metazoan-conservation/upload-submit-distributed.ps1` | canonical Windows helper | Uploads and submits the full distributed source. | Administrative helper. |
+| `human-metazoan-conservation/repair-failed-array.sh` | canonical repair | Reruns only failed tasks after the micromamba lock incident. | No biological values changed. |
+| `human-metazoan-conservation/upload-repair-failed-array.ps1` | canonical Windows repair helper | Uploads the lock-free launchers and starts the selective repair. | Administrative helper. |
+| `human-metazoan-conservation/watch-distributed.sh` | canonical status helper | Reports references, array completion, aggregation, and gate report. | Read-only status. |
+| `human-metazoan-conservation/MATERIALS_AND_METHODS.md` | canonical methods | Panel-by-panel Figure 5 methods and exact EI/IE/EE counting rules. | Documentation grounded in executed code. |
+
+Raw FASTQ/SRA, BAM/BAI, STAR indexes, logs, cache, scratch, archives and unreviewed
+generated biological results are excluded from GitHub.
+
+## Human/metazoan primary metric
+
+```text
+JM105_IR = (EI + IE) / ((EI + IE) + 2 * EE_total)
+```
+
+The primary metric has no pseudocount; zero denominator is `NA`. PEI with a 0.5
+continuity correction is secondary only. Public mammalian data cannot compute
+`NMD_hidden` without matched UPF1/NMD-on and NMD-off conditions.
+
+## Provenance
+
+The initial distributed sample array completed 31/34 tasks. Tasks 1, 5 and 33
+failed before biological work because concurrent `micromamba run` calls contended
+for one home-directory process lock. The selective lock-free repair and exact
+source are recorded under `human-metazoan-conservation/runtime-notes/`.
 
 ## Backfilled scientific/context documents
 
-| Path | Status | Purpose | Data status |
-|---|---|---|---|
-| `docs/what-data-shows-summary.md` | canonical context | Current interpretation guardrail for CR/Mud1/NMD-hidden leakage, intron architecture, Mud1-GFP, RP/non-RP stratification, and Parenteau comparison logic. | Documentation only. |
-| `docs/legacy-code-backfill.md` | active recovery queue | Tracks exact historical filenames, paths, outputs, source clues, and whether full source has actually been recovered. | Documentation only; never treat as code. |
+- `docs/what-data-shows-summary.md`
+- `docs/legacy-code-backfill.md`
 
-## Verified external recovery clue added 2026-07-11
+Historical descriptions and filenames are recovery clues, not substitutes for
+exact complete source.
 
-File Library contains `JM101_RNAseq_Protocol_and_Provenance.docx`. It verifies the historical JM101 workflow structure and output names, including:
+## Exact-source import status — 2026-07-21
 
-- Windows project root `Y:/Jordan/JM101`.
-- QuasR-compatible BAMs under `C:/rna_seq/quasr_bam`.
-- `metadata_clean.csv`, `yeast_introns_sacCer3.rds`, and `SGD_features.tab` as historical inputs.
-- QuasR intron/exon counting, DESeq2 exon-derived size factors, `IRratio = (intron + 1)/(exon + 1)`, and intron fraction outputs.
-- Rsubread/featureCounts gene-level counting, CPM, interaction/ratio-of-ratios checks, and output folders under `ir_outputs/` and `expression_outputs/`.
-
-This document is a provenance source, not the exact R/Python/Bash source. No script was reconstructed from it.
-
-## Canonical code still targeted for recovery
-
-See `docs/legacy-code-backfill.md` for exact historical filenames and source clues. Highest-priority unrecovered targets remain:
-
-1. `110_JM101_JM105_integrate_intronsaurus.py`.
-2. `111_JM101_STAR_align_array.sbatch` / later load-stack STAR variant.
-3. `112_JM101_integrate_after_STAR.sbatch` / later load-stack integration variant.
-4. Rsubread Step 2 hard-resume/turbo scripts, Step 3 DESeq2, and IRFinder drafts.
-5. Full Intronsaurus vNext3/vNext3AE/vNext3I/vNext3Y builders/readers.
-6. JM133/JM134 and Figure 2 candidate-gate source.
-
-`Exact full source not yet recovered` means exactly that. Historical claims that a source existed in a prior ephemeral sandbox are not sufficient for canonical import unless the source body is accessible and reverified in the current run.
+The complete v2 source bundle was syntax-validated locally and its SHA-256 manifest is preserved. All methods, provenance, manifests, repair code and small execution helpers are present on draft PR #6. The two large Python files remain explicitly `PARTIAL / EXACT SOURCE VERIFIED LOCALLY` until connector-safe byte-for-byte import is completed; this status must not be upgraded based on descriptions or snippets.
