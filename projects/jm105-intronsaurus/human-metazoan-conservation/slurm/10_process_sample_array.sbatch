@@ -1,9 +1,4 @@
 #!/usr/bin/env bash
-# Purpose: Process one public RNA-seq sample per Slurm array task.
-# Inputs: frozen 34-run manifest, completed species references, public SRA data.
-# Outputs: aligned BAM/BAI on Euler, compressed per-intron counts, QC JSON, completion marker.
-# Assumptions: Euler Slurm; 8 CPUs; 48 GB RAM; 250 GB node-local temporary storage.
-# Data status: real public RNA-seq only; no simulated biological data.
 #SBATCH --job-name=JM105_sample
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
@@ -21,11 +16,6 @@ CODE_DIR="$PROJECT_ROOT/code"
 WORK_ROOT="$PROJECT_ROOT/work"
 ENV_PREFIX="$PROJECT_ROOT/software/micromamba-root/envs/jm105-hgps-conservation"
 export PATH="$ENV_PREFIX/bin:$PATH"
-
-if [[ ! -x "$ENV_PREFIX/bin/python" ]]; then
-    echo "ERROR: Environment Python not found: $ENV_PREFIX/bin/python" >&2
-    exit 1
-fi
 
 mkdir -p "$PROJECT_ROOT/logs/distributed"
 TASK_TMP="${TMPDIR:-/tmp}/JM105_HGPS_${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}"
