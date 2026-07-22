@@ -50,9 +50,9 @@ Colours are never defined locally.
 
 ## Canonical Google Drive source
 
-- Folder: `00_CANONICAL_FIGURE_BIBLE_LOCKED` inside `JM105 - Intronsaurus & Nature Aging`
-- Native Google Doc: `JM105 Figure Bible — LOCKED — 2026-07-22`
-- Canonical version: `JM105-FIGURE-BIBLE-v1.0-2026-07-22`
+- [Locked Google Drive folder](https://drive.google.com/drive/folders/1qrmTGvzWtI_SZ2CBAzk-HL8lFl8b2zLB)
+- [Native Google Doc](https://docs.google.com/document/d/1aytYln182XsiYBNX4iH_UWK97wuai-Y_Tn77G6pbeVc/edit)
+- [Locked DOCX copy](https://docs.google.com/document/d/1qhl3irfYUZ4B4r_ktFby2Xg0JiGtnx0E/edit)
 
 ## Canonical files
 
