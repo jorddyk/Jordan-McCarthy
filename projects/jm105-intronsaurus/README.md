@@ -18,6 +18,7 @@ projects/jm105-intronsaurus/
   jm133-weak-5ss-mud1/
   figure2-candidate-gate/
   human-metazoan-conservation/
+  c-elegans-public-rnaseq/
   intronsaurus-browser/
   metadata/
   docs/
@@ -36,6 +37,10 @@ projects/jm105-intronsaurus/
 - Do not equate physiological aging with damage, abnormality, HGPS, or disease.
 - Whole-cell human or mouse RNA-seq may establish intron-containing RNA exposure,
   not nuclear export, translation, or NMD degradation.
+- Public worm studies are analysed separately; no cross-study subtraction is used
+  to imitate a missing factorial experiment.
+- `eat-2` is genetic dietary restriction caused by reduced feeding, whereas
+  `daf-2` is reduced insulin/IGF signalling.
 
 ## Canonical code imported
 
@@ -52,6 +57,10 @@ projects/jm105-intronsaurus/
 | `human-metazoan-conservation/upload-repair-failed-array.ps1` | canonical Windows repair helper | Uploads the lock-free launchers and starts the selective repair. | Administrative helper. |
 | `human-metazoan-conservation/watch-distributed.sh` | canonical status helper | Reports references, array completion, aggregation, and gate report. | Read-only status. |
 | `human-metazoan-conservation/MATERIALS_AND_METHODS.md` | canonical methods | Panel-by-panel Figure 5 methods and exact EI/IE/EE counting rules. | Documentation grounded in executed code. |
+| `c-elegans-public-rnaseq/scripts/*.py` | canonical pipeline v3 | Resolves five public worm studies, builds WBcel235, quantifies EI/IE/EE_total, computes within-study contrasts and renders audited figures. | Real public RNA-seq; no results committed. |
+| `c-elegans-public-rnaseq/slurm/*.sbatch` | canonical Euler launchers | Manifest-gated reference, 158-task sample array with four-way concurrency, and dependent aggregation. | Administrative/analysis code. |
+| `c-elegans-public-rnaseq/upload_submit_c_elegans_public_rnaseq.ps1` | canonical Windows helper | Uploads exact source, loads Euler `eth_proxy`, and submits the driver. | Administrative helper. |
+| `c-elegans-public-rnaseq/runtime-notes/2026-07-22-manifest-proxy-and-submission.md` | canonical provenance | Records proxy, manifest and classifier failures and the final v3 submission graph. | No biological outputs. |
 
 Raw FASTQ/SRA, BAM/BAI, STAR indexes, logs, cache, scratch, archives and unreviewed
 generated biological results are excluded from GitHub.
@@ -66,12 +75,23 @@ The primary metric has no pseudocount; zero denominator is `NA`. PEI with a 0.5
 continuity correction is secondary only. Public mammalian data cannot compute
 `NMD_hidden` without matched UPF1/NMD-on and NMD-off conditions.
 
+The worm workflow computes `NMD_hidden` only inside studies that contain matched
+NMD-on and NMD-off groups. It does not subtract measurements across studies.
+
 ## Provenance
 
-The initial distributed sample array completed 31/34 tasks. Tasks 1, 5 and 33
-failed before biological work because concurrent `micromamba run` calls contended
-for one home-directory process lock. The selective lock-free repair and exact
-source are recorded under `human-metazoan-conservation/runtime-notes/`.
+The initial distributed HGPS/metazoan sample array completed 31/34 tasks. Tasks
+1, 5 and 33 failed before biological work because concurrent `micromamba run`
+calls contended for one home-directory process lock. The selective lock-free
+repair and exact source are recorded under
+`human-metazoan-conservation/runtime-notes/`.
+
+The C. elegans metadata gate passed at pipeline version `2026-07-22.3` after GEO
+resolution, explicit separation of the SRP089617 experimental arms, recognition
+of `Y41E3.11` as `hrpu-1`, and exact-GSM assignment of the five prespecified
+GSE240821 groups. Driver `8176077` submitted reference job `8176647`, sample
+array `8176648` and aggregate job `8176649`. No generated biological output from
+that run is committed.
 
 ## Backfilled scientific/context documents
 
@@ -81,6 +101,9 @@ source are recorded under `human-metazoan-conservation/runtime-notes/`.
 Historical descriptions and filenames are recovery clues, not substitutes for
 exact complete source.
 
-## Exact-source import status — 2026-07-21
+## Exact-source import status — 2026-07-22
 
-The complete v2 source bundle is canonical on draft PR #6. Both large Python files were reconstructed from gzip/base64 source chunks, verified against their prespecified SHA-256 values, compiled successfully, and committed. The one-use importer and temporary source chunks were removed in the same commit.
+The complete HGPS/metazoan v2 source remains canonical on draft PR #6. The
+complete C. elegans public-RNA-seq v3 source is added to the same branch as one
+canonical project directory. Superseded repair bundles, compiled files,
+archives, raw data and generated results are not preserved.
