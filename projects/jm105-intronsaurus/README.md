@@ -67,6 +67,33 @@ projects/jm105-intronsaurus/
 | `docs/what-data-shows-summary.md` | canonical context | Current interpretation guardrail for CR/Mud1/NMD-hidden leakage, intron architecture, Mud1-GFP, RP/non-RP stratification, and Parenteau comparison logic. | Documentation only. |
 | `docs/legacy-code-backfill.md` | active recovery queue | Tracks exact historical filenames, paths, outputs, source clues, and whether full source has actually been recovered. | Documentation only; never treat as code. |
 
+## Successful-run intake recorded 2026-07-26
+
+Two material successful executions were verified from uploaded Euler transcripts. They are runtime provenance, not recovered source code.
+
+### Figure 1 renderer
+
+- Completed Slurm job: `8286585`.
+- State/exit: `COMPLETED`, `0:0`.
+- Elapsed: `00:00:29`.
+- Renderer root: `/cluster/scratch/jmccarthy/JM105_RNAseq/figure1_renderer_v1`.
+- Output: `/cluster/scratch/jmccarthy/JM105_RNAseq/figure1_renderer_v1/outputs/Figure1_v12_20260723_131022_8286585`.
+- Exact six-sample cohort gate passed: old `JM18|JM30|JM7`; young `JM12|JM24|JM54`.
+- Provenance reported 307 nuclear spliceosomal-mRNA introns, 6,585 nuclear chromosomal genes, verified common-name display policy, and `synthetic_data_used: false`.
+- Exact complete executed source is **not yet recovered**. Required source tree: `materialize_figure1_exact_inputs.py`, `render_figure1_panels.py`, the exact v12 launcher/submission scripts, `paper_style.py`, environment details, source hashes and validation outputs.
+
+### C. elegans final-figure renderer
+
+- Completed Slurm job: `8291829`.
+- State/exit: `COMPLETED`, `0:0`.
+- Elapsed: `00:02:37`.
+- Output: `/cluster/scratch/jmccarthy/JM105_CELEGANS_WORM_ANALYSIS/work/final_figure`.
+- Final-figure version: `2026-07-23.final-figure.2`.
+- Source-pipeline version: `2026-07-22.3`.
+- Manifest rows: 158; biological samples: 108.
+- Main, extended and combined figure audits passed; PNG dimensions matched; SVG text remained editable.
+- The base worm pipeline is preserved on draft PR #6, but the exact final-figure v2 renderer/launcher used by job `8291829` is **not yet recovered** and must not be inferred from the earlier aggregate renderer.
+
 ## Verified external recovery clue added 2026-07-11
 
 File Library contains `JM101_RNAseq_Protocol_and_Provenance.docx`. It verifies the historical JM101 workflow structure and output names, including:
@@ -83,11 +110,13 @@ This document is a provenance source, not the exact R/Python/Bash source. No scr
 
 See `docs/legacy-code-backfill.md` for exact historical filenames and source clues. Highest-priority unrecovered targets remain:
 
-1. `110_JM101_JM105_integrate_intronsaurus.py`.
-2. `111_JM101_STAR_align_array.sbatch` / later load-stack STAR variant.
-3. `112_JM101_integrate_after_STAR.sbatch` / later load-stack integration variant.
-4. Rsubread Step 2 hard-resume/turbo scripts, Step 3 DESeq2, and IRFinder drafts.
-5. Full Intronsaurus vNext3/vNext3AE/vNext3I/vNext3Y builders/readers.
-6. JM133/JM134 and Figure 2 candidate-gate source.
+1. Exact Figure 1 v12 source actually used by job `8286585`.
+2. Exact C. elegans final-figure v2 renderer/launcher actually used by job `8291829`.
+3. `110_JM101_JM105_integrate_intronsaurus.py`.
+4. `111_JM101_STAR_align_array.sbatch` / later load-stack STAR variant.
+5. `112_JM101_integrate_after_STAR.sbatch` / later load-stack integration variant.
+6. Rsubread Step 2 hard-resume/turbo scripts, Step 3 DESeq2, and IRFinder drafts.
+7. Full Intronsaurus vNext3/vNext3AE/vNext3I/vNext3Y builders/readers.
+8. JM133/JM134 and Figure 2 candidate-gate source.
 
 `Exact full source not yet recovered` means exactly that. Historical claims that a source existed in a prior ephemeral sandbox are not sufficient for canonical import unless the source body is accessible and reverified in the current run.
