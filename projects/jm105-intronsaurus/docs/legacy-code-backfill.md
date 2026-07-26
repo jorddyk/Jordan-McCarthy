@@ -28,25 +28,36 @@ A file is canonical only when its complete source body is accessible and verifie
 
 PR #1 historically contains complete JM133 weak-5′SS/Mud1 Python and sbatch source on branch `legacy-code-backfill-2026-07-08`. Do not duplicate it from memory. Reconcile or rebase that branch when the exact branch content is accessible and mergeable.
 
+Draft PR #6 preserves the complete base C. elegans public-RNA-seq pipeline and distributed HGPS/metazoan workflow. The later standalone final-figure v2 source used by job `8291829` is a separate recovery target until its exact files are copied byte-for-byte.
+
+Draft PR #7 preserves the targeted Figure 3 A/D/G v22 package and runtime provenance. It remains draft pending exact raw-mode Euler validation and final dependency intake.
+
+## Successful-run source-located queue — 2026-07-26
+
+| Priority | Proposed canonical path | Verified execution proof | Required exact source | Status |
+|---|---|---|---|---|
+| 1 | `figures/figure1/` or the existing canonical Figure 1 renderer area | Slurm job `8286585`, `COMPLETED 0:0`, output `/cluster/scratch/jmccarthy/JM105_RNAseq/figure1_renderer_v1/outputs/Figure1_v12_20260723_131022_8286585`; exact six-sample cohort gate passed; 307 introns, 6,585 genes; `synthetic_data_used: false`. | `materialize_figure1_exact_inputs.py`, `render_figure1_panels.py`, exact v12 launcher and submission scripts, `paper_style.py`, environment/dependency record, source SHA-256 manifest, input provenance and validation outputs. | **PARTIAL / SUCCESSFUL SOURCE LOCATED. Exact complete source not yet accessible; do not reconstruct from terminal excerpts.** |
+| 2 | `c-elegans-public-rnaseq/final-figure/` | Slurm job `8291829`, `COMPLETED 0:0`, output `/cluster/scratch/jmccarthy/JM105_CELEGANS_WORM_ANALYSIS/work/final_figure`; final version `2026-07-23.final-figure.2`; 158 manifest rows, 108 biological samples; all figure audits, PNG dimensions and editable-SVG checks passed. | Exact final-figure v2 Python source, sbatch/launcher, any style/helper modules, source hashes, completion JSON, manifest and concise reproduction command. | **PARTIAL / SUCCESSFUL SOURCE LOCATED. Base v3 pipeline is in PR #6, but the final-figure v2 renderer is not yet canonical.** |
+
 ## Current priority queue
 
 | Priority | Proposed canonical path | Historical source clue | Status |
 |---|---|---|---|
-| 1 | `analysis/jm101-jm105-integrate-intronsaurus.py` | `110_JM101_JM105_integrate_intronsaurus.py`; project `/cluster/scratch/jmccarthy/JM105_RNAseq`; metadata `Y:/Jordan/JM101/metadata_filtered.csv`; BAMs `Y:/Jordan/JM101/RSUBREAD_bam`; historical job `3574398`. | **Exact full source not yet recovered in an accessible source.** A prior ephemeral-sandbox note is not sufficient. |
-| 2 | `alignment/jm101-star-align-array.sbatch` | `111_JM101_STAR_align_array.sbatch`; later clue `113_JM101_STAR_align_array_LOAD_STACK.sbatch`; modules `stack/2024-06`, `gcc/12.2.0`, `star/2.7.10b`, `samtools/1.17`. | **Exact full source not yet recovered.** |
-| 3 | `analysis/jm101-integrate-after-star.sbatch` | `112_JM101_integrate_after_STAR.sbatch`; later clue `114_JM101_integrate_after_STAR_LOAD_STACK.sbatch`. | **Exact full source not yet recovered.** |
-| 4 | `analysis/jm101-rsubread-step2-reclassify-hard-resume.R` | Step 2 `RECLASSIFY + HARD-RESUME`; `base_dir <- "Y:/Jordan/JM101/RNA seq GC files"`; outputs `gene_counts_matrix.tsv`, `gene_annotation.tsv`, `sample_metadata.tsv`. | **Exact full source not yet recovered.** |
-| 5 | `analysis/jm101-rsubread-step2-throughput-turbo.R` | Step 2 `THROUGHPUT TURBO`, 2025-08-15. | **Exact full source not yet recovered.** |
-| 6 | `analysis/jm101-deseq2-step3.R` | Step 3 DESeq2 from Rsubread counts/annotations. | **Exact full source not yet recovered.** |
-| 7 | `analysis/jm101-irfinder-draft-workflow.R` | Draft R/WSL IRFinder workflow; `metadata_filtered.csv`; `Y:/Jordan/JM101/RNA seq GC files`. | **Exact full source not yet recovered.** |
-| 8 | `intronsaurus-browser/integrate-sun-matched-rna-protein-gene-stories.py` | `141_intronsaurus_matched_rna_protein_gene_stories_v3Y.py`. | **Exact full source not currently accessible.** Imported helpers do not substitute for the builder. |
-| 9 | `intronsaurus-browser/intronsaurus-explore-restored-data-fix-v3i.py` | `127_intronsaurus_explore_restored_DATA_fix_v3I.py`. | **Exact full source not currently accessible.** |
-| 10 | `reader/intronsaurus-reader-first-rna-fate-vnext3/` | `Intronsaurus_Reader_First_RNA_Fate_vNext3.html`; vNext3AE reader/builder variants. | **Exact complete source bundle not yet recovered.** |
-| 11 | `analysis/jm105-paired-gene-body-normalized-leakage-test.py` | `scripts/26_paired_gene_body_normalized_leakage_test.py`; output `26_PAIRED_GENE_BODY_NORMALIZED_LEAKAGE_TEST`. | Full source was previously visible in project context but is not accessible now; do not reconstruct. |
-| 12 | `figures/jm105-synopsis-aligned-all-intron-rnaseq-plots.py` | `scripts/28_make_synopsis_aligned_all_intron_RNAseq_plots.py`; output `28_SYNOPSIS_ALIGNED_ALL_INTRON_RNASEQ_PLOTS`. | Full source was previously visible in project context but is not accessible now; do not reconstruct. |
-| 13 | `jm133-weak-5ss-mud1/jm133-weak-5ss-need-mud1.py` | PR #1 / `scripts/71_JM133_weak_5SS_need_Mud1.py`. | Exact source reportedly staged in PR #1; not yet canonical on `main`. |
-| 14 | `jm134-starvation-switch/` analysis and label-audit scripts | JM134 Euler jobs `3101802`, `3104275`, `3106256`, `3109225`. | Exact full source not yet recovered. |
-| 15 | `figure2-candidate-gate/` scripts | Total/rRNA-depleted JM105 Figure 2 candidate-gate workflow. | Exact full source not yet recovered. |
+| 3 | `analysis/jm101-jm105-integrate-intronsaurus.py` | `110_JM101_JM105_integrate_intronsaurus.py`; project `/cluster/scratch/jmccarthy/JM105_RNAseq`; metadata `Y:/Jordan/JM101/metadata_filtered.csv`; BAMs `Y:/Jordan/JM101/RSUBREAD_bam`; historical job `3574398`. | **Exact full source not yet recovered in an accessible source.** A prior ephemeral-sandbox note is not sufficient. |
+| 4 | `alignment/jm101-star-align-array.sbatch` | `111_JM101_STAR_align_array.sbatch`; later clue `113_JM101_STAR_align_array_LOAD_STACK.sbatch`; modules `stack/2024-06`, `gcc/12.2.0`, `star/2.7.10b`, `samtools/1.17`. | **Exact full source not yet recovered.** |
+| 5 | `analysis/jm101-integrate-after-star.sbatch` | `112_JM101_integrate_after_STAR.sbatch`; later clue `114_JM101_integrate_after_STAR_LOAD_STACK.sbatch`. | **Exact full source not yet recovered.** |
+| 6 | `analysis/jm101-rsubread-step2-reclassify-hard-resume.R` | Step 2 `RECLASSIFY + HARD-RESUME`; `base_dir <- "Y:/Jordan/JM101/RNA seq GC files"`; outputs `gene_counts_matrix.tsv`, `gene_annotation.tsv`, `sample_metadata.tsv`. | **Exact full source not yet recovered.** |
+| 7 | `analysis/jm101-rsubread-step2-throughput-turbo.R` | Step 2 `THROUGHPUT TURBO`, 2025-08-15. | **Exact full source not yet recovered.** |
+| 8 | `analysis/jm101-deseq2-step3.R` | Step 3 DESeq2 from Rsubread counts/annotations. | **Exact full source not yet recovered.** |
+| 9 | `analysis/jm101-irfinder-draft-workflow.R` | Draft R/WSL IRFinder workflow; `metadata_filtered.csv`; `Y:/Jordan/JM101/RNA seq GC files`. | **Exact full source not yet recovered.** |
+| 10 | `intronsaurus-browser/integrate-sun-matched-rna-protein-gene-stories.py` | `141_intronsaurus_matched_rna_protein_gene_stories_v3Y.py`. | **Exact full source not currently accessible.** Imported helpers do not substitute for the builder. |
+| 11 | `intronsaurus-browser/intronsaurus-explore-restored-data-fix-v3i.py` | `127_intronsaurus_explore_restored_DATA_fix_v3I.py`. | **Exact full source not currently accessible.** |
+| 12 | `reader/intronsaurus-reader-first-rna-fate-vnext3/` | `Intronsaurus_Reader_First_RNA_Fate_vNext3.html`; vNext3AE reader/builder variants. | **Exact complete source bundle not yet recovered.** |
+| 13 | `analysis/jm105-paired-gene-body-normalized-leakage-test.py` | `scripts/26_paired_gene_body_normalized_leakage_test.py`; output `26_PAIRED_GENE_BODY_NORMALIZED_LEAKAGE_TEST`. | Full source was previously visible in project context but is not accessible now; do not reconstruct. |
+| 14 | `figures/jm105-synopsis-aligned-all-intron-rnaseq-plots.py` | `scripts/28_make_synopsis_aligned_all_intron_RNAseq_plots.py`; output `28_SYNOPSIS_ALIGNED_ALL_INTRON_RNASEQ_PLOTS`. | Full source was previously visible in project context but is not accessible now; do not reconstruct. |
+| 15 | `jm133-weak-5ss-mud1/jm133-weak-5ss-need-mud1.py` | PR #1 / `scripts/71_JM133_weak_5SS_need_Mud1.py`. | Exact source reportedly staged in PR #1; not yet canonical on `main`. |
+| 16 | `jm134-starvation-switch/` analysis and label-audit scripts | JM134 Euler jobs `3101802`, `3104275`, `3106256`, `3109225`. | Exact full source not yet recovered. |
+| 17 | `figure2-candidate-gate/` scripts | Total/rRNA-depleted JM105 Figure 2 candidate-gate workflow. | Exact full source not yet recovered. |
 
 ## Verified File Library clues
 
@@ -75,6 +86,10 @@ Action: retain these strings as exact search keys. Do not synthesize the missing
 - `JM105_ProjectDescription.docx`: JM105 total RNA-seq from MAD-isolated young/aged cells under Mud1/NMD/CR perturbations.
 - Generated Intronsaurus HTML artifacts are outputs, not canonical builders.
 - Figure prompt/spec documents are reusable non-runnable contracts only.
+
+## 2026-07-26 search result
+
+File Library runtime records verified two successful code-bearing executions: Figure 1 job `8286585` and C. elegans final-figure job `8291829`. The records include job/output/version/audit evidence, but not complete source bodies. Both are therefore recorded as `PARTIAL / SUCCESSFUL SOURCE LOCATED`, not `RECOVERED`.
 
 ## 2026-07-11 search result
 
