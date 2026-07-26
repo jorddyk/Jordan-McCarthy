@@ -1,6 +1,6 @@
 # Jordan McCarthy Code Wiki
 
-_Last updated: 2026-07-16 Europe/Zurich_
+_Last updated: 2026-07-26 Europe/Zurich_
 
 Canonical private repository: `jorddyk/Jordan-McCarthy`
 
@@ -41,10 +41,36 @@ Project-organized code vault. Canonical code lives under the project where a hum
   - `projects/jm105-intronsaurus/analysis/jm133-weak-5ss-need-mud1.py`
   - `projects/jm105-intronsaurus/analysis/jm133-weak-5ss-need-mud1.sbatch`
   Their source is uploaded to GitHub but not yet canonical on `main` because PR #1 currently requires conflict resolution against newer main history.
+- Draft PR #6 contains the complete base C. elegans public-RNA-seq v3 pipeline and distributed HGPS/metazoan workflow. The separate final-figure v2 renderer used by job `8291829` remains source-located rather than recovered.
+- Draft PR #7 contains the targeted raw-grounded Figure 3 A/D/G v22 package and remains draft pending raw Euler validation and final dependency intake.
 
 ### Priority exact-source queue
 
-`110_JM101_JM105_integrate_intronsaurus.py`, `111_JM101_STAR_align_array.sbatch`, `112_JM101_integrate_after_STAR.sbatch`, Rsubread Step 2 hard-resume/turbo, Step 3 DESeq2, IRFinder drafts, complete vNext3/vNext3AE builders/readers, JM134 analysis utilities, `141_intronsaurus_matched_rna_protein_gene_stories_v3Y.py`, `26_paired_gene_body_normalized_leakage_test.py`, and `28_make_synopsis_aligned_all_intron_RNAseq_plots.py`. Status: exact full source not yet recovered unless already listed canonical or preserved on the named branch.
+1. Exact Figure 1 v12 source used by successful job `8286585`.
+2. Exact C. elegans final-figure v2 source used by successful job `8291829`.
+3. `110_JM101_JM105_integrate_intronsaurus.py`, `111_JM101_STAR_align_array.sbatch`, `112_JM101_integrate_after_STAR.sbatch`, Rsubread Step 2 hard-resume/turbo, Step 3 DESeq2, IRFinder drafts, complete vNext3/vNext3AE builders/readers, JM134 analysis utilities, `141_intronsaurus_matched_rna_protein_gene_stories_v3Y.py`, `26_paired_gene_body_normalized_leakage_test.py`, and `28_make_synopsis_aligned_all_intron_RNAseq_plots.py`.
+
+Status rule: exact full source is not recovered unless already listed canonical or preserved on a named branch with complete verified bodies.
+
+### Successful-run intake — 2026-07-26
+
+#### Figure 1
+
+- Job `8286585`: `COMPLETED`, exit `0:0`, elapsed `00:00:29`.
+- Output: `/cluster/scratch/jmccarthy/JM105_RNAseq/figure1_renderer_v1/outputs/Figure1_v12_20260723_131022_8286585`.
+- Exact cohort gate: old `JM18|JM30|JM7`; young `JM12|JM24|JM54`.
+- Recorded scope: 307 nuclear spliceosomal-mRNA introns and 6,585 nuclear chromosomal genes.
+- Verified common-name display policy and `synthetic_data_used: false`.
+- Status: `PARTIAL / SUCCESSFUL SOURCE LOCATED`. The complete executed source tree is still missing from GitHub and must be copied byte-for-byte from Euler.
+
+#### C. elegans final figure
+
+- Job `8291829`: `COMPLETED`, exit `0:0`, elapsed `00:02:37`.
+- Output: `/cluster/scratch/jmccarthy/JM105_CELEGANS_WORM_ANALYSIS/work/final_figure`.
+- Final version `2026-07-23.final-figure.2`; source pipeline `2026-07-22.3`.
+- 158 manifest rows and 108 biological samples.
+- Main, extended and combined audits passed; PNG dimensions matched; SVG text remained editable.
+- Status: `PARTIAL / SUCCESSFUL SOURCE LOCATED`. The base v3 pipeline is in PR #6; the exact final-figure v2 renderer and launcher are not yet canonical.
 
 ## Figure rendering
 
@@ -68,13 +94,14 @@ Prompt/spec assets under `projects/figure-rendering/prompts/` define Figure 5, m
 Highest-priority missing or source-located code:
 
 1. Exact Figure 3 v21 sources `figure3_base_renderer.py` and `Figure_3_render_all_v21.py` — the latest verified source-bearing run is `/cluster/scratch/jmccarthy/JM105_RNAseq/Figure3_chat_build_20260715_163813/`; terminal retrieval records verify complete files of approximately 57 KB and 40 KB, matching `.pyc` companions, and the same files in Jordan's local `JM105_Figure3_Euler_Bundle_v6_EXTRACTED` results. Status: `PARTIAL / SOURCE LOCATED`; the connector exposes only the transcript, not source bytes.
-2. Figure 2 public-final renderer — exact complete Python is source-located in File Library and at `/cluster/home/jmccarthy/JM105_Figure2_public_final_20260713_171245/scripts/render_jm105_figure2_public_final.py`; the corrected run succeeded after `threshold_c` → `threshold_cr`. Status: `PARTIAL / SOURCE LOCATED`, not yet imported because full bytes were unavailable to this run.
-3. Figure 5 C/D/E public-clean renderer — exact uploaded `rerender_figure5_CDE_public_clean_labeled.py` and complete shell launcher were found in File Library. Status: `PARTIAL / SOURCE LOCATED`; no snippet reconstruction committed.
-4. JM134 label-audit/rerender workflow; Euler jobs `3101802`, `3104275`, `3106256`, `3109225`.
-5. Nature Aging/Yves-compatible main-figure layout renderer.
-6. Figure-story scoring model.
-7. Reusable `NO DATA` renderer.
-8. Synopsis-aligned RNA-seq renderer.
+2. Exact Figure 1 v12 renderer source used by job `8286585`. Status: `PARTIAL / SUCCESSFUL SOURCE LOCATED`.
+3. Figure 2 public-final renderer — exact complete Python is source-located in File Library and at `/cluster/home/jmccarthy/JM105_Figure2_public_final_20260713_171245/scripts/render_jm105_figure2_public_final.py`; the corrected run succeeded after `threshold_c` → `threshold_cr`. Status: `PARTIAL / SOURCE LOCATED`, not yet imported because full bytes were unavailable to this run.
+4. Figure 5 C/D/E public-clean renderer — exact uploaded `rerender_figure5_CDE_public_clean_labeled.py` and complete shell launcher were found in File Library. Status: `PARTIAL / SOURCE LOCATED`; no snippet reconstruction committed.
+5. JM134 label-audit/rerender workflow; Euler jobs `3101802`, `3104275`, `3106256`, `3109225`.
+6. Nature Aging/Yves-compatible main-figure layout renderer.
+7. Figure-story scoring model.
+8. Reusable `NO DATA` renderer.
+9. Synopsis-aligned RNA-seq renderer.
 
 The 2026-07-16 pass verified the latest Figure 3 v6 retrieval inventory. In addition to the v21 source pair, it contains the current `Figure_3_build_from_v21_and_JM100.py` (~33 KB). The run generated panel source tables and rendered assets before failing only at the composite hard cross-font audit: clipped headings and title/panel-letter overlaps were reported. This is a layout-QC blocker in the newer wrapper, not evidence of missing v21 logic or a biological-data failure. The next recovery must copy the exact `.py` bytes directly from the verified Euler run directory or Jordan's local v6 extraction.
 
@@ -117,6 +144,15 @@ Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategi
   - **Containment:** Daily Code Handoff is explicitly exempt from campaign-count reductions and may be disabled only by a direct Jordan instruction.
 
 # Last-known canonical decisions
+
+## 2026-07-26
+
+- Repository re-verified private and writable.
+- Successful Figure 1 job `8286585` and successful worm final-figure job `8291829` were recorded as runtime provenance.
+- Neither terminal record contains the complete exact source body used for the successful execution; both remain `PARTIAL / SUCCESSFUL SOURCE LOCATED`.
+- No source was reconstructed from log fragments or generated outputs.
+- Draft PR #6 remains the canonical staging area for the complete base worm and HGPS workflows; draft PR #7 remains the staging area for Figure 3 A/D/G v22.
+- No raw data, generated figures, logs, caches, secrets or invented biological values were committed.
 
 ## 2026-07-16
 
