@@ -1,6 +1,6 @@
 # Jordan McCarthy Code Wiki
 
-_Last updated: 2026-07-16 Europe/Zurich_
+_Last updated: 2026-07-27 Europe/Zurich_
 
 Canonical private repository: `jorddyk/Jordan-McCarthy`
 
@@ -42,9 +42,34 @@ Project-organized code vault. Canonical code lives under the project where a hum
   - `projects/jm105-intronsaurus/analysis/jm133-weak-5ss-need-mud1.sbatch`
   Their source is uploaded to GitHub but not yet canonical on `main` because PR #1 currently requires conflict resolution against newer main history.
 
+### 2026-07-27 Figure 2/NMD source intake
+
+Authorized File Library contains two complete Python source objects:
+
+```text
+JM105_figure2_render_v1_2_20260727.py
+JM105_figure2_render_v3_NMDoff_20260727.py
+```
+
+Status: `PARTIAL / EXACT SOURCE LOCATED`, not canonical.
+
+Verified boundaries from the indexed source files:
+
+- Figure 2 slice: 2% glucose, WT MUD1, young/old × UPF1+/upf1Δ.
+- Caloric restriction is excluded and remains a Figure 3 question.
+- Raw NMD-off/upf1Δ retained signal is kept distinct from `NMD_hidden = IR(upf1Δ) - IR(UPF1+)`.
+- Synthetic/mock/fake inputs are fail-closed.
+- Host abundance is labelled host RNA, not protein abundance.
+- The missing orthogonal NMD2/UPF2 experiment is stated as absent, not fabricated.
+- `v3_NMDoff` foregrounds the NMD-off comparison and treats NMD-on as a control/reference.
+
+The current connector exposed exact searchable file objects but did not expose their byte-complete bodies for GitHub import. The dependency `paper_style.py`, exact launcher/sbatch, environment record, source hashes and successful-run proof are also still needed. No source was reconstructed from snippets.
+
+A separate `JM105_NMD_AUDIT` workflow remains `UNRECOVERED / MULTIPLE REVISIONS`. Same-day records show an obsolete 42,301-byte ZIP whose PowerShell `ValidateSet` lacked `Provenance`, later revisions, and failed/superseded launcher attempts. Do not canonicalize those records as successful publication code.
+
 ### Priority exact-source queue
 
-`110_JM101_JM105_integrate_intronsaurus.py`, `111_JM101_STAR_align_array.sbatch`, `112_JM101_integrate_after_STAR.sbatch`, Rsubread Step 2 hard-resume/turbo, Step 3 DESeq2, IRFinder drafts, complete vNext3/vNext3AE builders/readers, JM134 analysis utilities, `141_intronsaurus_matched_rna_protein_gene_stories_v3Y.py`, `26_paired_gene_body_normalized_leakage_test.py`, and `28_make_synopsis_aligned_all_intron_RNAseq_plots.py`. Status: exact full source not yet recovered unless already listed canonical or preserved on the named branch.
+`110_JM101_JM105_integrate_intronsaurus.py`, `111_JM101_STAR_align_array.sbatch`, `112_JM101_integrate_after_STAR.sbatch`, Rsubread Step 2 hard-resume/turbo, Step 3 DESeq2, IRFinder drafts, complete vNext3/vNext3AE builders/readers, JM134 analysis utilities, `141_intronsaurus_matched_rna_protein_gene_stories_v3Y.py`, `26_paired_gene_body_normalized_leakage_test.py`, `28_make_synopsis_aligned_all_intron_RNAseq_plots.py`, and the exact complete 2026-07-27 Figure 2/NMD package. Status: exact full source not yet recovered unless already listed canonical or preserved on the named branch.
 
 ## Figure rendering
 
@@ -117,6 +142,14 @@ Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategi
   - **Containment:** Daily Code Handoff is explicitly exempt from campaign-count reductions and may be disabled only by a direct Jordan instruction.
 
 # Last-known canonical decisions
+
+## 2026-07-27
+
+- Exact File Library source objects located: `JM105_figure2_render_v1_2_20260727.py` and `JM105_figure2_render_v3_NMDoff_20260727.py`.
+- Both preserve the total/rRNA-depleted Figure 2 scope and distinguish raw NMD-off retained signal from NMD-hidden off-minus-on signal.
+- Neither is canonical because byte-complete transfer, `paper_style.py`, exact launcher/sbatch, environment, source hashes and successful-run proof remain unavailable.
+- `JM105_NMD_AUDIT` records contain multiple revisions and failures; no diagnostic or superseded variant was canonicalized.
+- No source was reconstructed from snippets; no raw data, generated figures, logs, archives, credentials or invented biological values were committed.
 
 ## 2026-07-16
 
