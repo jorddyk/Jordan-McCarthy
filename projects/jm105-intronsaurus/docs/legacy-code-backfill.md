@@ -47,6 +47,31 @@ PR #1 historically contains complete JM133 weak-5′SS/Mud1 Python and sbatch so
 | 13 | `jm133-weak-5ss-mud1/jm133-weak-5ss-need-mud1.py` | PR #1 / `scripts/71_JM133_weak_5SS_need_Mud1.py`. | Exact source reportedly staged in PR #1; not yet canonical on `main`. |
 | 14 | `jm134-starvation-switch/` analysis and label-audit scripts | JM134 Euler jobs `3101802`, `3104275`, `3106256`, `3109225`. | Exact full source not yet recovered. |
 | 15 | `figure2-candidate-gate/` scripts | Total/rRNA-depleted JM105 Figure 2 candidate-gate workflow. | Exact full source not yet recovered. |
+| 16 | `figures/jm105-figure2-aging-nmd-renderer.py` | File Library files `JM105_figure2_render_v1_2_20260727.py` and `JM105_figure2_render_v3_NMDoff_20260727.py`. | **PARTIAL / EXACT SOURCE LOCATED.** Complete file objects exist in authorized File Library, but byte-complete source could not be transferred through the current connector. `paper_style.py`, launcher/sbatch, source hashes, environment and successful-run proof are also required before choosing a canonical file. |
+| 17 | `figures/jm105-nmd-audit/` | `JM105_NMD_AUDIT.zip`, `Invoke-JM105-NMDAudit.ps1`, `Start-JM105-OnEuler.ps1`, `run_nmd_audit.sbatch`, provenance stage and decision-figure renderer. | **UNRECOVERED / MULTIPLE REVISIONS.** Terminal records include an obsolete 42,301-byte ZIP lacking the `Provenance` stage and later revisions, plus failed/superseded launch attempts. Do not canonicalize from logs or snippets. |
+
+## 2026-07-27 Figure 2/NMD source-location result
+
+Authorized File Library search returned two exact Python source objects:
+
+```text
+JM105_figure2_render_v1_2_20260727.py
+JM105_figure2_render_v3_NMDoff_20260727.py
+```
+
+The indexed complete-file content verifies these scientific boundaries:
+
+- authority is Yves's 2026-07-27 notebook interpretation, not the obsolete 2026-07-22 figure bible;
+- slice is 2% glucose, WT MUD1, young versus old, UPF1+ and upf1Δ;
+- caloric restriction belongs to Figure 3 and is excluded from these renderers;
+- raw NMD-off aging change and `NMD_hidden = IR(upf1Δ) - IR(UPF1+)` are explicitly distinct;
+- both refuse dry-run/synthetic/fake/mock/dummy/simulated/example inputs;
+- host RNA abundance is reported as RNA, not protein abundance;
+- the orthogonal NMD2/UPF2 experiment is explicitly absent rather than fabricated.
+
+No source body was reconstructed from the search snippets. The exact File Library objects could not be opened byte-for-byte by the current connector, so neither file is yet committed.
+
+The same-day records also contain Figure 2/NMD audit and Yves Figures 1/2 launch attempts. Those records include real failures—an obsolete ZIP without the provenance stage, PowerShell/remote launcher problems, and `Missing condition cell in raw table: ('young', 'off')`. These are diagnostic provenance, not successful publication-code intake.
 
 ## Verified File Library clues
 
