@@ -1,0 +1,7 @@
+panel	declarative_panel_claim	data_class	visual_form	primary_question
+A	Matched conditions separate aging from 0.1% glucose	schematic built from real design cells	condition cards with NMD-state glyphs and two contrast arrows	What exactly is being subtracted?
+B	0.1% glucose is not a global retained-RNA eraser	measured sample-level summary	raw sample points, means, bootstrap intervals, and null bands	Does restriction uniformly lower retained-intron RNA?
+C	0.1% glucose selectively reverses age-increased introns	computed per-intron contrasts	square quadrant scatter with all eligible introns and a separate common-name label lane	Is the intervention aligned against the aging program?
+D	Explicit gates define the selected program	computed filtering audit	proportional gate cascade with drop spurs and excluded-class summary	Was the selected program defined transparently rather than cherry-picked?
+E	The weaker required effect defines candidate rank	computed ranking	component-effect dumbbells plus minimum-score diamonds and external labels	Which selected introns have both a strong aging increase and strong suppression?
+F	Representative introns show selective 0.1%-glucose suppression	measured raw IR plus computed annotations	six interaction facets with every replicate, shape-coded NMD state, gap shading, right statistics, and comparator	Can a reader see the genome-wide claim at individual loci?
