@@ -41,6 +41,24 @@ projects/jm105-intronsaurus/
 - Distinguish RNA/host transcript abundance from protein abundance.
 - Avoid claiming caloric restriction is starvation.
 
+## Current Figure 4 authority — 2026-07-28
+
+The current manuscript title is:
+
+> Figure 4 | Mud1 couples intron retention and host-transcript abundance in the caloric-restriction response
+
+The same-day six-panel renderer lineage titled `Caloric restriction selectively suppresses an age-associated retained-intron program` is superseded as Figure 4 authority. Its v1/v2 source and failures are recorded as deprecated provenance, not publication-canonical Figure 4 code.
+
+Canonical recovery destination:
+
+```text
+projects/figure-rendering/panel-renderers/jm105-figure4-mud1-host-transcript/
+```
+
+Status: `PARTIAL / AUTHORITY LOCKED; CURRENT RENDERER UNRECOVERED`.
+
+The replacement renderer must be grounded in the exact current notebook/Drive panel authority and declared raw/source tables. It must distinguish intron retention from host-transcript abundance, and host-transcript abundance from protein abundance.
+
 ## Canonical code imported
 
 | Path | Status | Purpose | Data status |
@@ -83,11 +101,14 @@ This document is a provenance source, not the exact R/Python/Bash source. No scr
 
 See `docs/legacy-code-backfill.md` for exact historical filenames and source clues. Highest-priority unrecovered targets remain:
 
-1. `110_JM101_JM105_integrate_intronsaurus.py`.
-2. `111_JM101_STAR_align_array.sbatch` / later load-stack STAR variant.
-3. `112_JM101_integrate_after_STAR.sbatch` / later load-stack integration variant.
-4. Rsubread Step 2 hard-resume/turbo scripts, Step 3 DESeq2, and IRFinder drafts.
-5. Full Intronsaurus vNext3/vNext3AE/vNext3I/vNext3Y builders/readers.
-6. JM133/JM134 and Figure 2 candidate-gate source.
+1. Current Figure 4 Mud1/intron-retention/host-transcript renderer, exact style dependency, launcher, source-table lineage, hashes and successful Euler proof.
+2. Exact current Figure 2 measurement-validity renderer package after the real-data winner is adjudicated.
+3. Exact Novogene denominator files and the JM105 sample manifest needed for the Figure 2 source crosswalk.
+4. `110_JM101_JM105_integrate_intronsaurus.py`.
+5. `111_JM101_STAR_align_array.sbatch` / later load-stack STAR variant.
+6. `112_JM101_integrate_after_STAR.sbatch` / later load-stack integration variant.
+7. Rsubread Step 2 hard-resume/turbo scripts, Step 3 DESeq2, and IRFinder drafts.
+8. Full Intronsaurus vNext3/vNext3AE/vNext3I/vNext3Y builders/readers.
+9. JM133/JM134 and Figure 2 candidate-gate source not already canonical or staged on a verified branch.
 
 `Exact full source not yet recovered` means exactly that. Historical claims that a source existed in a prior ephemeral sandbox are not sufficient for canonical import unless the source body is accessible and reverified in the current run.
