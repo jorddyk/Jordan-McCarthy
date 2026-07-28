@@ -23,17 +23,47 @@ Do not treat this file as code. It is a recovery queue and import audit.
 
 | Priority | Proposed canonical path | Historical/source clue | Purpose | Current status |
 |---|---|---|---|---|
-| 1 | `panel-renderers/jm105-figure3-v21/figure3_base_renderer.py` and `panel-renderers/jm105-figure3-v21/Figure_3_render_all_v21.py` | Exact historical v21 sources were found in `/cluster/scratch/jmccarthy/JM105_RNAseq/Figure3_render_v21_20260702_161316` and copied into 2026-07-15 Figure 3 chat-build bundles; the latest verified retrieval is `/cluster/scratch/jmccarthy/JM105_RNAseq/Figure3_chat_build_20260715_163813/`, also downloaded into Jordan's local `JM105_Figure3_Euler_Bundle_v6_EXTRACTED` results; terminal records show complete files of about 57 KB and 40 KB, plus matching `.pyc` files | Preserve the last known complete Figure 3 v21 renderer and its shared base module before adapting any parser or panel logic | `PARTIAL / SOURCE LOCATED`: exact complete bytes exist on Euler and in Jordan's retrieved local v6 bundle, but this automation can access only the terminal transcript, not the `.py` file bodies; do not reconstruct from logs |
-| 2 | `panel-renderers/jm105-figure2-public-final/render_jm105_figure2_public_final.py` | Exact uploaded Python was copied to `/cluster/home/jmccarthy/JM105_Figure2_public_final_20260713_171245/scripts/render_jm105_figure2_public_final.py`; successful rerun recorded after replacing `threshold_c` with `threshold_cr` | Render Figure 2 public-final panels and provenance/audit exports from the strict total/rRNA-depleted source table | `PARTIAL / SOURCE LOCATED`: exact complete source exists in File Library/Euler, but full bytes were not retrievable in this automation run; do not reconstruct from terminal excerpts |
-| 3 | `panel-renderers/jm105-figure5-public-clean/rerender_figure5_CDE_public_clean_labeled.py` | Exact File Library upload `rerender_figure5_CDE_public_clean_labeled.py`, created 2026-07-13 15:57 CEST, with matching exact shell launcher | Render public-facing Figure 5 C/D/E assets, audits, matched tables and contact sheet while leaving 5A/5B unrendered without secure provenance and 5F untouched | `PARTIAL / SOURCE LOCATED`: indexed excerpts and complete launcher verified; full Python bytes were not exposed by the current connector, so no snippet-based reconstruction was committed |
-| 4 | `panel-renderers/jm134-starvation-switch-label-audit.py` | JM134 final layout and gene-labelled rerender workflow; Euler jobs `3101802`, `3104275`, `3106256`, `3109225` | Audit and rerender significant-in-both, JM105-only, and same-direction labels without overlap | Exact full source not yet recovered |
-| 5 | `panel-renderers/jm133-weak-5ss-mud1-scatter.py` | JM133 weak 5-prime splice-site/Mud1 scatter with LOESS, highlighted leaky set, eight ringed candidates, and marginal violin | Render the final JM133 relationship panel while preserving exact candidate and label logic | Exact full source not yet recovered |
-| 6 | `nature-aging-mockups/render-main-figure-layouts.py` | Recent Nature Aging / Yves-compatible figure mockup rendering conversations | Render drag-and-drop main-figure layout mockups for JM105/Intronsaurus while preserving existing panel aspect ratios and avoiding whitespace/text overlap | Exact full source not yet recovered |
-| 7 | `nature-aging-mockups/score-figure-story-architecture.py` | Requested scoring model for humanized/Yves-compatible/Nature Aging-likely figures | Score figure layouts across acceptance-likelihood, Yves compatibility, and human/non-AI design | Exact full source not yet recovered |
-| 8 | `panel-renderers/render-no-data-placeholder.py` | Figure 5 placeholder/NO DATA renderer | Render placeholders for experiments not yet done without fabricating data | Exact full source not yet recovered |
-| 9 | `nature-aging-mockups/figure-5-layout-renderer.py` | Figure 5 rendering from PowerShell/Euler using uploaded Fig5 docs/PPT | Render Figure 5 mockup from existing panels and NO DATA placeholders, matching style of other panels | Exact full source not yet recovered |
-| 10 | `nature-aging-mockups/render-synopsis-aligned-rnaseq-plots.py` | Euler script `scripts/28_make_synopsis_aligned_all_intron_RNAseq_plots.py`; output `28_SYNOPSIS_ALIGNED_ALL_INTRON_RNASEQ_PLOTS` | Render normal all-intron/all-gene RNA-seq panels required by the synopsis; may live under JM105 figures rather than generic rendering | Full current source was previously reported visible in project chat but is not currently accessible as a complete source body; exact full source not yet recovered |
-| 11 | `panel-renderers/render-figure2-panel-f-mud1-dependence.py` | Euler folders `PanelF_render_v7_TRANSPARENT_NO_BORDER_FOOTER_FIXED`, `PanelF_render_v8_FOOTER_SPACING_BEAUTIFUL`, and `PanelF_render_v9_TOP_DESCRIPTOR_SPACING_FIXED` | Render Figure 2F with computed NMD-hidden IR, data-driven y-limits, transparent outputs, dedicated descriptor/footer axes, and separated label lanes | Exact final complete source not yet recovered; patch sequence is not sufficient |
+| 1 | `panel-renderers/jm105-figure4-mud1-host-transcript/` | Jordan's 2026-07-28 authority reset: `Figure 4 | Mud1 couples intron retention and host-transcript abundance in the caloric-restriction response` | Rerender current Figure 4 from exact retention and host-transcript source tables under the current notebook/Drive panel authority | `PARTIAL / AUTHORITY LOCKED; CURRENT RENDERER UNRECOVERED`. The earlier CR-selectivity six-panel lineage is deprecated and must not govern Figure 4. |
+| 2 | `panel-renderers/jm105-figure2-measurement-validity/` | File Library exact Figure 2 v9/v10/v12 objects and Drive `CURRENT — JM105 Figure 2 v10 lane-locked renderer register` | Preserve the real-data adjudicated Figure 2 renderer after denominator, length, age × NMD and host-expression source validity are resolved | `PARTIAL / EXACT SOURCE LOCATED`; do not select a winner by filename or snippet. |
+| 3 | `panel-renderers/jm105-figure3-v21/figure3_base_renderer.py` and `panel-renderers/jm105-figure3-v21/Figure_3_render_all_v21.py` | Exact historical v21 sources were found in `/cluster/scratch/jmccarthy/JM105_RNAseq/Figure3_render_v21_20260702_161316` and copied into 2026-07-15 Figure 3 chat-build bundles; the latest verified retrieval is `/cluster/scratch/jmccarthy/JM105_RNAseq/Figure3_chat_build_20260715_163813/`, also downloaded into Jordan's local `JM105_Figure3_Euler_Bundle_v6_EXTRACTED` results; terminal records show complete files of about 57 KB and 40 KB, plus matching `.pyc` files | Preserve the last known complete Figure 3 v21 renderer and its shared base module before adapting any parser or panel logic | `PARTIAL / SOURCE LOCATED`: exact complete bytes exist on Euler and in Jordan's retrieved local v6 bundle, but this automation can access only the terminal transcript, not the `.py` file bodies; do not reconstruct from logs |
+| 4 | `panel-renderers/jm105-figure2-public-final/render_jm105_figure2_public_final.py` | Exact uploaded Python was copied to `/cluster/home/jmccarthy/JM105_Figure2_public_final_20260713_171245/scripts/render_jm105_figure2_public_final.py`; successful rerun recorded after replacing `threshold_c` with `threshold_cr` | Render Figure 2 public-final panels and provenance/audit exports from the strict total/rRNA-depleted source table | `PARTIAL / SOURCE LOCATED`: exact complete source exists in File Library/Euler, but full bytes were not retrievable in this automation run; do not reconstruct from terminal excerpts |
+| 5 | `panel-renderers/jm105-figure5-public-clean/rerender_figure5_CDE_public_clean_labeled.py` | Exact File Library upload `rerender_figure5_CDE_public_clean_labeled.py`, created 2026-07-13 15:57 CEST, with matching exact shell launcher | Render public-facing Figure 5 C/D/E assets, audits, matched tables and contact sheet while leaving 5A/5B unrendered without secure provenance and 5F untouched | `PARTIAL / SOURCE LOCATED`: indexed excerpts and complete launcher verified; full Python bytes were not exposed by the current connector, so no snippet-based reconstruction was committed |
+| 6 | `panel-renderers/jm134-starvation-switch-label-audit.py` | JM134 final layout and gene-labelled rerender workflow; Euler jobs `3101802`, `3104275`, `3106256`, `3109225` | Audit and rerender significant-in-both, JM105-only, and same-direction labels without overlap | Exact full source not yet recovered |
+| 7 | `panel-renderers/jm133-weak-5ss-mud1-scatter.py` | JM133 weak 5-prime splice-site/Mud1 scatter with LOESS, highlighted leaky set, eight ringed candidates, and marginal violin | Render the final JM133 relationship panel while preserving exact candidate and label logic | Exact full source not yet recovered |
+| 8 | `nature-aging-mockups/render-main-figure-layouts.py` | Recent Nature Aging / Yves-compatible figure mockup rendering conversations | Render drag-and-drop main-figure layout mockups for JM105/Intronsaurus while preserving existing panel aspect ratios and avoiding whitespace/text overlap | Exact full source not yet recovered |
+| 9 | `nature-aging-mockups/score-figure-story-architecture.py` | Requested scoring model for humanized/Yves-compatible/Nature Aging-likely figures | Score figure layouts across acceptance-likelihood, Yves compatibility, and human/non-AI design | Exact full source not yet recovered |
+| 10 | `panel-renderers/render-no-data-placeholder.py` | Figure 5 placeholder/NO DATA renderer | Render placeholders for experiments not yet done without fabricating data | Exact full source not yet recovered |
+| 11 | `nature-aging-mockups/figure-5-layout-renderer.py` | Figure 5 rendering from PowerShell/Euler using uploaded Fig5 docs/PPT | Render Figure 5 mockup from existing panels and NO DATA placeholders, matching style of other panels | Exact full source not yet recovered |
+| 12 | `nature-aging-mockups/render-synopsis-aligned-rnaseq-plots.py` | Euler script `scripts/28_make_synopsis_aligned_all_intron_RNAseq_plots.py`; output `28_SYNOPSIS_ALIGNED_ALL_INTRON_RNASEQ_PLOTS` | Render normal all-intron/all-gene RNA-seq panels required by the synopsis; may live under JM105 figures rather than generic rendering | Full current source was previously reported visible in project chat but is not currently accessible as a complete source body; exact full source not yet recovered |
+| 13 | `panel-renderers/render-figure2-panel-f-mud1-dependence.py` | Euler folders `PanelF_render_v7_TRANSPARENT_NO_BORDER_FOOTER_FIXED`, `PanelF_render_v8_FOOTER_SPACING_BEAUTIFUL`, and `PanelF_render_v9_TOP_DESCRIPTOR_SPACING_FIXED` | Render Figure 2F with computed NMD-hidden IR, data-driven y-limits, transparent outputs, dedicated descriptor/footer axes, and separated label lanes | Exact final complete source not yet recovered; patch sequence is not sufficient |
+
+## 2026-07-28 Figure 4 authority reset
+
+The same-day CR-selectivity package is no longer current Figure 4 authority. Current Figure 4 title:
+
+```text
+Figure 4 | Mud1 couples intron retention and host-transcript abundance in the caloric-restriction response
+```
+
+The deprecated v1 package is exact source-located with the following source manifest:
+
+```text
+94c389a97e15e6c4e4be3d80c9516591eb5796628c7c00acbdee06d950a657e1  JM105_figure4_cr_selectivity_panels_v1_20260728.py
+c32c3d05818455af985331dfd82ec4af251d5c6a4b4e5aad90b85b0aaaf01299  paper_style.py
+9f0a9fb2ff1c6718e15f147c60628806bc5a6cc94327aca18fe1a6d7e1695798  JM105_Figure4_CR_selectivity_v1.sbatch
+6f9dbeba23ff55037d30dfe7e168f4e1ca3dfe61bb783694b4750aa15a61ecb6  run_JM105_Figure4_CR_selectivity_v1_from_PowerShell.ps1
+815ce45ff0109796db279db73a23e945b0986041d82b879307217d0d1bc03103  README_JM105_Figure4_CR_selectivity_v1.md
+a6c2501bd5a7439b6aceb6c1c39853b335e66ae335ee51b4aa24587276b50a6f  Figure4_panel_contract.tsv
+8e97f37c072d1c6e8a388dcb8dc8d587e9cd56181301d0f81034ca7b69e892a4  Figure4_meeting_grounding.md
+```
+
+It is not imported as canonical code because it is superseded and because the current connector did not transfer all exact source bytes. v1 job `8886490` failed common-name resolution; v2 job `8888031` passed the real-GFF label preflight but failed the Panel D DejaVu Sans collision audit. A later v3 patch description does not constitute complete source or successful-run proof.
+
+The new authority register lives at:
+
+```text
+panel-renderers/jm105-figure4-mud1-host-transcript/README.md
+```
 
 ## 2026-07-16 recovery pass
 
@@ -78,6 +108,7 @@ The connector returned searchable excerpts but failed to open or transfer the fu
 - Clearly distinguish existing panels from newly required panels.
 - If data are absent, mark the panel as `NO DATA`.
 - Figure 2 must stay total/rRNA-depleted only unless Jordan explicitly changes it.
+- Distinguish intron retention from host-transcript abundance and host-transcript abundance from protein abundance.
 - SVG text should remain editable text, not outlined/path-converted.
 - Do not use `bbox_inches="tight"` in fixed-canvas figure exports.
 - Before patching a figure, list exact colliding objects by name and resolve by lane geometry, not by deleting required information.
