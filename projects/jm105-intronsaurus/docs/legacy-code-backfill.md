@@ -32,21 +32,53 @@ PR #1 historically contains complete JM133 weak-5′SS/Mud1 Python and sbatch so
 
 | Priority | Proposed canonical path | Historical source clue | Status |
 |---|---|---|---|
-| 1 | `analysis/jm101-jm105-integrate-intronsaurus.py` | `110_JM101_JM105_integrate_intronsaurus.py`; project `/cluster/scratch/jmccarthy/JM105_RNAseq`; metadata `Y:/Jordan/JM101/metadata_filtered.csv`; BAMs `Y:/Jordan/JM101/RSUBREAD_bam`; historical job `3574398`. | **Exact full source not yet recovered in an accessible source.** A prior ephemeral-sandbox note is not sufficient. |
-| 2 | `alignment/jm101-star-align-array.sbatch` | `111_JM101_STAR_align_array.sbatch`; later clue `113_JM101_STAR_align_array_LOAD_STACK.sbatch`; modules `stack/2024-06`, `gcc/12.2.0`, `star/2.7.10b`, `samtools/1.17`. | **Exact full source not yet recovered.** |
-| 3 | `analysis/jm101-integrate-after-star.sbatch` | `112_JM101_integrate_after_STAR.sbatch`; later clue `114_JM101_integrate_after_STAR_LOAD_STACK.sbatch`. | **Exact full source not yet recovered.** |
-| 4 | `analysis/jm101-rsubread-step2-reclassify-hard-resume.R` | Step 2 `RECLASSIFY + HARD-RESUME`; `base_dir <- "Y:/Jordan/JM101/RNA seq GC files"`; outputs `gene_counts_matrix.tsv`, `gene_annotation.tsv`, `sample_metadata.tsv`. | **Exact full source not yet recovered.** |
-| 5 | `analysis/jm101-rsubread-step2-throughput-turbo.R` | Step 2 `THROUGHPUT TURBO`, 2025-08-15. | **Exact full source not yet recovered.** |
-| 6 | `analysis/jm101-deseq2-step3.R` | Step 3 DESeq2 from Rsubread counts/annotations. | **Exact full source not yet recovered.** |
-| 7 | `analysis/jm101-irfinder-draft-workflow.R` | Draft R/WSL IRFinder workflow; `metadata_filtered.csv`; `Y:/Jordan/JM101/RNA seq GC files`. | **Exact full source not yet recovered.** |
-| 8 | `intronsaurus-browser/integrate-sun-matched-rna-protein-gene-stories.py` | `141_intronsaurus_matched_rna_protein_gene_stories_v3Y.py`. | **Exact full source not currently accessible.** Imported helpers do not substitute for the builder. |
-| 9 | `intronsaurus-browser/intronsaurus-explore-restored-data-fix-v3i.py` | `127_intronsaurus_explore_restored_DATA_fix_v3I.py`. | **Exact full source not currently accessible.** |
-| 10 | `reader/intronsaurus-reader-first-rna-fate-vnext3/` | `Intronsaurus_Reader_First_RNA_Fate_vNext3.html`; vNext3AE reader/builder variants. | **Exact complete source bundle not yet recovered.** |
-| 11 | `analysis/jm105-paired-gene-body-normalized-leakage-test.py` | `scripts/26_paired_gene_body_normalized_leakage_test.py`; output `26_PAIRED_GENE_BODY_NORMALIZED_LEAKAGE_TEST`. | Full source was previously visible in project context but is not accessible now; do not reconstruct. |
-| 12 | `figures/jm105-synopsis-aligned-all-intron-rnaseq-plots.py` | `scripts/28_make_synopsis_aligned_all_intron_RNAseq_plots.py`; output `28_SYNOPSIS_ALIGNED_ALL_INTRON_RNASEQ_PLOTS`. | Full source was previously visible in project context but is not accessible now; do not reconstruct. |
-| 13 | `jm133-weak-5ss-mud1/jm133-weak-5ss-need-mud1.py` | PR #1 / `scripts/71_JM133_weak_5SS_need_Mud1.py`. | Exact source reportedly staged in PR #1; not yet canonical on `main`. |
-| 14 | `jm134-starvation-switch/` analysis and label-audit scripts | JM134 Euler jobs `3101802`, `3104275`, `3106256`, `3109225`. | Exact full source not yet recovered. |
-| 15 | `figure2-candidate-gate/` scripts | Total/rRNA-depleted JM105 Figure 2 candidate-gate workflow. | Exact full source not yet recovered. |
+| 1 | `../figure-rendering/panel-renderers/jm105-figure4-mud1-host-transcript/` | Current 2026-07-28 Jordan authority: `Figure 4 | Mud1 couples intron retention and host-transcript abundance in the caloric-restriction response`. | **PARTIAL / AUTHORITY LOCKED; CURRENT RENDERER UNRECOVERED.** Recover current notebook/Drive panel authority, exact raw/source-table renderer, style module, launcher, environment, hashes and successful Euler proof. |
+| 2 | `figures/jm105-figure2-measurement-validity/` | Exact same-day Figure 2 renderer objects exist in File Library; Drive register names v10 lane-locked source and warns real-data Euler validation remains pending. | **PARTIAL / EXACT SOURCE LOCATED.** Do not select a canonical winner by filename or snippet; transfer byte-complete source after real-data adjudication. |
+| 3 | `metadata/jm105-denominator-source-crosswalk.tsv` and provenance | Current Figure 2 validity work requires exact Novogene clean-read/effective-fragment denominator files and one-to-one JM105 sample crosswalk. | **UNRECOVERED / HIGH PRIORITY.** No denominator values may be invented. |
+| 4 | `analysis/jm101-jm105-integrate-intronsaurus.py` | `110_JM101_JM105_integrate_intronsaurus.py`; project `/cluster/scratch/jmccarthy/JM105_RNAseq`; metadata `Y:/Jordan/JM101/metadata_filtered.csv`; BAMs `Y:/Jordan/JM101/RSUBREAD_bam`; historical job `3574398`. | **Exact full source not yet recovered in an accessible source.** A prior ephemeral-sandbox note is not sufficient. |
+| 5 | `alignment/jm101-star-align-array.sbatch` | `111_JM101_STAR_align_array.sbatch`; later clue `113_JM101_STAR_align_array_LOAD_STACK.sbatch`; modules `stack/2024-06`, `gcc/12.2.0`, `star/2.7.10b`, `samtools/1.17`. | **Exact full source not yet recovered.** |
+| 6 | `analysis/jm101-integrate-after-star.sbatch` | `112_JM101_integrate_after_STAR.sbatch`; later clue `114_JM101_integrate_after_STAR_LOAD_STACK.sbatch`. | **Exact full source not yet recovered.** |
+| 7 | `analysis/jm101-rsubread-step2-reclassify-hard-resume.R` | Step 2 `RECLASSIFY + HARD-RESUME`; `base_dir <- "Y:/Jordan/JM101/RNA seq GC files"`; outputs `gene_counts_matrix.tsv`, `gene_annotation.tsv`, `sample_metadata.tsv`. | **Exact full source not yet recovered.** |
+| 8 | `analysis/jm101-rsubread-step2-throughput-turbo.R` | Step 2 `THROUGHPUT TURBO`, 2025-08-15. | **Exact full source not yet recovered.** |
+| 9 | `analysis/jm101-deseq2-step3.R` | Step 3 DESeq2 from Rsubread counts/annotations. | **Exact full source not yet recovered.** |
+| 10 | `analysis/jm101-irfinder-draft-workflow.R` | Draft R/WSL IRFinder workflow; `metadata_filtered.csv`; `Y:/Jordan/JM101/RNA seq GC files`. | **Exact full source not yet recovered.** |
+| 11 | `intronsaurus-browser/integrate-sun-matched-rna-protein-gene-stories.py` | `141_intronsaurus_matched_rna_protein_gene_stories_v3Y.py`. | **Exact full source not currently accessible.** Imported helpers do not substitute for the builder. |
+| 12 | `intronsaurus-browser/intronsaurus-explore-restored-data-fix-v3i.py` | `127_intronsaurus_explore_restored_DATA_fix_v3I.py`. | **Exact full source not currently accessible.** |
+| 13 | `reader/intronsaurus-reader-first-rna-fate-vnext3/` | `Intronsaurus_Reader_First_RNA_Fate_vNext3.html`; vNext3AE reader/builder variants. | **Exact complete source bundle not yet recovered.** |
+| 14 | `analysis/jm105-paired-gene-body-normalized-leakage-test.py` | `scripts/26_paired_gene_body_normalized_leakage_test.py`; output `26_PAIRED_GENE_BODY_NORMALIZED_LEAKAGE_TEST`. | Full source was previously visible in project context but is not accessible now; do not reconstruct. |
+| 15 | `figures/jm105-synopsis-aligned-all-intron-rnaseq-plots.py` | `scripts/28_make_synopsis_aligned_all_intron_RNAseq_plots.py`; output `28_SYNOPSIS_ALIGNED_ALL_INTRON_RNASEQ_PLOTS`. | Full source was previously visible in project context but is not accessible now; do not reconstruct. |
+| 16 | `jm133-weak-5ss-mud1/jm133-weak-5ss-need-mud1.py` | PR #1 / `scripts/71_JM133_weak_5SS_need_Mud1.py`. | Exact source reportedly staged in PR #1; not yet canonical on `main`. |
+| 17 | `jm134-starvation-switch/` analysis and label-audit scripts | JM134 Euler jobs `3101802`, `3104275`, `3106256`, `3109225`. | Exact full source not yet recovered. |
+| 18 | `figure2-candidate-gate/` scripts | Total/rRNA-depleted JM105 Figure 2 candidate-gate workflow. | Exact full source not yet recovered except items explicitly canonical elsewhere. |
+
+## 2026-07-28 Figure 4 authority reset and deprecated lineage
+
+Jordan's later same-day instruction supersedes the CR-selectivity six-panel architecture as current Figure 4. The governing title is now:
+
+```text
+Figure 4 | Mud1 couples intron retention and host-transcript abundance in the caloric-restriction response
+```
+
+The obsolete v1 package is exact source-located with these verified hashes:
+
+```text
+94c389a97e15e6c4e4be3d80c9516591eb5796628c7c00acbdee06d950a657e1  JM105_figure4_cr_selectivity_panels_v1_20260728.py
+c32c3d05818455af985331dfd82ec4af251d5c6a4b4e5aad90b85b0aaaf01299  paper_style.py
+9f0a9fb2ff1c6718e15f147c60628806bc5a6cc94327aca18fe1a6d7e1695798  JM105_Figure4_CR_selectivity_v1.sbatch
+6f9dbeba23ff55037d30dfe7e168f4e1ca3dfe61bb783694b4750aa15a61ecb6  run_JM105_Figure4_CR_selectivity_v1_from_PowerShell.ps1
+815ce45ff0109796db279db73a23e945b0986041d82b879307217d0d1bc03103  README_JM105_Figure4_CR_selectivity_v1.md
+a6c2501bd5a7439b6aceb6c1c39853b335e66ae335ee51b4aa24587276b50a6f  Figure4_panel_contract.tsv
+8e97f37c072d1c6e8a388dcb8dc8d587e9cd56181301d0f81034ca7b69e892a4  Figure4_meeting_grounding.md
+```
+
+Do not import this package as current Figure 4 code. v1 job `8886490` failed common-name resolution and then emitted misleading post-failure success text. v2 job `8888031` passed real-GFF label preflight but failed closed on a measured DejaVu Sans Panel D collision between `gate_name_0.1% suppression` and `gate_count_0.1% suppression`. Exact v2 bytes were not exposed. A described v3 geometry patch is not complete source and has no verified full successful run.
+
+Classification:
+
+- v1: `DEPRECATED / EXACT SOURCE LOCATED`;
+- v2: `PARTIAL / FAILED SOURCE LOCATED`;
+- described v3 patch: `UNRECOVERED / DIAGNOSTIC ONLY`;
+- current Mud1/host-transcript Figure 4 renderer: `UNRECOVERED`.
 
 ## Verified File Library clues
 
@@ -85,6 +117,7 @@ File Library searches used exact names for `110`, `111`, `112`, STAR, Rsubread h
 - Figure 2 remains total/rRNA-depleted only unless Jordan explicitly reverses this.
 - Poly-A data remain excluded from Figure 2.
 - Distinguish raw NMD-off/upf1Δ retained signal from NMD-hidden off-minus-on signal.
+- Distinguish intron retention from host-transcript abundance.
 - Distinguish RNA/host transcript abundance from protein abundance.
 - Do not call caloric restriction starvation.
 - Never generate fake biological data.
