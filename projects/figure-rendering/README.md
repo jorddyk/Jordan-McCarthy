@@ -12,11 +12,12 @@ Read these files before writing code or rendering:
 projects/figure-rendering/START_HERE_FOR_FIGURE_RENDERING.md
 projects/figure-rendering/AGENTS.md
 projects/figure-rendering/docs/figure-rendering-reliability-standard.md
+projects/figure-rendering/templates/jm105-figure-rendering-learning-loop.md
 projects/figure-rendering/templates/figure-rendering-new-chat-checklist.md
 projects/figure-rendering/templates/chatgpt-jm105-rendering-operating-standard.md
 ```
 
-The reliability standard is cross-figure. It requires panel-identity and full-scope locks, verified source schemas and renderer CLIs, exact target-Euler execution, cross-font collision testing, direct retrieval, local verification, and Drive/GitHub logging. The complete Figure 2 incident chronology is in `docs/jm105-figure2-2026-07-14-complete-incident-postmortem.md`.
+The reliability standard is cross-figure. It requires panel-identity and full-scope locks, verified source schemas and renderer CLIs, exact target-Euler execution, cross-font collision testing, direct retrieval, local verification, and Drive/GitHub logging. The learning loop requires every material failure to become a regression test or machine-checkable guard before another submission. The complete Figure 2 incident chronology is in `docs/jm105-figure2-2026-07-14-complete-incident-postmortem.md`; the active Figure 3 incident record is in `docs/jm105-figure3-2026-07-28-rendering-incident-and-learning-record.md`.
 
 ## Intended structure
 
@@ -26,8 +27,10 @@ projects/figure-rendering/
     Reusable figure-layout and journal-style mockup scripts.
   panel-renderers/
     Standalone panel rendering utilities.
+  qa/
+    Fail-closed metadata, alias, rendered-object and artifact checks.
   templates/
-    Style/layout templates and reusable configuration files.
+    Style/layout templates, learning loops and reusable configuration files.
   prompts/
     Reusable prompt/spec artifacts for figure redesign and rendering.
   docs/legacy-code-backfill.md
@@ -55,6 +58,10 @@ projects/figure-rendering/
 - A remote render is incomplete until the same delivery includes direct Windows retrieval, local existence checks, and opening the white preview.
 - For JM105/Intronsaurus panel rendering, read `templates/chatgpt-jm105-rendering-operating-standard.md` before writing new code.
 - For JM105 Figure 2 Euler work, read `docs/jm105-figure2-euler-rendering-runbook.md` and the complete incident postmortem before launching or wrapping any renderer.
+- For JM105 Figure 3 work, read the locked Figure 3 prompt/crosswalk and the 2026-07-28 incident record before code.
+- Run the exact-table metadata preflight before Slurm submission; opaque sample IDs are never biological metadata.
+- Literal `NaN` cells and visible systematic ORF labels are hard publication-QA failures.
+- Commit only the Jordan-accepted canonical renderer; failed attempts belong in one incident record.
 
 ## Canonical code status
 
@@ -64,6 +71,9 @@ projects/figure-rendering/
 | `panel-renderers/jm105-figure2-v4_1/figure2f_seven_gate_counts.py` | RECOVERED canonical source | Standalone Figure 2F seven-gate renderer from the raw 402-row strict-gate table, with cumulative gate counts, collision audits, transparent exports and Euler file inventory | Real total/rRNA-depleted JM105 gate table only; hard-fails unless the final mask equals `candidate_passed_strict` and n=49; NMD-hidden definition preserved. |
 | `panel-renderers/render-figure1ef-total-rrna-print.ps1` | canonical | JM105 Figure 1E/F print panel workflow | Real total/rRNA-depleted inputs; no fake data or poly-A. |
 | `panel-renderers/jm105-figure3-mud1-cr-panels/` | partial exact-source import | Recovered runner/README; the historical v21 Python source pair is source-located in the verified 2026-07-15 Euler v6 build and Jordan's retrieved local v6 bundle, but exact source bytes are not yet transferred into GitHub | Real JM105 summary tables; no source-schema substitution is allowed. |
+| `qa/jm105_metadata_preflight.py` | canonical infrastructure | Fail-closed normalization and exact-table metadata-cell inventory before JM105 rendering | Reads metadata only; no biological metric calculation or simulated data. |
+| `qa/test_jm105_metadata_preflight.py` | canonical regression suite | Locks Unicode delta, plain UPF1, MUD1, age and glucose label behavior | Infrastructure-only test cases. |
+| `templates/jm105-figure-rendering-learning-loop.md` | canonical operating infrastructure | Converts every material failure into a regression test and defines promotion states | No biological data. |
 | `panel-renderers/render-figure4-panel-e-external-context.py` | canonical | Corrected Figure 4E external-context renderer | Uses audited source values; layout repair only. |
 | `panel-renderers/run-figure4-panel-e-external-context-euler.sh` | canonical | Euler wrapper for Figure 4E | Administrative wrapper. |
 | `panel-renderers/retrieve-figure4-panel-e-external-context.ps1` | canonical | Retrieval helper for Figure 4E outputs | No biological values generated. |
@@ -88,3 +98,5 @@ A 2026-07-13 evening File Library pass located exact uploaded files for the curr
 On 2026-07-14, the exact complete standalone Figure 2F seven-gate raw-count renderer was recovered and committed at `panel-renderers/jm105-figure2-v4_1/figure2f_seven_gate_counts.py`. Its verified source is the strict 402-row gate table and generator under `/cluster/scratch/jmccarthy/JM105_RNAseq/Figure2_stage1_audit_20260630_145204/Figure2_stage1B_STRICT_NUCLEAR_ORF_GATE/`. It preserves the total/rRNA-depleted-only Figure 2 contract, distinguishes NMD-hidden off-minus-on IR, and does not reconstruct biological values.
 
 The 2026-07-14 Figure 2 incident produced the accepted v4.1 execution pattern after failures involving archive layers, execution policy, missing files, raw-text audits, moved scripts, nested SSH, missing CLI arguments, Excel `UsedRange`, PowerShell interpolation, raw/enriched schemas, false visual audits, and cross-font clipping. Future figure chats must use the new reliability standard rather than repeat that discovery process.
+
+The 2026-07-28 Figure 3 incident added permanent guards for clickable artifact delivery, local filename discovery, opaque sample IDs, Unicode genotype symbols, plain `UPF1`, common-name-only visible labels, literal-NaN rejection, exact axis contrasts, scheduler-state interpretation and the prohibition on promoting a non-Mud1 CR-selectivity renderer as canonical Figure 3.
