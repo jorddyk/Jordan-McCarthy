@@ -1,6 +1,6 @@
 # Jordan McCarthy Code Wiki
 
-_Last updated: 2026-07-16 Europe/Zurich_
+_Last updated: 2026-07-28 Europe/Zurich_
 
 Canonical private repository: `jorddyk/Jordan-McCarthy`
 
@@ -18,6 +18,7 @@ Project-organized code vault. Canonical code lives under the project where a hum
 6. Filenames, summaries, output lists, provenance documents, historical job success, prompts, and patch sequences are recovery clues—not recovered runnable source.
 7. Quantitative microscopy must not silently convert to 8-bit or apply auto-contrast.
 8. The Daily Code Handoff is an operational continuity service: it may search authorized sources, preserve exact complete code, update existing canonical files and this wiki, and commit safe changes to this private repository.
+9. Manuscript renderers must be classified as raw/source-table rerenderers, assembly/composite utilities, or deprecated diagnostics. Composite-only success is never a panel-rerender success.
 
 # Project areas
 
@@ -30,7 +31,24 @@ Project-organized code vault. Canonical code lives under the project where a hum
 - NMD is primarily the detector; distinguish raw NMD-off/upf1Δ retained signal from NMD-hidden off-minus-on signal.
 - Safe visible claim: CR suppresses part of an age-linked NMD-revealed retained-intron/leakage state in a Mud1-dependent way.
 - Mud1 is a genetic handle/permissive requirement, not automatically the sole cause of every candidate intron.
+- Distinguish intron retention from host-transcript abundance.
 - Distinguish host RNA abundance from protein abundance; CR is not starvation.
+
+### Figure 4 current authority — 2026-07-28
+
+Current title:
+
+> Figure 4 | Mud1 couples intron retention and host-transcript abundance in the caloric-restriction response
+
+The same-day six-panel CR-selectivity renderer lineage is superseded as Figure 4 authority. Its exact v1 package and v2 failure are retained only as deprecated provenance. The current Figure 4 renderer is `UNRECOVERED`.
+
+Canonical recovery register:
+
+```text
+projects/figure-rendering/panel-renderers/jm105-figure4-mud1-host-transcript/README.md
+```
+
+The replacement must use the exact current notebook/Drive panel authority and declared raw/source tables. It must not reuse the obsolete six-panel architecture merely because exact code exists for it.
 
 ### Canonical code
 
@@ -44,7 +62,12 @@ Project-organized code vault. Canonical code lives under the project where a hum
 
 ### Priority exact-source queue
 
-`110_JM101_JM105_integrate_intronsaurus.py`, `111_JM101_STAR_align_array.sbatch`, `112_JM101_integrate_after_STAR.sbatch`, Rsubread Step 2 hard-resume/turbo, Step 3 DESeq2, IRFinder drafts, complete vNext3/vNext3AE builders/readers, JM134 analysis utilities, `141_intronsaurus_matched_rna_protein_gene_stories_v3Y.py`, `26_paired_gene_body_normalized_leakage_test.py`, and `28_make_synopsis_aligned_all_intron_RNAseq_plots.py`. Status: exact full source not yet recovered unless already listed canonical or preserved on the named branch.
+1. Current Figure 4 Mud1/intron-retention/host-transcript renderer, exact style dependency, source tables, launcher, hashes and successful Euler proof.
+2. Exact current Figure 2 measurement-validity package after denominator and real-data adjudication.
+3. Exact Novogene denominator files and one-to-one JM105 sample crosswalk.
+4. `110_JM101_JM105_integrate_intronsaurus.py`, `111_JM101_STAR_align_array.sbatch`, `112_JM101_integrate_after_STAR.sbatch`, Rsubread Step 2 hard-resume/turbo, Step 3 DESeq2, IRFinder drafts, complete vNext3/vNext3AE builders/readers, JM134 analysis utilities, `141_intronsaurus_matched_rna_protein_gene_stories_v3Y.py`, `26_paired_gene_body_normalized_leakage_test.py`, and `28_make_synopsis_aligned_all_intron_RNAseq_plots.py`.
+
+Status: exact full source not yet recovered unless already listed canonical or preserved on the named branch.
 
 ## Figure rendering
 
@@ -55,11 +78,33 @@ Project-organized code vault. Canonical code lives under the project where a hum
 - Figure 4E Euler/retrieval wrappers.
 - `projects/figure-rendering/panel-renderers/jm105-rendering-harness/`
 - `projects/figure-rendering/panel-renderers/jm105-fig4bc-sequence-architecture/`
-- `projects/figure-rendering/panel-renderers/jm105-figure4-secondary-structure-accessibility/` — Figure 4G predicted splice-signal accessibility and RNAlib MFE-derived structure control using the locked Figure 4 selected/background data (selected n=49).
+- `projects/figure-rendering/panel-renderers/jm105-figure4-secondary-structure-accessibility/` — Figure 4G predicted splice-signal accessibility and RNAlib MFE-derived structure control using the locked Figure 4 selected/background data (selected n=49). This historical panel identity does not override the 2026-07-28 current Figure 4 authority reset.
 - `projects/figure-rendering/panel-renderers/jm105-figure2-v4_1/figure2f_seven_gate_counts.py` — `RECOVERED` exact complete standalone Figure 2F renderer. It reads the verified raw 402-row strict-gate table, derives all seven cumulative counts, hard-fails unless the final mask equals `candidate_passed_strict` with n=49, performs cross-font collision audits, exports transparent/editable figures and can refresh the Euler file inventory.
 - Partial Figure 3 Mud1/CR package: runner/README canonical. The historical v21 Python pair is source-located in the verified 2026-07-15 v6 run and Jordan's retrieved local v6 bundle, but exact bytes are not yet canonical.
 
 Prompt/spec assets under `projects/figure-rendering/prompts/` define Figure 5, manuscript-sequence, lane/collision, and artifact-package contracts. They are not runnable substitutes.
+
+### 2026-07-28 deprecated Figure 4 CR-selectivity lineage
+
+The obsolete v1 package is exact source-located with hashes:
+
+```text
+94c389a97e15e6c4e4be3d80c9516591eb5796628c7c00acbdee06d950a657e1  JM105_figure4_cr_selectivity_panels_v1_20260728.py
+c32c3d05818455af985331dfd82ec4af251d5c6a4b4e5aad90b85b0aaaf01299  paper_style.py
+9f0a9fb2ff1c6718e15f147c60628806bc5a6cc94327aca18fe1a6d7e1695798  JM105_Figure4_CR_selectivity_v1.sbatch
+6f9dbeba23ff55037d30dfe7e168f4e1ca3dfe61bb783694b4750aa15a61ecb6  run_JM105_Figure4_CR_selectivity_v1_from_PowerShell.ps1
+815ce45ff0109796db279db73a23e945b0986041d82b879307217d0d1bc03103  README_JM105_Figure4_CR_selectivity_v1.md
+a6c2501bd5a7439b6aceb6c1c39853b335e66ae335ee51b4aa24587276b50a6f  Figure4_panel_contract.tsv
+8e97f37c072d1c6e8a388dcb8dc8d587e9cd56181301d0f81034ca7b69e892a4  Figure4_meeting_grounding.md
+```
+
+Classification and run proof:
+
+- v1 job `8886490`: `DEPRECATED DIAGNOSTIC FAILURE`; common-name resolution failed for `YDL012C`, and the wrapper emitted misleading post-failure success text.
+- v2 job `8888031`: `PARTIAL / FAILED SOURCE LOCATED`; real-GFF label preflight passed, but Panel D failed the DejaVu Sans collision audit between the 0.1%-suppression gate name and count.
+- described v3 lane patch: `UNRECOVERED / DIAGNOSTIC ONLY`; no complete exact source or verified full successful run.
+
+These variants must not be imported as current Figure 4 code.
 
 ### Recovery source of truth
 
@@ -67,14 +112,16 @@ Prompt/spec assets under `projects/figure-rendering/prompts/` define Figure 5, m
 
 Highest-priority missing or source-located code:
 
-1. Exact Figure 3 v21 sources `figure3_base_renderer.py` and `Figure_3_render_all_v21.py` — the latest verified source-bearing run is `/cluster/scratch/jmccarthy/JM105_RNAseq/Figure3_chat_build_20260715_163813/`; terminal retrieval records verify complete files of approximately 57 KB and 40 KB, matching `.pyc` companions, and the same files in Jordan's local `JM105_Figure3_Euler_Bundle_v6_EXTRACTED` results. Status: `PARTIAL / SOURCE LOCATED`; the connector exposes only the transcript, not source bytes.
-2. Figure 2 public-final renderer — exact complete Python is source-located in File Library and at `/cluster/home/jmccarthy/JM105_Figure2_public_final_20260713_171245/scripts/render_jm105_figure2_public_final.py`; the corrected run succeeded after `threshold_c` → `threshold_cr`. Status: `PARTIAL / SOURCE LOCATED`, not yet imported because full bytes were unavailable to this run.
-3. Figure 5 C/D/E public-clean renderer — exact uploaded `rerender_figure5_CDE_public_clean_labeled.py` and complete shell launcher were found in File Library. Status: `PARTIAL / SOURCE LOCATED`; no snippet reconstruction committed.
-4. JM134 label-audit/rerender workflow; Euler jobs `3101802`, `3104275`, `3106256`, `3109225`.
-5. Nature Aging/Yves-compatible main-figure layout renderer.
-6. Figure-story scoring model.
-7. Reusable `NO DATA` renderer.
-8. Synopsis-aligned RNA-seq renderer.
+1. Current Figure 4 Mud1/intron-retention/host-transcript renderer and exact execution package.
+2. Current Figure 2 measurement-validity renderer and exact denominator/sample provenance.
+3. Exact Figure 3 v21 sources `figure3_base_renderer.py` and `Figure_3_render_all_v21.py` — the latest verified source-bearing run is `/cluster/scratch/jmccarthy/JM105_RNAseq/Figure3_chat_build_20260715_163813/`; terminal retrieval records verify complete files of approximately 57 KB and 40 KB, matching `.pyc` companions, and the same files in Jordan's local `JM105_Figure3_Euler_Bundle_v6_EXTRACTED` results. Status: `PARTIAL / SOURCE LOCATED`; the connector exposes only the transcript, not source bytes.
+4. Figure 2 public-final renderer — exact complete Python is source-located in File Library and at `/cluster/home/jmccarthy/JM105_Figure2_public_final_20260713_171245/scripts/render_jm105_figure2_public_final.py`; the corrected run succeeded after `threshold_c` → `threshold_cr`. Status: `PARTIAL / SOURCE LOCATED`, not yet imported because full bytes were unavailable to this run.
+5. Figure 5 C/D/E public-clean renderer — exact uploaded `rerender_figure5_CDE_public_clean_labeled.py` and complete shell launcher were found in File Library. Status: `PARTIAL / SOURCE LOCATED`; no snippet reconstruction committed.
+6. JM134 label-audit/rerender workflow; Euler jobs `3101802`, `3104275`, `3106256`, `3109225`.
+7. Nature Aging/Yves-compatible main-figure layout renderer.
+8. Figure-story scoring model.
+9. Reusable `NO DATA` renderer.
+10. Synopsis-aligned RNA-seq renderer.
 
 The 2026-07-16 pass verified the latest Figure 3 v6 retrieval inventory. In addition to the v21 source pair, it contains the current `Figure_3_build_from_v21_and_JM100.py` (~33 KB). The run generated panel source tables and rendered assets before failing only at the composite hard cross-font audit: clipped headings and title/panel-letter overlaps were reported. This is a layout-QC blocker in the newer wrapper, not evidence of missing v21 logic or a biological-data failure. The next recovery must copy the exact `.py` bytes directly from the verified Euler run directory or Jordan's local v6 extraction.
 
@@ -111,12 +158,25 @@ Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategi
   - **Containment:** code/status live under `projects/`; handoffs remain audit-only.
 - **Risk:** figure patch sequences create one-off sprawl and violate original geometry.
   - **Containment:** canonicalize only complete final renderers and enforce the rendering operating standard.
+- **Risk:** obsolete figure numbering or panel architecture is promoted because its code is easier to recover.
+  - **Containment:** current Jordan/notebook authority governs; superseded complete code remains deprecated provenance.
 - **Risk:** real/simulated/`NO DATA` status drifts.
   - **Containment:** declare data status in project README, renderer outputs, and handoff.
 - **Risk:** code preservation is disabled during agency restructuring.
   - **Containment:** Daily Code Handoff is explicitly exempt from campaign-count reductions and may be disabled only by a direct Jordan instruction.
 
 # Last-known canonical decisions
+
+## 2026-07-28
+
+- Repository re-verified private and writable.
+- Current Figure 4 title locked to `Mud1 couples intron retention and host-transcript abundance in the caloric-restriction response`.
+- Same-day CR-selectivity v1/v2 lineage classified deprecated/noncanonical for Figure 4.
+- v1 exact source hashes recorded; no source body reconstructed.
+- v1 job `8886490` and v2 job `8888031` recorded as failed provenance.
+- Current Figure 4 renderer remains `UNRECOVERED` pending exact notebook/Drive authority, source-table lineage, executable package and successful Euler proof.
+- Gmail attachment search was unavailable because the connector was not authenticated; no Gmail result was claimed.
+- No raw data, generated figures, logs, caches, secrets or invented biological values were committed.
 
 ## 2026-07-16
 
