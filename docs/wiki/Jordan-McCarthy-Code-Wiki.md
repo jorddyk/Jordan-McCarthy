@@ -60,6 +60,8 @@ A Drive register document (folder `06 Current Figure Rendering Code`) describes 
 - `projects/figure-rendering/panel-renderers/jm105-rendering-harness/`
 - `projects/figure-rendering/panel-renderers/jm105-fig4bc-sequence-architecture/`
 - `projects/figure-rendering/panel-renderers/jm105-figure4-secondary-structure-accessibility/` — Figure 4G predicted splice-signal accessibility and RNAlib MFE-derived structure control using the locked Figure 4 selected/background data (selected n=49).
+- `projects/figure-rendering/panel-renderers/jm105-figure3-cr-selectivity-v2-1/jm105-figure3-render-v2-1-cr-selectivity.py` — `RECOVERED` (2026-07-29) exact complete six-panel Figure 3 CR-selectivity renderer, `+MUD1` only. Not yet Euler-run or Jordan-accepted.
+- `projects/figure-rendering/panel-renderers/jm105-figure4-mud1-host-transcript/` — `RECOVERED` (2026-07-29) exact complete eight-panel Figure 4 Mud1-coupling renderer (`jm105-figure4-render-v11-2-mud1-coupling.py`) plus its `JM100.xlsx` lifespan-to-CSV data-prep dependency (`jm100-lifespan-to-csv.py`). Title matches PR #12's current Figure 4 authority; a successful real-data Euler run and Jordan acceptance are still outstanding.
 - `projects/figure-rendering/panel-renderers/jm105-figure2-v4_1/figure2f_seven_gate_counts.py` — `RECOVERED` exact complete standalone Figure 2F renderer. It reads the verified raw 402-row strict-gate table, derives all seven cumulative counts, hard-fails unless the final mask equals `candidate_passed_strict` with n=49, performs cross-font collision audits, exports transparent/editable figures and can refresh the Euler file inventory.
 - Partial Figure 3 Mud1/CR package: runner/README canonical. The historical v21 Python pair is source-located in the verified 2026-07-15 v6 run and Jordan's retrieved local v6 bundle, but exact bytes are not yet canonical.
 
@@ -129,6 +131,7 @@ Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategi
 - Found one new artifact: the Figure 2 v10 lane-locked renderer register in Drive folder `06 Current Figure Rendering Code`, created 2026-07-28 and not previously logged. Recorded as `PARTIAL / SOURCE LOCATED` in the JM105 legacy-backfill ledger; no source reconstructed.
 - No new artifacts found in Gmail; attachment and keyword searches returned only personal correspondence and prior automation status emails.
 - No raw data, generated renders, secrets, or reconstructed biological/code values were committed.
+- Later the same day, Jordan supplied a zip of three Python files that a Claude response had produced in the NMD-analysis chat (a source this automation cannot search directly, since it has no connector for claude.ai conversation history). All three compiled and were verified byte-for-byte identical to the upload, then committed as `RECOVERED` exact source under two new figure-rendering folders: `panel-renderers/jm105-figure3-cr-selectivity-v2-1/` and `panel-renderers/jm105-figure4-mud1-host-transcript/`. Flagged for Jordan: each script's header docstring names a stale prior version (the embedded `SCHEMA` strings and filenames agree on the newer version); and whether the new Figure 3/Figure 4 split reconciles with the 2026-07-28 "locked Mud1-dependence Figure 3" framing is unresolved.
 
 ## 2026-07-16
 
