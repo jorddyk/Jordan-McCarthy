@@ -47,6 +47,7 @@ PR #1 historically contains complete JM133 weak-5′SS/Mud1 Python and sbatch so
 | 13 | `jm133-weak-5ss-mud1/jm133-weak-5ss-need-mud1.py` | PR #1 / `scripts/71_JM133_weak_5SS_need_Mud1.py`. | Exact source reportedly staged in PR #1; not yet canonical on `main`. |
 | 14 | `jm134-starvation-switch/` analysis and label-audit scripts | JM134 Euler jobs `3101802`, `3104275`, `3106256`, `3109225`. | Exact full source not yet recovered. |
 | 15 | `figure2-candidate-gate/` scripts | Total/rRNA-depleted JM105 Figure 2 candidate-gate workflow. | Exact full source not yet recovered. |
+| 16 | `figures/jm105-figure2-render-v10-lane-locked.py` | `JM105_figure2_render_v10_lane_locked_20260728.py`, superseding `JM105_figure2_render_v9_FINAL_20260728.py`; Google Drive register "CURRENT — JM105 Figure 2 v10 lane-locked renderer register" (folder `06 Current Figure Rendering Code`), created 2026-07-28. SHA-256 `fbd47169d0320e04c0eaf41692b9500be4b1cfa8f862e089b891507c497bd00e`. | `PARTIAL / SOURCE LOCATED`. See 2026-07-29 recovery pass below. |
 
 ## Verified File Library clues
 
@@ -75,6 +76,21 @@ Action: retain these strings as exact search keys. Do not synthesize the missing
 - `JM105_ProjectDescription.docx`: JM105 total RNA-seq from MAD-isolated young/aged cells under Mud1/NMD/CR perturbations.
 - Generated Intronsaurus HTML artifacts are outputs, not canonical builders.
 - Figure prompt/spec documents are reusable non-runnable contracts only.
+
+## 2026-07-29 recovery pass
+
+Google Drive folder `06 Current Figure Rendering Code` (created 2026-07-28 08:42 CEST) contains one Google Doc, "CURRENT — JM105 Figure 2 v10 lane-locked renderer register." It is a register/pointer document, not the runnable Python file, and no matching `.py` file object exists elsewhere in Drive under this or related names. Verified clues recorded from the register:
+
+- Proposed canonical filename: `JM105_figure2_render_v10_lane_locked_20260728.py`, superseding `JM105_figure2_render_v9_FINAL_20260728.py`.
+- SHA-256: `fbd47169d0320e04c0eaf41692b9500be4b1cfa8f862e089b891507c497bd00e`.
+- Fixed canvas 7.2 × 9.6 in; schema `JM105-FIG2-LANE-LOCKED-v10-20260728`; Euler destination `/cluster/home/jmccarthy/JM105_NMD_AUDIT/`.
+- Scope allowlist unchanged from repo guardrails: rRNA-depleted total JM105 RNA-seq only, 2% glucose, MUD1+, young vs. old, UPF1+ vs. upf1Δ; poly-A, P-versus-T, mRNA-like, caloric restriction and mud1Δ excluded by non-use.
+- Six stated scientific corrections relative to v9: (1) panel a is retained-junction RNA under NMD-off, not a leakage/compartment assay; (2) the library-size denominator must be passed as `effective_fragments` (Novogene raw mates ÷ 2 × Effective fraction), not called mapped-read CPM; (3) panel c states compression of NMD-revealed signal, not proven loss of NMD activity; (4) panel d reports stratified/counting-definition sensitivity without removing introns or declaring the length association fully technical or biological; (5) panel e adds independent host-gene-body log2FC alongside retained/spliced-junction changes; (6) panel f says "outside the nuclear mRNA/ORF set," not "outside protein-coding genes," and SNR17A/B remain absent from the count universe.
+- Layout fix: every panel object assigned a fixed inch-based lane (title/plot/label/legend/tick/group-label/footer); fails closed on any clipping or collision before export.
+- Required inputs: `JM105_primary53_intron_EI_IE_EE_counts_LONG.csv`, `SGD_features.tab`, `2B_gene_body_expression_WT_old_vs_young_all_genes.csv`, `JM105_lib_sizes.tsv` (unit `effective_fragments`).
+- Validation boundary stated by the register itself: the source compiled and passed an end-to-end schema-matched private layout test (zero clipping/collision), but the real-data Euler render has not yet been re-verified against `render_self_audit.json`. Do not represent this as a completed real-data render.
+
+Status: `PARTIAL / SOURCE LOCATED`. The connector exposes only the register's narrative text, not the `.py` file bytes. No source was reconstructed from the register description. Next recovery action: transfer the exact `JM105_figure2_render_v10_lane_locked_20260728.py` bytes from Jordan's Euler `JM105_NMD_AUDIT/` directory or local copy, verify against the stated SHA-256, and only then import under `figures/jm105-figure2-render-v10-lane-locked.py`.
 
 ## 2026-07-11 search result
 

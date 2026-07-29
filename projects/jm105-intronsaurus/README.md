@@ -79,6 +79,12 @@ File Library contains `JM101_RNAseq_Protocol_and_Provenance.docx`. It verifies t
 
 This document is a provenance source, not the exact R/Python/Bash source. No script was reconstructed from it.
 
+## Verified external recovery clue added 2026-07-29
+
+Google Drive folder `06 Current Figure Rendering Code` contains a register document, "CURRENT — JM105 Figure 2 v10 lane-locked renderer register," describing `JM105_figure2_render_v10_lane_locked_20260728.py` (supersedes `JM105_figure2_render_v9_FINAL_20260728.py`; SHA-256 `fbd47169d0320e04c0eaf41692b9500be4b1cfa8f862e089b891507c497bd00e`). The register documents six scientific corrections (retained-junction framing, `effective_fragments` denominator labeling, NMD-compression wording, length-sensitivity diagnostics, independent host-gene-body log2FC, and nuclear mRNA/ORF-set wording) and a fixed inch-based lane layout that fails closed on clipping/collision.
+
+This is a provenance/register document, not the exact Python source. No `.py` file object was found elsewhere in Drive. See `docs/legacy-code-backfill.md` for the full recorded clue and next recovery action.
+
 ## Canonical code still targeted for recovery
 
 See `docs/legacy-code-backfill.md` for exact historical filenames and source clues. Highest-priority unrecovered targets remain:

@@ -1,6 +1,6 @@
 # Jordan McCarthy Code Wiki
 
-_Last updated: 2026-07-16 Europe/Zurich_
+_Last updated: 2026-07-29 Europe/Zurich_
 
 Canonical private repository: `jorddyk/Jordan-McCarthy`
 
@@ -41,6 +41,10 @@ Project-organized code vault. Canonical code lives under the project where a hum
   - `projects/jm105-intronsaurus/analysis/jm133-weak-5ss-need-mud1.py`
   - `projects/jm105-intronsaurus/analysis/jm133-weak-5ss-need-mud1.sbatch`
   Their source is uploaded to GitHub but not yet canonical on `main` because PR #1 currently requires conflict resolution against newer main history.
+
+### Figure 2 v10 lane-locked renderer (2026-07-29)
+
+A Drive register document (folder `06 Current Figure Rendering Code`) describes `JM105_figure2_render_v10_lane_locked_20260728.py`, which supersedes a `v9_FINAL` renderer and adds a fixed inch-based lane layout with fail-closed clipping/collision checks, plus six scientific-wording corrections (retained-junction framing, `effective_fragments` denominator, NMD-compression wording, length-sensitivity diagnostics without intron removal, independent host-gene-body log2FC, and nuclear mRNA/ORF-set wording). SHA-256 `fbd47169d0320e04c0eaf41692b9500be4b1cfa8f862e089b891507c497bd00e`. Status `PARTIAL / SOURCE LOCATED`: the register's own validation boundary states only a schema-matched private layout test has passed; the real-data Euler render is not yet re-verified. No `.py` bytes were found in Drive, so nothing was imported. Full detail in `projects/jm105-intronsaurus/docs/legacy-code-backfill.md`.
 
 ### Priority exact-source queue
 
@@ -117,6 +121,14 @@ Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategi
   - **Containment:** Daily Code Handoff is explicitly exempt from campaign-count reductions and may be disabled only by a direct Jordan instruction.
 
 # Last-known canonical decisions
+
+## 2026-07-29
+
+- Repository re-verified private and writable; working from branch `claude/dazzling-turing-a3ujj5` per current session policy rather than direct `main` commits.
+- Searched Google Drive (recent files and full-text) and Gmail (attachments and body keywords) for code/computational artifacts not yet preserved. Reviewed open PRs #1-#12 for existing in-flight recovery state.
+- Found one new artifact: the Figure 2 v10 lane-locked renderer register in Drive folder `06 Current Figure Rendering Code`, created 2026-07-28 and not previously logged. Recorded as `PARTIAL / SOURCE LOCATED` in the JM105 legacy-backfill ledger; no source reconstructed.
+- No new artifacts found in Gmail; attachment and keyword searches returned only personal correspondence and prior automation status emails.
+- No raw data, generated renders, secrets, or reconstructed biological/code values were committed.
 
 ## 2026-07-16
 
