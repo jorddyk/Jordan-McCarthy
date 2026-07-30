@@ -118,6 +118,13 @@ Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategi
 
 # Last-known canonical decisions
 
+## 2026-07-30
+
+- Scheduled legacy-backfill continuation pass searched Google Drive (full recent-file listing plus targeted queries) and Gmail (attachment search) for new computational artifacts. No new byte-complete source was found.
+- Confirmed the `06 Current Figure Rendering Code` Drive folder holds only a descriptive register for `JM105_figure2_render_v10_lane_locked_20260728.py` (SHA-256 recorded), not the runnable file itself; status remains `PARTIAL / SOURCE LOCATED` and it was not reconstructed from the register text.
+- Confirmed the Drive copy of `paper_style.py` differs from the canonical repository copy only in its docstring/governance header, not in functional content; no update applied.
+- No action taken on open PRs #1, #6, #7, #9, #10, #12 since no new evidence changed their recovery status.
+
 ## 2026-07-16
 
 - Repository re-verified private and writable on `main`.
