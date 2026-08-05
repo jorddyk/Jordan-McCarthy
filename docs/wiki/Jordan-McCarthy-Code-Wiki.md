@@ -1,6 +1,6 @@
 # Jordan McCarthy Code Wiki
 
-_Last updated: 2026-07-16 Europe/Zurich_
+_Last updated: 2026-08-05 Europe/Zurich_
 
 Canonical private repository: `jorddyk/Jordan-McCarthy`
 
@@ -67,6 +67,7 @@ Prompt/spec assets under `projects/figure-rendering/prompts/` define Figure 5, m
 
 Highest-priority missing or source-located code:
 
+0. Figure 2 v10 lane-locked renderer `JM105_figure2_render_v10_lane_locked_20260728.py` (SHA-256 `fbd47169d0320e04c0eaf41692b9500be4b1cfa8f862e089b891507c497bd00e`) — supersedes `..._v9_FINAL_20260728.py`, which supersedes `..._v5_20260727.py`. Only a Drive register/transcript with metadata and hash is accessible; no `.py` bytes recovered as of 2026-08-05. `PARTIAL / SOURCE LOCATED`. This is now the preferred Figure 2 target ahead of the older `render_jm105_figure2_public_final.py` lineage.
 1. Exact Figure 3 v21 sources `figure3_base_renderer.py` and `Figure_3_render_all_v21.py` — the latest verified source-bearing run is `/cluster/scratch/jmccarthy/JM105_RNAseq/Figure3_chat_build_20260715_163813/`; terminal retrieval records verify complete files of approximately 57 KB and 40 KB, matching `.pyc` companions, and the same files in Jordan's local `JM105_Figure3_Euler_Bundle_v6_EXTRACTED` results. Status: `PARTIAL / SOURCE LOCATED`; the connector exposes only the transcript, not source bytes.
 2. Figure 2 public-final renderer — exact complete Python is source-located in File Library and at `/cluster/home/jmccarthy/JM105_Figure2_public_final_20260713_171245/scripts/render_jm105_figure2_public_final.py`; the corrected run succeeded after `threshold_c` → `threshold_cr`. Status: `PARTIAL / SOURCE LOCATED`, not yet imported because full bytes were unavailable to this run.
 3. Figure 5 C/D/E public-clean renderer — exact uploaded `rerender_figure5_CDE_public_clean_labeled.py` and complete shell launcher were found in File Library. Status: `PARTIAL / SOURCE LOCATED`; no snippet reconstruction committed.
@@ -117,6 +118,15 @@ Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategi
   - **Containment:** Daily Code Handoff is explicitly exempt from campaign-count reductions and may be disabled only by a direct Jordan instruction.
 
 # Last-known canonical decisions
+
+## 2026-08-05
+
+- Repository re-verified private and writable on `main`; work delivered on branch `claude/dazzling-turing-hdmrkv`.
+- Gmail and Google Drive searched as authorized sources; no new complete runnable canonical code found for any project area.
+- `paper_style.py` re-verified byte-identical to the Drive copy; already canonical, no change.
+- New Figure 2 renderer lineage identified (v5 → v9 → v10 lane-locked) via a Drive register/transcript; only metadata and a SHA-256 hash are accessible, not source bytes. Recorded in `projects/figure-rendering/docs/legacy-code-backfill.md` as the current preferred Figure 2 target.
+- Out-of-taxonomy content noted: a Drive folder tree prefixed `RR_...` (e.g. `RR_OMEGA_SWARM_DIRECT_DECIPHERMENT...`, `RR_HRFA__HISTORICAL_RAPA_NUI_FORMULA_ATLAS...`) contains Python scripts unrelated to any current repo project (JM105, figure-rendering, ImageJ/Fiji, language-learning, personal-intelligence-agency); appears to be a separate personal/side workflow. Not imported; no project category exists for it yet.
+- No biological data, generated renders, raw sequencing, microscopy stacks, or binary outputs were committed.
 
 ## 2026-07-16
 
