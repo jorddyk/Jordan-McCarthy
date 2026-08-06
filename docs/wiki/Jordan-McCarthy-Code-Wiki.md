@@ -1,6 +1,6 @@
 # Jordan McCarthy Code Wiki
 
-_Last updated: 2026-07-16 Europe/Zurich_
+_Last updated: 2026-08-06 Europe/Zurich_
 
 Canonical private repository: `jorddyk/Jordan-McCarthy`
 
@@ -117,6 +117,14 @@ Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategi
   - **Containment:** Daily Code Handoff is explicitly exempt from campaign-count reductions and may be disabled only by a direct Jordan instruction.
 
 # Last-known canonical decisions
+
+## 2026-08-06
+
+- Repository re-verified private and writable on `main`; working session developed on `claude/dazzling-turing-2zdejc`.
+- Drive sweep for artifacts modified since the 2026-07-28 handoff found no new complete runnable code, script, notebook, or computational work.
+- One new source-located clue recorded: a Google Doc register describing `JM105_figure2_render_v10_lane_locked_20260728.py` (superseding a `v9_FINAL` variant), with SHA-256 `fbd47169d0320e04c0eaf41692b9500be4b1cfa8f862e089b891507c497bd00e`. The register itself is metadata/prose, not the `.py` file; exact bytes are not present in Drive. Logged as `PARTIAL / SOURCE LOCATED` in `projects/figure-rendering/docs/legacy-code-backfill.md`.
+- The remaining Drive activity since 2026-07-28 is non-code personal/planning documents in unrelated project trees; out of this repo's scope and not reviewed beyond MIME type/extension.
+- No biological data, generated renders, raw sequencing, microscopy stacks, secrets, or reconstructed code were committed.
 
 ## 2026-07-16
 

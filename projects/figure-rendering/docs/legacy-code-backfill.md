@@ -64,6 +64,21 @@ The evening pass found materially better evidence:
 
 The connector returned searchable excerpts but failed to open or transfer the full uploaded Python files. Therefore these are classified `PARTIAL / SOURCE LOCATED`, not `RECOVERED`. No biological code was reconstructed from excerpts. The next handoff should retrieve the exact files from File Library or copy them directly from the verified Euler paths.
 
+## 2026-08-06 recovery pass
+
+A Drive sweep for artifacts modified since the 2026-07-28 handoff found one new document: `CURRENT — JM105 Figure 2 v10 lane-locked renderer register` (Google Doc, created/modified 2026-07-28, in Drive folder `06 Current Figure Rendering Code` under `JM105 - Intronsaurus & Nature Aging`). It records that `JM105_figure2_render_v10_lane_locked_20260728.py` supersedes `JM105_figure2_render_v9_FINAL_20260728.py`, with:
+
+- SHA-256 `fbd47169d0320e04c0eaf41692b9500be4b1cfa8f862e089b891507c497bd00e`
+- Fixed 7.2 × 9.6 inch canvas, schema `JM105-FIG2-LANE-LOCKED-v10-20260728`
+- Euler destination `/cluster/home/jmccarthy/JM105_NMD_AUDIT/`
+- Six stated scientific corrections relative to v9 (panel-a leakage-assay wording, `effective_fragments` denominator labeling, panel-c NMD-compression wording, panel-d length-sensitivity framing, panel-e independent gene-body log2FC addition, panel-f nuclear mRNA/ORF-set wording)
+- A fixed per-lane layout audit (title/subtitle/legend/axis-label/tick-label/footer/plot extents) that fails closed on clipping or collisions
+- A stated validation boundary: the source passed an end-to-end schema-matched **private layout test only**; the real-data Euler render had not yet run and `render_self_audit.json` had not yet been retrieved as of the register's last edit
+
+The Drive document is a register/metadata description, not the `.py` file itself — no runnable bytes are attached to it or discoverable elsewhere in Drive under either the `v9_FINAL` or `v10_lane_locked` filenames. Status: `PARTIAL / SOURCE LOCATED`, same class as the outstanding Figure 3/4/5 targets above. This supersedes item 11's implicit "current Figure 2 Panel F" framing — the newest known scope-of-truth for the Figure 2 renderer is now the v10 lane-locked variant, not v9 or the Panel F patch sequence, once actual bytes are recovered. No code was reconstructed from the register's prose; no figures, biological values, or provenance were fabricated.
+
+Nothing else in Drive was modified since 2026-07-28 that qualifies as code, a script, a notebook, or computational work. The rest of that period's Drive activity is non-code personal/planning documents (Google Docs/Sheets under unrelated project trees) outside this repo's scope; none were opened beyond confirming their MIME type and file extension.
+
 ## Mockup/image-generation artifacts deliberately not committed as code
 
 - Generated Nature Aging-style mockup PNGs are not runnable source.
