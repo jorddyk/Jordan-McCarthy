@@ -1,6 +1,6 @@
 # Jordan McCarthy Code Wiki
 
-_Last updated: 2026-07-16 Europe/Zurich_
+_Last updated: 2026-08-08 Europe/Zurich_
 
 Canonical private repository: `jorddyk/Jordan-McCarthy`
 
@@ -117,6 +117,13 @@ Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategi
   - **Containment:** Daily Code Handoff is explicitly exempt from campaign-count reductions and may be disabled only by a direct Jordan instruction.
 
 # Last-known canonical decisions
+
+## 2026-08-08
+
+- No repository commit since `3db310b` (2026-07-28); this run found no complete runnable source in Gmail (no code attachments in 60 days) or Drive since that commit.
+- New recovery clue: `CURRENT — JM105 Figure 2 v10 lane-locked renderer register` (Drive doc, 2026-07-28) describes a complete `JM105_figure2_render_v10_lane_locked_20260728.py` superseding v9, but only the register text is accessible. Logged in `projects/figure-rendering/docs/legacy-code-backfill.md`.
+- New recovery clue: Yeast Cell Replicative Lifespan (RLS) Tracker & AI Engine — an OpenCV annotation dashboard plus MobileNetV2 classifier plus sequence-based RLS/censoring/mortality engine, described across three Drive docs (2026-08-06/07) as shared JM105/Intronsaurus aging-chip phenotyping infrastructure. No source code found. Logged in `projects/imagej-fiji-aging-chips/docs/legacy-code-backfill.md` and `projects/imagej-fiji-aging-chips/README.md`.
+- Several unrelated Drive items (a cryptanalysis/"Rongorongo" decipherment project, a college-admissions folder tree, old animal-husbandry photos) were reviewed and correctly excluded as out of this repository's scope.
 
 ## 2026-07-16
 

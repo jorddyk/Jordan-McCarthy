@@ -23,6 +23,22 @@ A script is recovered only when its complete source body is available and can be
 | 9 | `macros/jm076-remove-brightfield-slices-from-stack.ijm` | `Y:/Jordan/JM076/Macros/Step4_RemovebrightfieldSlicesFromStack.ijm` | `exact full source not yet recovered` |
 | 10 | `macros/jm076-red-channel-extractor.ijm` | `Y:/Jordan/JM076/Macros/Step6_RedChannelMacro.ijm` | `exact full source not yet recovered` |
 
+## Recovery pass: 2026-08-08
+
+Three Google Docs (created/modified 2026-08-06/07, all after the last repository commit `3db310b` of 2026-07-28) describe a substantial new system, the **Yeast Cell Replicative Lifespan (RLS) Tracker & AI Engine**, proposed as shared aging-chip phenotyping infrastructure for JM105 and Intronsaurus:
+
+- `SOURCE — RLS Tracker Round 11 Principal-Supplied Technical Record — 2026-08-07`
+- `2026-08-07 — RLS Automation Gate Assessment & HEARTH Socratic Review`
+- `MEMO 2026-012 — RLS Automation Integration Across JM105 & Intronsaurus`
+
+| Priority | Proposed canonical path | Historical/source clue | Purpose | Current status |
+|---|---|---|---|---|
+| 11 | `rls-tracker/annotation_dashboard.py` | OpenCV interactive dashboard for trap-by-trap navigation of brightfield aging-chip frames; side-by-side human/AI state rendering; keyboard shortcuts; contrast/zoom; writes to `master_human_annotations.xlsx`; smart resume keyed by `Chip_ID`, `Position`, `Trap_ID`, `Frame` | Human annotation UI for the six-class ontology (Mother, Early Bud, Late Bud, Dead Cell, No Cell, Blurry, plus excluded/administrative classes) over >14,000 verified frames | `exact full source not yet recovered`; only prose description found, no `.py`/`.ipynb` file body |
+| 12 | `rls-tracker/train_rls_classifier.py` | Round 11 model: ImageNet-pretrained frozen MobileNetV2 backbone, `GlobalAveragePooling2D` -> `Dropout(0.4)` -> `Dense(num_classes)`; Adam lr 1e-3; `ReduceLROnPlateau`(factor 0.5, patience 3); `EarlyStopping`(patience 8); image pipeline: 0.5-99.5 percentile contrast stretch, resize 128x128x3, MobileNetV2 preprocessing to [-1,1], `RandomFlip("vertical")`; per-frame sample weight `ClassWeight x [1 + 0.5x|Human RLS-AI RLS| + 0.5 for missed mortality]` | Frame classifier plus hard-trap mining used to reduce manual post-acquisition aging-chip scoring | `exact full source not yet recovered` |
+| 13 | `rls-tracker/rls_sequence_engine.py` | Sequence-aware RLS/censoring/mortality logic: division on Late Bud -> Mother/Early Bud (with No Cell gap look-back); `is_censored`/`died_on_chip` rules keyed on Blurry/Escaped/Skipped and direct-to-Dead-Cell transitions | Converts per-frame classifications into per-trap RLS, death/censoring outcomes for lifespan phenotyping (including the CR x Mud1 arm) | `exact full source not yet recovered` |
+
+No `.py`, `.ipynb`, or other runnable source body for the RLS Tracker was found in Drive or as a Gmail attachment in this pass — only the three descriptive Google Docs above. Nothing was imported or reconstructed from the prose description. This project does not yet have a dedicated top-level folder in the repo; `rls-tracker/` paths here are proposed, pending Jordan confirming placement (this project or a new one) once real source is recovered.
+
 ## Recovery pass: 2026-07-12
 
 ### Sources searched

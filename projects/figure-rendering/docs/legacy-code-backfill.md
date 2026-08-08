@@ -35,6 +35,16 @@ Do not treat this file as code. It is a recovery queue and import audit.
 | 10 | `nature-aging-mockups/render-synopsis-aligned-rnaseq-plots.py` | Euler script `scripts/28_make_synopsis_aligned_all_intron_RNAseq_plots.py`; output `28_SYNOPSIS_ALIGNED_ALL_INTRON_RNASEQ_PLOTS` | Render normal all-intron/all-gene RNA-seq panels required by the synopsis; may live under JM105 figures rather than generic rendering | Full current source was previously reported visible in project chat but is not currently accessible as a complete source body; exact full source not yet recovered |
 | 11 | `panel-renderers/render-figure2-panel-f-mud1-dependence.py` | Euler folders `PanelF_render_v7_TRANSPARENT_NO_BORDER_FOOTER_FIXED`, `PanelF_render_v8_FOOTER_SPACING_BEAUTIFUL`, and `PanelF_render_v9_TOP_DESCRIPTOR_SPACING_FIXED` | Render Figure 2F with computed NMD-hidden IR, data-driven y-limits, transparent outputs, dedicated descriptor/footer axes, and separated label lanes | Exact final complete source not yet recovered; patch sequence is not sufficient |
 
+## 2026-08-08 recovery pass
+
+A Drive search for documents modified since the 2026-07-28 commit (`3db310b`) surfaced `CURRENT — JM105 Figure 2 v10 lane-locked renderer register` (Google Doc, created/modified 2026-07-28), which was not yet reflected in this ledger.
+
+| Priority | Proposed canonical path | Historical/source clue | Purpose | Current status |
+|---|---|---|---|---|
+| 12 | `panel-renderers/jm105-figure2-v10-lane-locked/render_jm105_figure2_v10_lane_locked.py` | Register names the complete runnable source `JM105_figure2_render_v10_lane_locked_20260728.py` (SHA-256 `fbd47169d0320e04c0eaf41692b9500be4b1cfa8f862e089b891507c497bd00e`), stated to supersede `JM105_figure2_render_v9_FINAL_20260728.py`; Euler destination `/cluster/home/jmccarthy/JM105_NMD_AUDIT/`; schema `JM105-FIG2-LANE-LOCKED-v10-20260728` | Fixed inch-based lane layout renderer for Figure 2 (total/rRNA-depleted JM105 only); fixes Panel a/c/d/e/f wording, explicit `effective_fragments` library-size unit, and per-lane clipping/collision audit before export | `PARTIAL / SOURCE LOCATED`: only the register/spec document is accessible, not the `.py` file bytes; the register itself states the real-data Euler render has not yet passed (`render_self_audit.json` not yet retrieved). Do not reconstruct from the register text. |
+
+No complete `.py` body for v9 or v10 was found in Drive or Gmail attachments in this pass. Nothing was imported.
+
 ## 2026-07-16 recovery pass
 
 A new File Library pass verified the latest Figure 3 recovery/build location: `/cluster/scratch/jmccarthy/JM105_RNAseq/Figure3_chat_build_20260715_163813/`. Its retrieved output inventory contains the exact historical `figure3_base_renderer.py` (~57 KB) and `Figure_3_render_all_v21.py` (~40 KB), their compiled companions, and the current `Figure_3_build_from_v21_and_JM100.py` (~33 KB). The same complete output set was downloaded into Jordan's local `JM105_Figure3_Euler_Bundle_v6_EXTRACTED` results.
