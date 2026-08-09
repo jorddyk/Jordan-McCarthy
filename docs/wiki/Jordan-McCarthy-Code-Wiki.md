@@ -1,6 +1,6 @@
 # Jordan McCarthy Code Wiki
 
-_Last updated: 2026-07-16 Europe/Zurich_
+_Last updated: 2026-08-09 Europe/Zurich_
 
 Canonical private repository: `jorddyk/Jordan-McCarthy`
 
@@ -67,6 +67,7 @@ Prompt/spec assets under `projects/figure-rendering/prompts/` define Figure 5, m
 
 Highest-priority missing or source-located code:
 
+0. JM105 Figure 2 v10 lane-locked renderer — `SOURCE DESCRIBED, NOT LOCATED` (2026-08-09). A Drive register document names the exact current-canonical filename, SHA-256, fixed-canvas/schema identity, and Euler destination for a renderer that supersedes the prior v9 renderer, but no `.py` bytes were found. See backfill ledger priority 12.
 1. Exact Figure 3 v21 sources `figure3_base_renderer.py` and `Figure_3_render_all_v21.py` — the latest verified source-bearing run is `/cluster/scratch/jmccarthy/JM105_RNAseq/Figure3_chat_build_20260715_163813/`; terminal retrieval records verify complete files of approximately 57 KB and 40 KB, matching `.pyc` companions, and the same files in Jordan's local `JM105_Figure3_Euler_Bundle_v6_EXTRACTED` results. Status: `PARTIAL / SOURCE LOCATED`; the connector exposes only the transcript, not source bytes.
 2. Figure 2 public-final renderer — exact complete Python is source-located in File Library and at `/cluster/home/jmccarthy/JM105_Figure2_public_final_20260713_171245/scripts/render_jm105_figure2_public_final.py`; the corrected run succeeded after `threshold_c` → `threshold_cr`. Status: `PARTIAL / SOURCE LOCATED`, not yet imported because full bytes were unavailable to this run.
 3. Figure 5 C/D/E public-clean renderer — exact uploaded `rerender_figure5_CDE_public_clean_labeled.py` and complete shell launcher were found in File Library. Status: `PARTIAL / SOURCE LOCATED`; no snippet reconstruction committed.
@@ -90,6 +91,8 @@ No complete JM076/JM128/JM129 macro or Groovy source is currently canonical. Rec
 
 Priority targets include ND2 position splitting, C2 MitoSOX extraction, BF/FL/ROS/RLS merging, virtual hyperstacks, and quantitative rolling-ball background subtraction. Known clues include `Image001.nd2`, `Image001_Pos0_Hyperstack.tif`, `MitosoxRedInducibleFusionsRepeat.nd2`, `Continue001.nd2`, `Continue002.nd2`, `rollingBallRadius=100`, `C=2`, `Z=60`, `T=107/139/145`, and the named RLS/ROS outputs.
 
+New candidate scope (2026-08-09, not yet recovered): a Python/Keras "Yeast Cell Replicative Lifespan (RLS) Tracker & AI Engine" — `train_classifier.py` (MobileNetV2 frame-state classifier), `human_classifier_ui.py` (OpenCV annotation dashboard), a deterministic division/mortality/censoring sequence engine, and a prospective-lifespan quantile oracle. Described in Tier-1 owner-supplied Drive documentation as converting longitudinal aging-chip brightfield stacks into per-trap RLS outputs; positioned by a related memo as shared JM105/Intronsaurus aging-chip infrastructure. Architecture and hyperparameters are documented as recovery clues only; no source bytes recovered. See `projects/imagej-fiji-aging-chips/docs/legacy-code-backfill.md`.
+
 ## Language learning
 
 Canonical complete single-file apps:
@@ -102,6 +105,17 @@ Only import web apps complete from `<!DOCTYPE html>` through `</html>`.
 ## Personal intelligence agency
 
 Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategic alert triage, science preemption, Swiss leverage, and weekly strategic briefing/red-team tasks. Live task configuration, rather than historical README wording, determines current permissions.
+
+# Last-known canonical decisions
+
+## 2026-08-09
+
+- Repository re-verified: `main` at `3db310b`, this handoff developed on `claude/dazzling-turing-dyzg9e`.
+- No complete runnable code was found in Google Drive or Gmail attachments since the 2026-07-28 pass. Google Drive is dominated by an unrelated large-scale "Rongorongo decipherment" research effort (OMEGA/PROMETHEUS runs, symbol ledgers) already tracked by separate PRs (#4, #14) outside this ledger's scope; it was scanned but yielded nothing relevant to JM105/figure-rendering/ImageJ/language-learning/personal-intelligence-agency.
+- One new figure-rendering recovery clue logged: JM105 Figure 2 v10 lane-locked renderer register (metadata only, no source bytes). See `projects/figure-rendering/docs/legacy-code-backfill.md` priority 12.
+- One new candidate project lead logged: a Python/Keras RLS Tracker & AI Engine for aging-chip phenotyping (`train_classifier.py`, `human_classifier_ui.py`, sequence engine, lifespan oracle), described in Tier-1 owner-supplied Drive documentation dated 2026-08-06/07. Architecture is documented in detail but no source bytes were found; recorded as recovery clues only in `projects/imagej-fiji-aging-chips/docs/legacy-code-backfill.md`.
+- Open-PR backlog observed and not acted on this pass (no new code was ready to merge and existing open PRs were not created by this run): PR #13 (`agent/add-jm105-figure-analysis-scripts-20260730`, draft, `mergeable_state: clean` against current `main`, 7 hash-verified/`py_compile`-validated JM105 Figure 3–6 and figure-rendering sources) remains open and unmerged; PR #1 remains open since 2026-07-08 against stale history.
+- No raw data, generated renders, logs, secrets, or reconstructed biological/code values were committed.
 
 # Code-focused execution risks and containment
 

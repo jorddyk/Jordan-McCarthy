@@ -58,3 +58,7 @@ No result contained a complete `.ijm` or Groovy source body. Results were unrela
 ## Import rule
 
 A macro/script becomes canonical only when the complete exact source is available. If only a summary of the historical script is available, keep it in this README or the legacy backfill record as a recovery target rather than committing reconstructed code as recovered code.
+
+## Candidate scope addition: RLS Tracker & AI Engine
+
+A Python/Keras "Yeast Cell Replicative Lifespan (RLS) Tracker & AI Engine" (OpenCV annotation UI, MobileNetV2 frame-state classifier, sequence-based RLS/mortality/censoring engine, and a prospective-lifespan oracle) was identified as principal-supplied source in Google Drive on 2026-08-07/08-09. It converts longitudinal aging-chip brightfield stacks into per-trap RLS outputs and is a natural fit for this project's scope even though it is Python rather than Fiji/ImageJ. It is proposed to live under `python/rls-tracker/` once exact source is recovered. See `docs/legacy-code-backfill.md` for the full recovery-clue record; no source has been recovered yet.
