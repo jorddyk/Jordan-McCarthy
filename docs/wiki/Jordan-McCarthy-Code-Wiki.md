@@ -118,6 +118,13 @@ Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategi
 
 # Last-known canonical decisions
 
+## 2026-08-13
+
+- Repository re-verified writable on `main`.
+- Full sweep of Gmail and Google Drive for code artifacts not yet preserved in the repository. No code attachments found in Gmail; no complete runnable source body found in Drive.
+- Identified a new recovery target: the RLS Tracker & AI Engine (`train_classifier.py`, `human_classifier_ui.py`, prospective-lifespan-oracle) — a yeast aging-chip replicative-lifespan computer-vision/scoring pipeline referenced in Drive folder `07 — Source Archive & Raw Traffic`. Only an architecture description was located, not file bytes; recorded as a recovery target in `docs/handoffs/2026-08-13-code-handoff.md`, not imported.
+- No biological data, generated renders, logs, secrets, or reconstructed code were committed.
+
 ## 2026-07-16
 
 - Repository re-verified private and writable on `main`.
