@@ -1,6 +1,6 @@
 # Jordan McCarthy Code Wiki
 
-_Last updated: 2026-07-16 Europe/Zurich_
+_Last updated: 2026-08-14 Europe/Zurich_
 
 Canonical private repository: `jorddyk/Jordan-McCarthy`
 
@@ -117,6 +117,14 @@ Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategi
   - **Containment:** Daily Code Handoff is explicitly exempt from campaign-count reductions and may be disabled only by a direct Jordan instruction.
 
 # Last-known canonical decisions
+
+## 2026-08-14
+
+- Repository-wide sweep of Google Drive, Gmail, and GitHub state found no new code, scripts, notebooks, or computational artifacts beyond what prior runs already surfaced.
+- The JM105 Figure 2 v10 lane-locked renderer register remains `PARTIAL / SOURCE LOCATED`; no `.py` bytes for it exist anywhere in Drive.
+- Gmail attachment search could not be run this pass — no message search/list tool was exposed to the session (only reply/forward/spam/trash management). Flagged as a connector gap for the next run.
+- Nine automated recovery PRs remain open and unmerged (#1, #4, #6, #7, #9, #10, #12, #13, #14); PR #1 is now merge-conflicted against current `main`. No new PR was opened this run to avoid duplicating already-pending work.
+- No biological data, generated renders, raw sequencing, microscopy stacks, credentials, or personal-intelligence-agency live-state material were committed.
 
 ## 2026-07-16
 
