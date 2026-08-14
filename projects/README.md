@@ -16,6 +16,7 @@ Daily handoffs may cite these files, but the code itself should live here, not i
 | Folder | Human title | Purpose |
 |---|---|---|
 | `jm105-intronsaurus/` | JM105 / Intronsaurus analysis | RNA-seq, intron retention, leakage, NMD, Mud1/CR, manuscript-support code |
+| `jm136-aging-chip-analysis/` | JM-136: Automating Aging Chip Analysis | Microfluidic yeast aging-chip extraction, annotation, RLS automation, benchmark, and QA pipeline |
 | `figure-rendering/` | Figure rendering and manuscript mockups | Figure-layout scripts, plotting utilities, Nature Aging-style mockups |
 | `imagej-fiji-aging-chips/` | ImageJ / Fiji aging-chip macros | Fiji/ImageJ/Groovy macros for aging-chip, MitoSOX, ROS, BF/FL, ND2 splitting, stitching, and quantitative microscopy workflows |
 | `language-learning/` | Language-learning apps | German/TELC active-recall apps and study tools |
