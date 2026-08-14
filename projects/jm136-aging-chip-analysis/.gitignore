@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+aging_chip_env/
+
+# IDE / OS
+.DS_Store
+Thumbs.db
+
+# Raw and extracted microscopy data
+*.nd2
+*.tif
+*.tiff
+*.ome.tif
+*.ome.tiff
+extracted_traps/
+
+# Human annotations / recovered workbooks
+annotation/*.xlsx
+annotation/*.xlsb
+annotation/*.csv
+*.xlsx
+*.xlsb
+
+# Trained models / checkpoints
+*.keras
+*.h5
+*.weights.h5
+*.joblib
+candidate_*
+
+# Generated reports / figures / videos
+*.out
+*.err
+*.log
+*.avi
+*.mp4
+training_accuracy.png
+rls_*concordance.csv
+v7_*audit.csv
+v7_*manifest.json
+
+# Slurm
+slurm-*.out
+v7_*.out
+v7_*.err
