@@ -36,7 +36,7 @@ VAL_FRACTION = 0.2                 # trap-level validation split
 RANDOM_SEED = 42
 
 ORACLE_FEATURE_VERSION = 2  # v2: dropped mean_conf/recent_conf (were trained as constant 1.0
-                            # from human labels but served with real confidences ->
+                            # from human labels but served with real classifier confidences ->
                             # train/serve skew). Retrain with train_oracle_only.py.
 ORACLE_FEATURE_NAMES = [
     "curr_rls", "frames_observed",
