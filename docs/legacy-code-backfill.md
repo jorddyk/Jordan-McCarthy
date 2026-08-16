@@ -297,3 +297,15 @@ Status: legacy-code-backfill prompt imported. Other exact scheduled-task prompt 
 - Updated `projects/figure-rendering/README.md`, `projects/figure-rendering/panel-renderers/README.md`, `projects/figure-rendering/docs/legacy-code-backfill.md`, and `docs/wiki/Jordan-McCarthy-Code-Wiki.md`.
 - Deliberately did not commit generated Figure 2–5 mockup PNGs because they are visual artifacts with schematic/mock values, not source code.
 - Deliberately did not reconstruct missing renderers such as `render-no-data-placeholder.py` or `render-main-figure-layouts.py`; they remain recovery targets until exact source is found.
+
+## Current continuation pass — 2026-08-16 scheduled backfill sweep
+
+- Verified `jorddyk/Jordan-McCarthy` is reachable and current project structure/READMEs were fetched before making changes.
+- Searched Google Drive (recent files plus targeted `fullText`/`title` queries for JM134, JM133, Fiji/ImageJ/MitoSOX, `.py`/`.ijm`/`.ps1`/`.sbatch`/`.groovy`/`.html`, `kartoffel`, `render-no-data-placeholder`, `render-main-figure-layouts`) for code not yet in the repo.
+- Gmail connector in this session exposes only send/reply/forward/spam/trash actions; no message-search or read tool was available, so Gmail could not be searched for code attachments this pass.
+- Found `paper_style.py` (JM105 aging/CR/Mud1 manuscript visual-style module) in Drive. Compared byte-for-byte against `projects/figure-rendering/jm105-figure-bible/paper_style.py`: already canonical in the repo (only difference is an unused `Iterable` import already cleaned up on the committed version). Nothing to import.
+- Re-checked "Lab Notebook complete copy and paste text dump" for JM-076 ImageJ/Fiji macro bodies referenced in this file's earlier entries; still only macro names/workflow are present, no macro source. Status unchanged: `exact full source not yet recovered`.
+- Found two Drive items that are explicitly out of scope and were **not** imported:
+  - A large set of recently modified "HEARTH" documents (operation briefs, memoranda, network/relationship profiles with named individuals, forecast ledgers, WhatsApp-sourced intake notes, negotiation prep). These are exactly the "daily private intelligence products" / "message transcripts" / raw sensitive source material that `projects/personal-intelligence-agency/README.md` says must never be committed. Left untouched.
+  - Two Python files unrelated to any declared project (`01_REPRODUCE_TOURNAMENT.py` / OMEGA-SWARM reproducibility script, and `RR_HRFA__VALIDATOR...py`) concerning a glyph/text "decipherment" analysis (Rapa Nui-style corpus, sealed-identity run bundles). They do not map to JM105/Intronsaurus, figure-rendering, ImageJ/Fiji, language-learning, or personal-intelligence-agency, and their provenance/purpose is unclear from the file content alone. Not imported pending Jordan's confirmation of project scope; flagged in the handoff email.
+- No newly recovered full source code was committed in this pass; only this continuation-pass note was added.
