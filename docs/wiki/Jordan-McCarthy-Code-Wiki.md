@@ -118,6 +118,13 @@ Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategi
 
 # Last-known canonical decisions
 
+## 2026-08-17
+
+- Repository re-verified reachable; open PR list reviewed (#1, #4, #6, #7, #9, #10, #12, #13, #14, #16 all still open/draft, unmerged).
+- Google Drive and Gmail (message search available this pass) both searched for new code; no new code-shaped artifacts found beyond what is already canonical on `main` or already committed on an existing open PR.
+- Resolved the 2026-08-16 "unclear provenance" flag on `01_REPRODUCE_TOURNAMENT.py` and the `RR_HRFA_VALIDATOR` script: both are content-identical to files already committed under `projects/rongorongo/` on open draft PR #14.
+- No biological data, generated renders, raw sequencing, microscopy stacks, or binary outputs were committed.
+
 ## 2026-07-16
 
 - Repository re-verified private and writable on `main`.
