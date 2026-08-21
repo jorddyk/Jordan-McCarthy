@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#SBATCH --job-name=JM105_ref
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=16
+#SBATCH --mem-per-cpu=6G
+#SBATCH --time=04:00:00
+#SBATCH --output=/cluster/scratch/jmccarthy/JM105_HGPS_Metazoan_Conservation/logs/distributed/reference_%j.out
+#SBATCH --error=/cluster/scratch/jmccarthy/JM105_HGPS_Metazoan_Conservation/logs/distributed/reference_%j.err
+
+set -euo pipefail
+module load eth_proxy
+
+SPECIES="${1:?Usage: sbatch 00_prepare_reference.sbatch human|mouse}"
+PROJECT_ROOT="${PROJECT_ROOT:-/cluster/scratch/jmccarthy/JM105_HGPS_Metazoan_Conservation}"
+CODE_DIR="$PROJECT_ROOT/code"
+WORK_ROOT="$PROJECT_ROOT/work"
+ENV_PREFIX="$PROJECT_ROOT/software/micromamba-root/envs/jm105-hgps-conservation"
+export PATH="$ENV_PREFIX/bin:$PATH"
+
+mkdir -p "$PROJECT_ROOT/logs/distributed"
+
+"$ENV_PREFIX/bin/python" "$CODE_DIR/scripts/jm105_metazoan_distributed.py" \
+    prepare-reference \
+    --root "$WORK_ROOT" \
+    --species "$SPECIES" \
+    --threads "${SLURM_CPUS_PER_TASK}"
+
+echo "REFERENCE_COMPLETE species=$SPECIES job=$SLURM_JOB_ID"

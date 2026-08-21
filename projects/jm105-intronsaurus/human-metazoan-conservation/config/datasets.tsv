@@ -1,0 +1,4 @@
+dataset	species	role	prespecified_groups
+GSE118633	human	HGPS discovery / total-RNA validation	control;hgps
+GSE137083	human	HGPS intervention-direction test	normal_control;hgps_control;hgps_pan_pml_kd;hgps_pml2_kd;hgps_fti
+GSE222163	mouse	bona fide metazoan caloric-restriction arm	bat_control;bat_cr;skm_control;skm_cr

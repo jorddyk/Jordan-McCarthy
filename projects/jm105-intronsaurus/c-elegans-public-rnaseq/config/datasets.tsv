@@ -1,0 +1,6 @@
+dataset_id	accession	role	include
+DR_PRIMARY	SRP089617	eat-2 dietary restriction with splicing/NMD perturbations	yes
+NMD_IIS	GSE94077	smg-2 x daf-2 factorial at day-1 adult	yes
+DIRECT_NMD	GSE100929	NMD-null input RNA-seq plus SMG-2 RIP/input	yes
+AGING	GSE124994	replicated adult-aging RNA-seq time course	yes
+DR_REPLICATION	GSE240821	independent eat-2 dietary-restriction and transcription-factor perturbations	yes

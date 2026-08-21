@@ -1,6 +1,6 @@
 # Jordan McCarthy Code Wiki
 
-_Last updated: 2026-07-16 Europe/Zurich_
+_Last updated: 2026-07-22 Europe/Zurich_
 
 Canonical private repository: `jorddyk/Jordan-McCarthy`
 
@@ -31,10 +31,14 @@ Project-organized code vault. Canonical code lives under the project where a hum
 - Safe visible claim: CR suppresses part of an age-linked NMD-revealed retained-intron/leakage state in a Mud1-dependent way.
 - Mud1 is a genetic handle/permissive requirement, not automatically the sole cause of every candidate intron.
 - Distinguish host RNA abundance from protein abundance; CR is not starvation.
+- Public worm studies are analysed separately; no cross-study subtraction is used to imitate a missing JM105 factorial.
+- `eat-2` is genetic dietary restriction caused by reduced pharyngeal pumping; `daf-2` is reduced insulin/IGF signalling, not CR.
 
 ### Canonical code
 
 - `projects/jm105-intronsaurus/analysis/jm105-old-cell-leaky-intron-determinants.py`
+- `projects/jm105-intronsaurus/human-metazoan-conservation/` — exact complete distributed public HGPS/metazoan CR workflow, panel-by-panel Materials and Methods, parallel reference jobs, 34-task array, one-pass EI/IE/EE_total quantification, selective lock repair, source checksums and runtime provenance. Primary metric: `JM105_IR = (EI + IE) / ((EI + IE) + 2 * EE_total)` with no primary pseudocount; mammalian data are not labelled NMD-hidden leakage.
+- `projects/jm105-intronsaurus/c-elegans-public-rnaseq/` — complete manifest-gated v3 workflow for five public worm studies, WBcel235/Ensembl 113 reference preparation, EI/IE/EE_total quantification, within-study DR/aging/NMD contrasts, fixed-canvas audited rendering, four-way download concurrency, Windows upload/retrieval helpers, checksums and runtime provenance. `NMD_hidden` is computed only from matched groups within one study.
 - Transformation-protocol sample resolver, manifest, Slurm runner, and PowerShell checker under `transformation-protocol-rnaseq/`.
 - Intronsaurus vNext3I/vNext3Y launch/retrieval/status helpers and the vNext3AH UI patch under `intronsaurus-browser/`.
 - Exact complete JM133 analysis and Euler launcher are preserved on open branch/PR `legacy-code-backfill-2026-07-08` / PR #1 at:
@@ -118,6 +122,21 @@ Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategi
 
 # Last-known canonical decisions
 
+## 2026-07-22
+
+- Complete C. elegans public-RNA-seq pipeline v3 is canonical on draft PR #6 under `projects/jm105-intronsaurus/c-elegans-public-rnaseq/`.
+- The metadata gate passed only after GEO-to-SRA experiment resolution, explicit separation of the SRP089617 baseline/NMD/`hrpu-1` arms, recognition of `Y41E3.11` as `hrpu-1`, and an exact GSM allowlist for the five prespecified GSE240821 groups.
+- Full driver `8176077` submitted reference `8176647`, sample array `8176648` with 158 tasks and four-way concurrency, and aggregate `8176649`. At canonicalization time the reference was running and no biological result was available.
+- Euler external downloads require inherited `eth_proxy` variables. The canonical PowerShell uploader loads the proxy in a remote Bash login shell before submission; direct Bash submission fails early when no proxy is exported.
+- Temporary patch bundles, compiled files, raw reads, alignments, STAR indexes, logs, caches, archives, figures and generated biological results were not committed.
+
+## 2026-07-21
+
+- Exact complete JM105 HGPS/metazoan distributed source is canonical on draft PR #6 under `projects/jm105-intronsaurus/human-metazoan-conservation/`.
+- The living paper methods register is stored in Google Drive at `JM105 - Intronsaurus & Nature Aging/04 Manuscript/Materials and Methods`; GitHub mirrors the current Figure 5 methods in `MATERIALS_AND_METHODS.md`.
+- Array `7873466` completed 31/34 tasks; tasks 1, 5 and 33 failed before biological work because concurrent `micromamba run` calls contended for `~/.cache/mamba/proc`. The selective repair invokes the environment Python directly and preserves the 31 completed outputs.
+- Exact large-source imports were SHA-256 verified and Python-compiled before canonicalization. No raw sequencing data, BAM/BAI files, STAR indices, logs, caches, archives or unreviewed biological outputs were committed.
+
 ## 2026-07-16
 
 - Repository re-verified private and writable on `main`.
@@ -132,7 +151,7 @@ Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategi
 - Repository re-verified private and writable on `main`.
 - Exact complete Figure 3 v21 source files are confirmed present on Euler and in retrieved local/build bundles, but remain `PARTIAL / SOURCE LOCATED` because exact `.py` bytes were not exposed to this automation.
 - Verified filenames: `figure3_base_renderer.py` (~57 KB) and `Figure_3_render_all_v21.py` (~40 KB), with matching compiled companions.
-- Recorded blockers are invocation/schema mismatches, not missing renderer logic: candidate TSV without `intron_id`, and unsupported extra positional CLI argument.
+- Recorded blockers are invocation/schema mismatches, not missing renderer logic: candidate TSV without required `intron_id`, and unsupported extra positional CLI argument.
 - No code was reconstructed from terminal output; no biological values, raw data, generated renders, logs, or binaries were committed.
 
 ## 2026-07-14
