@@ -1,61 +1,130 @@
 # JM105 Figure 3 Mud1/CR Panel Renderer
 
-Recovered canonical renderer for JM105 Figure 3: “Mud1 is required for full caloric restriction suppression of selected retained introns.”
+Publication-code area for JM105 Figure 3: “Mud1 is required for caloric restriction to suppress age-linked intron leakage.”
 
-## Source clue
+## Current status
 
-Recovered from the JM105 Figure 3 rendering/debugging chat. The final accepted large-text run on Euler was:
+The exact historical v21 source was recovered from the successful Euler run on 20 July 2026. The recovered pair is the proven raw/source-table parser and renderer lineage for the RNA panels:
 
 ```text
-/cluster/scratch/jmccarthy/JM105_RNAseq/Figure3_render_v21_20260702_161316
+Figure_3_render_all_v21.py  2595f23d89c0b040d861f95d3b26139c1856eb00103625c05e4498d21d4de8a4
+figure3_base_renderer.py     9a8e87fdccd5509eb33328a6177350e442078c78be3025721975f504d97ddce1
 ```
 
-That run reported:
+The exact pair is present in Jordan’s recovered execution archive and in the distributed v22 Euler bundle. It is **not yet committed as standalone canonical files on this branch**, because the current connector could verify the archive, filenames and hashes but could not transfer those two large source bodies into GitHub. Until that byte-for-byte import is complete, the repository package remains `PARTIAL / EXECUTION BUNDLE COMPLETE` rather than fully self-contained.
+
+The earlier `Figure3_improved` run successfully assembled source-locked PowerPoint assets into a composite, but it did not rerender panel internals and is not the publication renderer.
+
+The targeted `render_figure3_ADG_v22.py` renderer and its complete helper modules are now preserved on this draft branch. They use the recovered v21 computation API and change only Panels A, D and G:
+
+- A: graphical Cox proportional-hazards display from `JM100.xlsx`;
+- D: correct quantitative-axis semantics and explicit condition-marker legend;
+- G: data-driven limits showing all finite host-abundance observations.
+
+## Current PowerPoint panel identities
+
+- A: lifespan relevance;
+- B: set-level Mud1 dependence;
+- C: candidate-level comparison;
+- D: candidate-by-candidate paired responses;
+- E: ranking;
+- F: representative examples;
+- G: host RNA abundance control;
+- H: cell-cycle control.
+
+Historical v21 mapping remains:
 
 ```text
-TEXT_OVERLAPS_TOTAL=0
-TEXT_CLIPPED_TOTAL=0
-B/C gene labels = 8.5 pt
-B/C ticks = 8.0 pt
-B/C axis title = 9.0 pt
-D gene labels = 8.5 pt
-D ticks = 8.0 pt
-D axis title = 9.0 pt
-APPROVED_SYSTEMATIC_FALLBACK_LABELS=3
-UNAPPROVED_SYSTEMATIC_LABELS=0
+current C <- v21 A
+current D <- v21 B
+current E <- v21 C
+current F <- v21 D
+current G <- v21 E
 ```
 
-## Files
+## Targeted corrections
 
-| File | Purpose |
-|---|---|
-| `figure3_base_renderer.py` | Shared renderer utilities, data loading, audit/output helpers, and panel functions from the recovered v21 package. |
-| `Figure_3_render_all_v21.py` | Final v21 orchestration script for rendering and auditing Figure 3 panels. |
-| `run_figure3_v21_on_euler.sh` | Euler runner that creates a timestamped run directory, copies the renderer, prechecks inputs, and submits the Slurm job. |
+### Panel A
 
-## Expected real-data inputs on Euler
+- Rerender from `JM100.xlsx`, sheet `Results`.
+- Preserve four survival curves and exact cohorts.
+- Replace the text-heavy statistics boxes with a colour-coded Cox forest display.
+- Show WT CR versus WT 2%, mud1Δ CR versus mud1Δ 2%, and the CR × genotype interaction.
+- Retain hazard ratios, 95% confidence intervals, p-values, group sizes, model note and source assumptions.
+
+### Panel D
+
+Horizontal position is measured quantitative NMD-hidden IR. It does not encode condition identity.
+
+Recovered exact marker rule:
+
+- **open circle = old 2% glucose**;
+- **filled circle = old 0.1% glucose CR**;
+- line = the same intron paired across conditions.
+
+The targeted renderer removes the misleading positional `2%`/`CR` labels and adds numerical NMD-hidden IR scales.
+
+### Panel G
+
+The recovered v21 code proves that edge triangles represented observations outside a robust 96th-percentile display limit. The targeted renderer:
+
+- retains the exact v21 host-abundance computation;
+- shows all finite observations;
+- uses a shared data-driven symmetric limit plus 8% padding;
+- removes clipping triangles;
+- writes a range audit documenting the old limit, formerly clipped count, full raw ranges and new limit.
+
+Local recovered-source preflight found 402 finite pairs, 22 outside the prior limit, and zero points clipped in v22.
+
+## Scientific/data contract
+
+- Figure 3 RNA panels use real JM105 total/rRNA-depleted RNA-seq sources only.
+- No poly-A, P-versus-T, mRNA-like or P−T data are loaded.
+- No biological values are fabricated.
+- `NMD_hidden = IR(upf1Δ) − IR(UPF1+)`.
+- `candidate_score = min(aging_effect, CR_suppression)`.
+- Panel F contrast is computed (+MUD1 CR-suppression) versus (mud1Δ CR-suppression); Panel F is not recomputed by the A/D/G targeted renderer.
+- Host RNA abundance is not protein abundance.
+
+## Output contract
+
+Each rerendered panel exports:
+
+- transparent SVG with editable Arial-requested text;
+- transparent PDF;
+- transparent PNG;
+- white-background preview PNG;
+- plot-source and statistics/range audit TSV files.
+
+Canvas dimensions are fixed. `bbox_inches="tight"` is not used. No information is removed to relieve crowding.
+
+## Euler raw-mode inputs
 
 ```text
+/cluster/scratch/jmccarthy/JM105_RNAseq/162_FIG1EF_EXACT_RAW_FILES/
+/cluster/scratch/jmccarthy/JM105_RNAseq/162_FIG1EF_EXACT_RAW_FILES/JM105_replicate_stats_by_intron_condition.csv
 /cluster/scratch/jmccarthy/JM105_RNAseq/Figure2_stage1_audit_20260630_145204/Figure2_stage1B_STRICT_NUCLEAR_ORF_GATE/Figure_2_STRICT_candidate_gate_passed.tsv
-/cluster/scratch/jmccarthy/JM105_RNAseq/101_INTRONSAURUS_LEAKAGE_FIRST_EXPRESSION_FIXED/tables/JM105_replicate_stats_by_intron_condition.csv
 ```
 
-## Scientific/data status
-
-- Uses real JM105 total/rRNA-depleted RNA-seq summary tables.
-- Does not use poly-A, P-versus-T, mRNA-like, or P−T construct data.
-- Does not fabricate biological data.
-- Systematic ORF fallbacks are allowed only when common names are missing and are audited.
-- SVG/PDF text is configured to remain editable text.
-- Fixed-canvas export contract: transparent SVG/PDF/PNG plus white preview PNG.
-- `bbox_inches="tight"` is not used.
+`JM100.xlsx` is an execution input and is not stored in GitHub.
 
 ## Run
 
-On Euler, from this directory:
+The complete v22 execution bundle must contain the two recovered v21 dependencies beside the tracked v22 modules before submission.
 
 ```bash
-bash run_figure3_v21_on_euler.sh
+JOB_ID="$(sbatch --parsable render_figure3_ADG_v22.sbatch)"
+echo "JOB_ID=${JOB_ID}"
 ```
 
-The script prints the `RUN_DIR` and `JOBID`.
+A successful raw-mode run must end with:
+
+```text
+OUTPUT_VALIDATION=PASS
+FIGURE3_ADG_V22_RENDER=PASS
+OUTPUT_DIR=/cluster/scratch/jmccarthy/JM105_RNAseq/Figure3_ADG_v22_<timestamp>
+```
+
+## Publication-code rule
+
+Only complete code that regenerates panel internals from the declared workbook/raw/source tables is publication-canonical. Composite-only scripts and failed intermediate patches remain provenance, not accepted paper code. The draft PR must remain open until the exact v21 dependency pair is committed byte-for-byte and a raw Euler v22 run is recorded.
