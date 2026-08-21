@@ -60,6 +60,30 @@ projects/jm105-intronsaurus/
 | `intronsaurus-browser/check-intronsaurus-explore-restored-data-fix-v3i-status.sh` | canonical helper | Checks vNext3I status/logs. | Administrative helper. |
 | `intronsaurus-browser/patches/vnext3ah-fix28-gene-story-sources-patch.html` | canonical patch | Deduplicates Gene Stories evidence labels and adds source/provenance notes. | UI/provenance only; no biological values generated. |
 
+## Exact Figure 2/NMD source located on 2026-07-27
+
+Two complete Python source files are present in the authorized File Library:
+
+```text
+JM105_figure2_render_v1_2_20260727.py
+JM105_figure2_render_v3_NMDoff_20260727.py
+```
+
+Status: **PARTIAL / EXACT SOURCE LOCATED; NOT YET CANONICAL**.
+
+Verified from the complete-file records and indexed source text:
+
+- both are Figure 2 renderers for the 2% glucose, WT MUD1, young/old × UPF1+/upf1Δ slice;
+- both explicitly separate raw NMD-off retained-intron signal from `NMD_hidden = IR(upf1Δ) - IR(UPF1+)`;
+- both refuse synthetic/mock inputs and write manifests plus transparent/white figure outputs through `paper_style.py`;
+- `v3_NMDoff` foregrounds the NMD-off comparison and treats NMD-on as a control/reference;
+- the source dependency `paper_style.py`, exact launcher/sbatch, environment record, source hashes, and an unambiguous successful-run proof were not exposed as complete transferable files in this handoff;
+- the connector exposed searchable exact file objects but did not expose byte-complete bodies for GitHub import.
+
+Do not choose one file as publication-canonical or reconstruct either from search snippets. The next intake must transfer the exact complete bytes together with `paper_style.py`, launcher/sbatch, input-schema provenance, source hashes and successful Euler proof.
+
+A separate `JM105_NMD_AUDIT` workflow was also source-located through terminal records. The available records show multiple revisions and failed/superseded extraction or launcher attempts, including an old ZIP whose `ValidateSet` omitted `Provenance`. It is therefore diagnostic provenance only and is not canonicalized.
+
 ## Backfilled scientific/context documents
 
 | Path | Status | Purpose | Data status |
@@ -89,5 +113,6 @@ See `docs/legacy-code-backfill.md` for exact historical filenames and source clu
 4. Rsubread Step 2 hard-resume/turbo scripts, Step 3 DESeq2, and IRFinder drafts.
 5. Full Intronsaurus vNext3/vNext3AE/vNext3I/vNext3Y builders/readers.
 6. JM133/JM134 and Figure 2 candidate-gate source.
+7. Exact Figure 2/NMD 2026-07-27 renderer package and dependency set described above.
 
 `Exact full source not yet recovered` means exactly that. Historical claims that a source existed in a prior ephemeral sandbox are not sufficient for canonical import unless the source body is accessible and reverified in the current run.
