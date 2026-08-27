@@ -1,6 +1,6 @@
 # Jordan McCarthy Code Wiki
 
-_Last updated: 2026-07-16 Europe/Zurich_
+_Last updated: 2026-08-27 Europe/Zurich_
 
 Canonical private repository: `jorddyk/Jordan-McCarthy`
 
@@ -20,6 +20,25 @@ Project-organized code vault. Canonical code lives under the project where a hum
 8. The Daily Code Handoff is an operational continuity service: it may search authorized sources, preserve exact complete code, update existing canonical files and this wiki, and commit safe changes to this private repository.
 
 # Project areas
+
+## Aging-chip RLS pipeline
+
+### Scientific state
+
+- Purpose: convert longitudinal yeast aging-chip trap stacks into per-trap division counts, death calls and escape/censoring calls (survival-ready RLS) with bounded human QC.
+- Canonical event semantics: division = Late Bud -> Mother/Early Bud bridging No Cell / Blurry gaps; confirmed death = living state -> Dead Cell; "Mother Escaped (Ignore Rest)" right-censors the trap (divisions and death at/after the escape frame do not count).
+- 2026-08-27 revision: escape is a trainable 7th state class with a dedicated detector head and a calibrated sustained-run censor decoder; evaluation includes full post-escape frame tails; deployment gate = test MAE <= 1.00, within-1 >= 85%, death agreement >= 90%, escape agreement >= 90%.
+- Current model status: deployment gate FAIL (automation withheld); promoted 2026-08-27 as the assistive instrument on dominance over the escape-blind incumbent. Untouched test (n=42 traps, seed-42 trap-level split 207/42/42 from 116,657 annotation rows across three chips): RLS MAE 3.07 overall, 1.12 on escape-clean traps; bias +0.17; death and escape agreement 85.7%. Six-condition interaction arms show no material signed bias in this sample (small n; re-audit as annotation grows).
+- Trained `.keras` models, `master_human_annotations.xlsx`, TIFF stacks and per-run reports are deliberately excluded from this repo (hard rule 5); they live in the deployment folder with timestamped `pre_escape_*` backups.
+
+### Canonical code
+
+- `projects/aging-chip-rls-pipeline/human_classifier_ui.py` — trap annotator UI (single source of truth for human RLS and frame labels) with live AI overlay and calibrated detector HUD (division / death / escape-censoring calls).
+- `projects/aging-chip-rls-pipeline/train_classifier.py` — endpoint-trained multitask trainer (7-class state + division/dead/escape heads), decoder calibration on held-out traps, deployment gate, candidate_* export on gate failure.
+- `projects/aging-chip-rls-pipeline/diagnose_classifier.py` — frame- and trap-level audit of a deployed or candidate model against the master annotations.
+- Decode functions are ported verbatim between trainer and UI; do not edit one without the other.
+- Handoff record: `docs/handoffs/2026-08-27-aging-chip-rls-escape-retrofit-handoff.md`. Corresponding intelligence memo filed in Drive 2026-08-27 ("HEARTH UPDATE — RLS Tracker escape-censoring retrofit and assistive promotion").
+
 
 ## JM105 / Intronsaurus
 
