@@ -1,0 +1,42 @@
+{
+  "run_id": "OMEGA-20260717T0918+0200-DCE062EF",
+  "timestamp": "2026-07-17T09:18:19+02:00",
+  "verdict": "NO SYSTEM SURVIVED",
+  "authoritative_ledger_id": "1H5zdu19Ocj21sneaMEIChxF-_34DyycrYvY2DzUaVe8",
+  "frozen_atlas_id": "18Gv2yGFk6D94TAWyKr1s1K5PvnuZDx1g5C5XCeXcMSQ",
+  "input_hashes": {
+    "frozen_atlas_xlsx_sha256": "c829a8087d9d7268804a10e5c51081c71e497b35d941d5d394af0d995a06f74e",
+    "prior_candidate_ledger_xlsx_sha256": "ec985201891f9af0ebd164f6214de9dfe303c89fcf6f2a7f992eae883052a381"
+  },
+  "seeds": {
+    "run_seed_hex": "b321ebf420f99aa5",
+    "run_seed_int": 12907857440778328741,
+    "ba6_reference_seed": 32711,
+    "ar_core_reference_seed": 987654321,
+    "side_rigidity_reference_seeds": ["0x7031", "0x7032", "0x7033"]
+  },
+  "counts": {
+    "passages": 141,
+    "whole_tokens": 1021,
+    "families": 366,
+    "transferable_signatures": 33,
+    "cue_only_passages": 36,
+    "continuous_transliterations": 0,
+    "continuous_translations": 0
+  },
+  "files": {
+    "OMEGA_SWARM_LEDGER__OMEGA-20260717T0918+0200-DCE062EF.xlsx": {"sha256": "1944f03f79a36ced4964e6942d8b5fb97fb40288a66ad473400ae1d4983d1bc6", "bytes": 50381},
+    "FINAL_REPORT__OMEGA-20260717T0918+0200-DCE062EF.txt": {"sha256": "6c028052800cb8685d2e709fb6944ce32ef71af02cbfcfcfbd78ae869ad74342", "bytes": 14712},
+    "README.md": {"sha256": "68e5b18febe4fd0e704a268583af3f16961fc3de7c0600aba7b880aa7af7956d", "bytes": 750},
+    "omega_reproduce.py": {"sha256": "793abc6e1cbd69ea78b7ddf1186c8086ac75c2a90b95221b875ef02e6260e2be", "bytes": 2467},
+    "system_ranking.csv": {"sha256": "83fb9c1f3e57b347e3913c91c2b801e2593ba757435c94f63449d8a070e002e7", "bytes": 1071},
+    "sign_values.csv": {"sha256": "9d62eaa1d42112ab5a873a509fc634c25e6b5ba44f7a3601c8109ea4821e3f5b", "bytes": 10504},
+    "passage_readings.csv": {"sha256": "80f5073d886248cb3d3e81d5d872258a3223c2ba8dd6e9f30650b943eb0c86b4", "bytes": 39058},
+    "heldout_predictions.csv": {"sha256": "f7433d71e7c355540f81d3acb9f52ae0e1620007d7b0788a63abc9b0c0f2f04d", "bytes": 1425},
+    "validation_results.csv": {"sha256": "16f1570f2163fb1d1bf5848c35c3d8683195774554765a3fe01261983b2186d1", "bytes": 792},
+    "input_manifest.csv": {"sha256": "905f32decba20dc5261b5d543abc79b98a1bac333c45b7ef6090d5b6aa99468f", "bytes": 1741},
+    "passage_atlas_frozen.csv": {"sha256": "ae2c91d5cf459dbee68f873895e2357b384aecb914684b11db5719011d209520", "bytes": 41369},
+    "side_rigidity.csv": {"sha256": "1580f734b43cb6213af97a4b8449b9b4cc10cce245866e2eb743066bf7a155c5", "bytes": 556},
+    "mirror_pairs.csv": {"sha256": "91e8726c5a9d9e07d8a68814d219227e2618d20721d4cc306db0f1faf2889651", "bytes": 135}
+  }
+}

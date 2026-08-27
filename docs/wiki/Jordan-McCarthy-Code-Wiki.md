@@ -122,6 +122,26 @@ Only import web apps complete from `<!DOCTYPE html>` through `</html>`.
 
 Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategic alert triage, science preemption, Swiss leverage, and weekly strategic briefing/red-team tasks. Live task configuration, rather than historical README wording, determines current permissions.
 
+Per the personal-intelligence-agency README's own canonicality rules, this project preserves only reusable architecture/prompts/schemas, never daily private intelligence products (Master Interaction Record, Canonical Ledger, Weekly Operating Board, Connection Tracking, Network Profiles, Forecast/Wrong Ledger, and similar Tier-1/Tier-2 live-state Drive documents are explicitly out of scope for this repository and were not touched by the 2026-08-03 pass).
+
+## Rongorongo decipherment
+
+### Scientific state
+
+Statistical/computational cryptanalysis of the Rongorongo script. Every adjudication run recovered so far concludes `NO SYSTEM SURVIVED` / `NO AUTHENTIC BRIDGE SURVIVED`: no candidate decipherment system has cleared the preregistered promotion gates (external bridge, stable phonetic/grammatical value, fresh prediction, re-encoding rate, family-blocked significance, continuous passage). Five specific sign readings (`003=rongo`, `006=a/ki/particle`, `076=person/name marker`, `078=ure/lineage`, `200=ko/particle`) are explicitly rejected, not merely unconfirmed.
+
+### Canonical code
+
+- `projects/rongorongo/omega-swarm-reproduction/` — four `RECOVERED` reproduction scripts (`reproduce_structural_tests.py`, `01_reproduce_tournament.py`, `omega_reproduce.py`, `reproduce_adjudication_omega_swarm_f303e582.py`) for the 2026-07-16/17 OMEGA-SWARM adjudication runs over the frozen 141-passage corpus. Code is complete and `py_compile`-clean; each requires companion data files (`horley_encoding.py`, `horley_parallels.csv`, `frozen_passages.json`, `passage_atlas_frozen.csv`, an `RR_SEALED_IDENTITY...` workbook, an input manifest/systems CSV) that were not located in Drive — status `PARTIAL / CODE RECOVERED, INPUTS NOT LOCATED`.
+- `projects/rongorongo/prometheus-null-compiler/rr_prometheus_compiler.py` — `RECOVERED`, self-contained, no external data dependency. Actually executed (`self-test`) during import and its output matched the source-recorded result exactly.
+- `projects/rongorongo/hrfa-validator/rr_hrfa_validator.py` — `RECOVERED` (native `.py` file, not a doc mirror). Requires `formula_atlas.jsonl`, not located in Drive — status `PARTIAL / CODE RECOVERED, INPUT NOT LOCATED`.
+
+Prior sealed blind-test branches (`rr/f6r1-jm-a1-sealed`, `rongorongo-y20f-sealed`, `rongorongo-phase19-temp`) remain intentionally unmerged per that project's own convention: they exist only to execute one preregistered test in a clean CI environment, with durable results transferred to the Rongorongo Drive ledger rather than kept in git history.
+
+### Recovery source of truth
+
+Two Drive folders were not deep-searched during the 2026-08-03 pass and are the most likely location of the missing companion data files above: "Rongorongo Decipherment" (id `1kcOu4vkaudFu7mWBS3efGT_HWfI1ngs2`) and "TAU_RONGORONGO_REPLICATION_PREP_2" (id `1PNj62Q3schlCmgigaJlpNJi0YGoSx4EY`).
+
 # Code-focused execution risks and containment
 
 - **Risk:** legacy code remains trapped in old chats while remembered filenames/job IDs create false confidence.
@@ -136,6 +156,14 @@ Canonical prompt/spec assets cover legacy backfill, daily code handoff, strategi
   - **Containment:** Daily Code Handoff is explicitly exempt from campaign-count reductions and may be disabled only by a direct Jordan instruction.
 
 # Last-known canonical decisions
+
+## 2026-08-03
+
+- Searched Google Drive and Gmail for new code/computational artifacts across all projects.
+- JM105 figure-rendering: no new artifacts. The Figure 2 v10 lane-locked renderer register remains descriptive-only (confirms the 2026-07-30 finding); no `.py` bytes for v5/v9/v10 exist in Drive.
+- Personal intelligence agency: no artifacts imported. Live Tier-1/Tier-2 state documents (Master Interaction Record, Canonical Ledger, Weekly Operating Board, Connection Tracking, Network Profiles, Forecast/Wrong Ledger, HEARTH operations memos) are out of scope per that project's own canonicality rules and were left untouched.
+- Rongorongo decipherment: new project directory created at `projects/rongorongo/`. Recovered six complete, `py_compile`-clean Python files plus one JSON manifest from Drive documents (four OMEGA-SWARM reproduction scripts, one self-contained PROMETHEUS null compiler, one HRFA formula-atlas validator). One script (`rr_prometheus_compiler.py`) was independently executed and its self-test output verified against the source record; the shared Ba6 exact-probability constant was independently recomputed and verified. The other five scripts require companion data files not located in Drive (only referenced by name/SHA-256) and are therefore not independently runnable in this repository; each is labeled `PARTIAL / CODE RECOVERED, INPUT(S) NOT LOCATED`.
+- No raw data, generated figures, credentials, or fabricated biological/linguistic values were committed.
 
 ## 2026-07-16
 

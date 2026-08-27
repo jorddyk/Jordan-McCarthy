@@ -20,6 +20,7 @@ Daily handoffs may cite these files, but the code itself should live here, not i
 | `imagej-fiji-aging-chips/` | ImageJ / Fiji aging-chip macros | Fiji/ImageJ/Groovy macros for aging-chip, MitoSOX, ROS, BF/FL, ND2 splitting, stitching, and quantitative microscopy workflows |
 | `language-learning/` | Language-learning apps | German/TELC active-recall apps and study tools |
 | `personal-intelligence-agency/` | Personal intelligence agency | Scheduled-task prompts, scoring rubrics, and automation support |
+| `rongorongo/` | Rongorongo decipherment | Statistical/computational cryptanalysis of the Rongorongo script: reproduction scripts, blind-coding validators, and null-result adjudication records |
 
 ## Backfill rule
 
