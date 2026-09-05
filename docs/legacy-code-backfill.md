@@ -251,13 +251,13 @@ Likely canonical path:
 projects/language-learning/
 ```
 
-Source clue:
+Imported runnable source:
 
 ```text
 projects/language-learning/active-recall-apps/kartoffel-vocabulary-active-recall.html
 ```
 
-Status: exact full source not yet recovered.
+Status: exact full source recovered and already present in the repo (299-line complete HTML app; imported per `docs/wiki/Jordan-McCarthy-Code-Wiki.md` 2026-07-09 entry). This file's "not yet recovered" status was stale as of the 2026-08-16 pass and is corrected in the 2026-09-05 pass below.
 
 ### Personal intelligence agency prompts/rubrics
 
@@ -309,3 +309,14 @@ Status: legacy-code-backfill prompt imported. Other exact scheduled-task prompt 
   - A large set of recently modified "HEARTH" documents (operation briefs, memoranda, network/relationship profiles with named individuals, forecast ledgers, WhatsApp-sourced intake notes, negotiation prep). These are exactly the "daily private intelligence products" / "message transcripts" / raw sensitive source material that `projects/personal-intelligence-agency/README.md` says must never be committed. Left untouched.
   - Two Python files unrelated to any declared project (`01_REPRODUCE_TOURNAMENT.py` / OMEGA-SWARM reproducibility script, and `RR_HRFA__VALIDATOR...py`) concerning a glyph/text "decipherment" analysis (Rapa Nui-style corpus, sealed-identity run bundles). They do not map to JM105/Intronsaurus, figure-rendering, ImageJ/Fiji, language-learning, or personal-intelligence-agency, and their provenance/purpose is unclear from the file content alone. Not imported pending Jordan's confirmation of project scope; flagged in the handoff email.
 - No newly recovered full source code was committed in this pass; only this continuation-pass note was added.
+
+## Current continuation pass — 2026-09-05 scheduled backfill sweep
+
+- Verified `jorddyk/Jordan-McCarthy` is reachable; project READMEs and structure fetched before making changes.
+- Searched Google Drive: 25 most-recently-modified files, plus targeted `fullText`/`title` queries for JM134, JM133, kartoffel, and for `.py`/`.ijm`/`.groovy`/`.ps1`/`.sbatch`/`.html` source files. Gmail connector in this session again exposes only send/reply/forward/spam/trash/label actions, no search or read tool, so Gmail could not be searched for code attachments this pass (unchanged limitation, consistent with every prior pass since 2026-07-08).
+- The 25 most-recently-modified Drive files are almost entirely "HEARTH" personal-intelligence-agency working documents (operation briefs, network/relationship profiles, forecast/state ledgers, a financial-continuity protocol, a grocery list, a budget spreadsheet) plus two decipherment/"OMEGA-SWARM"/rongorongo-related items (see below). None are code or computational artifacts for a declared project. The HEARTH documents are explicitly out of scope per `projects/personal-intelligence-agency/README.md` ("must never contain private raw inbox/calendar exports, ... network/relationship profiles... Do not commit daily private intelligence products") and were left untouched, consistent with every prior pass.
+- Corrected a stale entry: `projects/language-learning/active-recall-apps/kartoffel-vocabulary-active-recall.html` was still listed above as "not yet recovered," but the file is already present in the repo as a complete 299-line app (imported 2026-07-09 per the code wiki). Updated the entry above; no new code needed.
+- Found the same two out-of-scope decipherment/"OMEGA-SWARM" Python files noted in the 2026-07-08 and 2026-08-16 passes (`01_REPRODUCE_TOURNAMENT.py` and `RR_HRFA__VALIDATOR...py`), plus a new sibling item, a spreadsheet titled "Direct Decipherment Run Intake Register" (created 2026-09-05, same day as this pass). None map to a declared project in this repo's taxonomy. Not imported.
+- **Governance finding, not a code-recovery finding:** open PR #14 ("Recover Rongorongo OMEGA-SWARM/PROMETHEUS reproduction code", draft, opened 2026-08-03) attempts to import exactly this decipherment material into this repo, in direct contradiction of the "unclear scope, not imported" judgment every other pass (2026-07-08, 2026-08-16, this pass) has reached about the same files. This inconsistency, plus the fact that new decipherment artifacts keep appearing in Drive, means Jordan's explicit scope decision is now overdue. This pass did not merge, close, or add to PR #14.
+- **Governance finding:** as of this pass there are 15 open pull requests against this repo, including at least 7 daily "no new code recovered" documentation PRs (#15, #18, #19, #20, #21, #22, #23) that were never merged to `main`, several of which already reconcile/supersede each other (#22 supersedes #18–21) without any of them landing. Substantive unmerged PRs (#6, #7, #9, #10, #12, #13, #16) are also still open. This pass did not merge or close any of them (out of scope for a Drive/Gmail recovery sweep and a shared-state action), but the backlog is large enough that `docs/legacy-code-backfill.md` on `main` is now several sweeps behind what has actually been drafted, and is flagged for Jordan in the handoff email.
+- No newly recovered full source code was committed in this pass; only the stale-entry correction and this continuation-pass note were added.
